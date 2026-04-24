@@ -22,3 +22,39 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local assistant/settings
+.claude/
+
+# migration/reference exports
+public/wp-export-index.html
+src/data/wp-raw.json
+
+# photographic assets kept out of GitHub for now
+public/images/editorial/
+public/images/1-2.png
+public/images/2-2.png
+public/images/3-2.png
+public/images/4-2.png
+public/images/2149741786.jpg
+public/images/2149741786-1.jpg
+public/images/Asesoramiento.webp
+public/images/Circulo.webp
+public/images/Cocina.webp
+public/images/Contacto.png
+public/images/Decoracion-1.webp
+public/images/Encuentro.webp
+public/images/Home-staging.webp
+public/images/Interiorismo.webp
+public/images/mt-sample-background.jpg
+public/images/Planificacion.webp
+public/images/PortadaContacto.webp
+public/images/PortadaInicio.webp
+public/images/PortadaInicio-1.webp
+public/images/PortadaServicios.webp
+public/images/PortadaSobreNosotros.webp
+public/images/Satisfaccion.webp
+public/images/Servicios.png
+public/images/SobreNosotros.png
+public/images/SobreNosotros-optimized.avif
+public/images/SobreNosotros-optimized.webp

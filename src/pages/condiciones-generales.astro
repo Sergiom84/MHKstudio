@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/locations';
+---
+
+<Layout title="Condiciones Generales | MHK Studio" description="Condiciones generales de MHK Studio." canonical={`${siteConfig.url}/condiciones-generales`} noindex={true}>
+  <section class="py-32 px-6 bg-[#fdfaf7] min-h-screen">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-6">Legal</p>
+      <h1 class="text-3xl font-light text-[#201400] mb-12">Condiciones Generales</h1>
+      <div class="text-[#201400]/70 space-y-6 leading-relaxed text-sm">
+        <h2 class="text-lg font-medium text-[#201400]">Servicios contratados</h2>
+        <p>Las condiciones específicas de cada servicio se detallarán en el presupuesto o contrato que se firme entre MHK Studio y el cliente.</p>
+        <h2 class="text-lg font-medium text-[#201400]">Presupuestos</h2>
+        <p>Los presupuestos tienen una validez de 30 días desde su emisión. Cualquier modificación en el alcance del proyecto puede suponer una revisión del presupuesto.</p>
+        <h2 class="text-lg font-medium text-[#201400]">Propiedad intelectual</h2>
+        <p>Los diseños y proyectos elaborados por MHK Studio son propiedad intelectual del estudio hasta la liquidación total del proyecto.</p>
+        <h2 class="text-lg font-medium text-[#201400]">Legislación aplicable</h2>
+        <p>Las presentes condiciones se rigen por la legislación española. Para cualquier controversia, las partes se someten a los juzgados de Almería.</p>
+        <p>Contacto: <a href={`mailto:${siteConfig.email}`} class="text-[#bda589] underline">{siteConfig.email}</a></p>
+      </div>
+    </div>
+  </section>
+</Layout>

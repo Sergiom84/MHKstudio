@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/locations';
+---
+
+<Layout title="Política de Privacidad | MHK Studio" description="Política de privacidad de MHK Studio." canonical={`${siteConfig.url}/politica-de-privacidad`} noindex={true}>
+  <section class="py-32 px-6 bg-[#fdfaf7] min-h-screen">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-6">Legal</p>
+      <h1 class="text-3xl font-light text-[#201400] mb-12">Política de Privacidad</h1>
+      <div class="text-[#201400]/70 space-y-6 leading-relaxed text-sm">
+        <h2 class="text-lg font-medium text-[#201400]">Responsable del tratamiento</h2>
+        <p>MHK Studio · {siteConfig.email} · {siteConfig.address}</p>
+        <h2 class="text-lg font-medium text-[#201400]">Datos que recopilamos</h2>
+        <p>A través del formulario de contacto recopilamos: nombre, email, teléfono (opcional) y el mensaje. Estos datos se utilizan exclusivamente para responder a tu consulta.</p>
+        <h2 class="text-lg font-medium text-[#201400]">Derechos del usuario</h2>
+        <p>Puedes ejercer tus derechos de acceso, rectificación, supresión y portabilidad enviando un email a {siteConfig.email}.</p>
+        <h2 class="text-lg font-medium text-[#201400]">Conservación de datos</h2>
+        <p>Los datos se conservan durante el tiempo necesario para gestionar tu consulta, y nunca se ceden a terceros sin tu consentimiento.</p>
+      </div>
+    </div>
+  </section>
+</Layout>
