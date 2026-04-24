@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/locations';
+---
+
+<Layout title="Aviso Legal | MHK Studio" description="Aviso legal de MHK Studio, estudio de diseño de interiores en Mojácar." canonical={`${siteConfig.url}/aviso-legal`} noindex={true}>
+  <section class="py-32 px-6 bg-[#fdfaf7] min-h-screen">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-6">Legal</p>
+      <h1 class="text-3xl font-light text-[#201400] mb-12">Aviso Legal</h1>
+      <div class="prose prose-sm max-w-none text-[#201400]/70 space-y-6 leading-relaxed">
+        <h2 class="text-lg font-medium text-[#201400]">Titular del sitio web</h2>
+        <p>MHK Studio · Mojácar (Almería) · {siteConfig.email} · {siteConfig.phone}</p>
+        <h2 class="text-lg font-medium text-[#201400]">Objeto y ámbito de aplicación</h2>
+        <p>El presente Aviso Legal regula el uso del sitio web mhkstudio.design, del que es titular MHK Studio. La utilización del sitio web atribuye la condición de usuario e implica la aceptación plena de todas las condiciones incluidas en este Aviso Legal.</p>
+        <h2 class="text-lg font-medium text-[#201400]">Propiedad intelectual</h2>
+        <p>Todos los contenidos del sitio web (textos, imágenes, diseños, logotipos) son propiedad de MHK Studio o de terceros que han autorizado su uso. Queda prohibida su reproducción sin autorización expresa.</p>
+        <h2 class="text-lg font-medium text-[#201400]">Limitación de responsabilidad</h2>
+        <p>MHK Studio no se hace responsable de los daños derivados del uso del sitio web ni de la información contenida en el mismo.</p>
+      </div>
+    </div>
+  </section>
+</Layout>

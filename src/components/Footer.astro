@@ -1,0 +1,79 @@
+---
+import { siteConfig, locations } from '../data/locations';
+---
+
+<footer class="bg-[#201400] text-[#fdfaf7] pt-16 pb-8 mt-0">
+  <div class="max-w-6xl mx-auto px-6">
+    <!-- Top grid -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <img src="/images/MHK-interior-design-studio.webp" alt="MHK Studio" class="h-10 w-auto mb-4 brightness-0 invert" />
+        <p class="text-xs tracking-[0.3em] uppercase text-[#bda589] mb-5">designing for living</p>
+        <div class="flex gap-4">
+          <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="text-xs text-[#bda589]/70 hover:text-[#bda589] transition-colors uppercase tracking-widest">WhatsApp</a>
+          <a href={siteConfig.instagram} target="_blank" rel="noopener" class="text-xs text-[#bda589]/70 hover:text-[#bda589] transition-colors uppercase tracking-widest">Instagram</a>
+        </div>
+        <div class="flex gap-4 mt-2">
+          <a href={siteConfig.facebook} target="_blank" rel="noopener" class="text-xs text-[#bda589]/70 hover:text-[#bda589] transition-colors uppercase tracking-widest">Facebook</a>
+          <a href={siteConfig.pinterest} target="_blank" rel="noopener" class="text-xs text-[#bda589]/70 hover:text-[#bda589] transition-colors uppercase tracking-widest">Pinterest</a>
+        </div>
+      </div>
+
+      <!-- MHK Studio links -->
+      <div>
+        <h3 class="text-xs font-medium tracking-[0.3em] uppercase text-[#bda589] mb-4">MHKstudio.design</h3>
+        <ul class="space-y-2">
+          <li><a href="/sobre-nosotros" class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">Sobre nosotros</a></li>
+          <li><a href="/servicios" class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">Servicios</a></li>
+          <li><a href="/contacto" class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Dónde trabajamos -->
+      <div>
+        <h3 class="text-xs font-medium tracking-[0.3em] uppercase text-[#bda589] mb-4">Dónde trabajamos</h3>
+        <ul class="space-y-2 columns-2">
+          {locations.map(loc => (
+            <li>
+              <a href={`/${loc.slug}`} class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">
+                {loc.city}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h3 class="text-xs font-medium tracking-[0.3em] uppercase text-[#bda589] mb-4">Contacto</h3>
+        <ul class="space-y-3">
+          <li>
+            <p class="text-xs text-[#bda589]/60 uppercase tracking-wider mb-1">Teléfono</p>
+            <a href={siteConfig.phoneHref} class="text-sm text-[#fdfaf7]/80 hover:text-[#fdfaf7] transition-colors">{siteConfig.phone}</a>
+          </li>
+          <li>
+            <p class="text-xs text-[#bda589]/60 uppercase tracking-wider mb-1">Correo electrónico</p>
+            <a href={`mailto:${siteConfig.email}`} class="text-sm text-[#fdfaf7]/80 hover:text-[#fdfaf7] transition-colors">{siteConfig.email}</a>
+          </li>
+          <li>
+            <p class="text-xs text-[#bda589]/60 uppercase tracking-wider mb-1">Dirección</p>
+            <p class="text-sm text-[#fdfaf7]/80">{siteConfig.address}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-[#bda589]/20 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-xs text-[#fdfaf7]/40">© {new Date().getFullYear()} MHK Studio · Todos los derechos reservados</p>
+      <div class="flex gap-6">
+        <a href="/aviso-legal" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Aviso legal</a>
+        <a href="/politica-de-privacidad" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Privacidad</a>
+        <a href="/politica-de-cookies" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Cookies</a>
+        <a href="/condiciones-generales" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Condiciones</a>
+      </div>
+    </div>
+  </div>
+</footer>

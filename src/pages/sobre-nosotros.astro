@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/locations';
+---
+
+<Layout
+  title="Sobre nosotros | Estudio de diseño de interiores"
+  description="Conoce MHK Studio: estudio de diseño de interiores en Mojácar especializado en decoración personalizada, interiorismo y home staging. Diseño minimalista, natural y atemporal."
+  canonical={`${siteConfig.url}/sobre-nosotros`}
+>
+  <!-- Hero -->
+  <section class="relative h-[60vh] min-h-[400px] flex items-end pb-16 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/PortadaSobreNosotros.webp" alt="MHK Studio equipo" class="w-full h-full object-cover" loading="eager" />
+      <div class="absolute inset-0 bg-[#201400]/45"></div>
+    </div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 w-full">
+      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-3">Quiénes somos</p>
+      <h1 class="text-4xl md:text-5xl font-light text-white leading-tight">
+        Estudio de diseño de interiores<br />en busca de la belleza funcional
+      </h1>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="py-24 px-6 bg-[#fdfaf7]">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-6">Nuestra filosofía</p>
+          <h2 class="text-2xl md:text-3xl font-light text-[#201400] mb-6 leading-snug">
+            Diseño minimalista,<br />natural y atemporal
+          </h2>
+          <p class="text-base text-[#201400]/65 leading-relaxed mb-5">
+            En MHK Studio somos un estudio de diseño de interiores apasionado por crear espacios únicos, funcionales y con alma. Diseñamos ambientes que reflejan la personalidad, el estilo de vida y las emociones de cada cliente.
+          </p>
+          <p class="text-base text-[#201400]/65 leading-relaxed">
+            Promovemos un estilo minimalista, natural y elegante, que respira calma y autenticidad. En MHK Studio no solo diseñamos espacios: construimos experiencias. Apostamos por la simplicidad como forma de belleza.
+          </p>
+        </div>
+        <div class="overflow-hidden">
+          <picture>
+            <source srcset="/images/SobreNosotros-optimized.avif" type="image/avif" />
+            <img src="/images/SobreNosotros-optimized.webp" alt="Diseño de interiores MHK Studio" class="w-full aspect-[3/4] object-cover" loading="lazy" />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="py-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-4">Lo que nos define</p>
+        <h2 class="text-3xl font-light text-[#201400]">Compromiso, detalle y atención personalizada</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        {[
+          {
+            title: 'Escucha activa',
+            desc: 'Cada proyecto comienza entendiendo a fondo quién eres, cómo vives y qué sientes en tu hogar. Tu visión es nuestra brújula.',
+          },
+          {
+            title: 'Diseño con propósito',
+            desc: 'Cada decisión tiene una razón: estética, funcionalidad y bienestar se combinan para crear espacios que mejoran tu calidad de vida.',
+          },
+          {
+            title: 'Acompañamiento total',
+            desc: 'Estamos contigo desde el primer boceto hasta la entrega final. Transparencia, comunicación y cuidado en cada fase del proyecto.',
+          },
+        ].map(val => (
+          <div class="border-t-2 border-[#bda589] pt-8">
+            <h3 class="text-lg font-medium text-[#201400] mb-4">{val.title}</h3>
+            <p class="text-sm text-[#201400]/65 leading-relaxed">{val.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Misión -->
+  <section class="py-24 px-6 bg-[#201400] text-white">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-6">Nuestra misión</p>
+      <h2 class="text-3xl md:text-4xl font-light italic leading-relaxed">
+        "Transformar espacios en experiencias que eleven la vida cotidiana."
+      </h2>
+      <div class="w-12 h-px bg-[#bda589] mx-auto mt-10"></div>
+    </div>
+  </section>
+
+  <!-- Imagen + Logo -->
+  <section class="py-24 px-6 bg-[#fdfaf7]">
+    <div class="max-w-4xl mx-auto text-center">
+      <img src="/images/Circulo.webp" alt="MHK Studio" class="h-32 w-32 mx-auto mb-8 rounded-full object-cover" loading="lazy" />
+      <img src="/images/MHK.webp" alt="MHK Studio logo" class="h-10 mx-auto mb-6" loading="lazy" />
+      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-8">designing for living</p>
+      <a
+        href="/contacto"
+        class="inline-block border border-[#bda589] text-[#bda589] text-xs tracking-[0.3em] uppercase px-10 py-4 hover:bg-[#bda589] hover:text-white transition-all duration-300"
+      >
+        Contactar con el estudio
+      </a>
+    </div>
+  </section>
+</Layout>
