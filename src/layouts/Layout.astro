@@ -11,6 +11,7 @@ interface Props {
   ogImage?: string;
   schema?: object;
   noindex?: boolean;
+  noHeaderOffset?: boolean;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   ogImage = `${siteConfig.url}/images/destacada.png`,
   schema,
   noindex = false,
+  noHeaderOffset = false,
 } = Astro.props;
 
 const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
@@ -92,9 +94,17 @@ const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
   </head>
   <body>
     <Header />
-    <main class="pt-[73px]">
+    <main class={noHeaderOffset ? '' : 'pt-[92px]'}>
       <slot />
     </main>
     <Footer />
+    <script
+      is:inline
+      type="text/javascript"
+      id="hs-script-loader"
+      async
+      defer
+      src="https://js.hs-scripts.com/49385837.js"
+    ></script>
   </body>
 </html>

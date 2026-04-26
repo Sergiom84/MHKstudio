@@ -1,75 +1,545 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { services, siteConfig } from '../data/locations';
+import { siteConfig } from '../data/locations';
+
+const serviceDetails = [
+  {
+    title: 'Decoración de interiores personalizada',
+    navTitle: 'Decoración de interiores',
+    eyebrow: 'Renovar sin obra',
+    image: '/images/Decoracion-1.webp',
+    alt: 'Dormitorio cálido con cabecero de fibras naturales y aplique decorativo',
+    paragraphs: [
+      [
+        {
+          text:
+            'Transformamos espacios cotidianos en ambientes únicos, acogedores y llenos de estilo. Nuestro servicio de decoración de interiores en Almería está pensado para quienes desean renovar su hogar sin necesidad de hacer grandes obras.',
+        },
+      ],
+      [
+        {
+          text:
+            'Analizamos tus gustos, necesidades y estilo de vida para seleccionar cuidadosamente ',
+        },
+        {
+          text:
+            'la paleta de colores, los muebles, textiles, iluminación y elementos decorativos.',
+          highlight: true,
+        },
+        {
+          text:
+            ' Cada elección busca crear una atmósfera armoniosa, con una distribución inteligente que aporte comodidad, funcionalidad y carácter.',
+        },
+      ],
+    ],
+    bullets: [],
+    note: 'Ideal para quienes desean renovar su hogar sin hacer reformas.',
+  },
+  {
+    title: 'Proyectos de interiorismo en Almería',
+    navTitle: 'Proyectos de interiorismo',
+    eyebrow: 'Proyecto integral',
+    image: '/images/Interiorismo.webp',
+    alt: 'Interior sereno con mobiliario curvo y luz cálida',
+    paragraphs: [
+      [
+        {
+          text:
+            'Ofrecemos un servicio completo de interiorismo personalizado, pensado para reformas integrales o viviendas nuevas. Desde la primera visita técnica hasta la entrega del proyecto final, ',
+        },
+        {
+          text:
+            'te acompañamos en cada etapa del proceso para dar vida a un espacio coherente, funcional y lleno de identidad.',
+          highlight: true,
+        },
+      ],
+      [
+        {
+          text:
+            'Nuestro enfoque combina creatividad y planificación profesional. Incluye:',
+        },
+      ],
+    ],
+    bullets: [
+      'Estudio del espacio y briefing personalizado',
+      'Propuesta de distribución y zonificación a medida',
+      'Visualizaciones 3D',
+      'Selección de materiales, acabados y mobiliario',
+      'Soluciones sostenibles y adaptadas al presupuesto',
+    ],
+    note: 'Perfecto para quienes desean transformar por completo su vivienda o iniciar un proyecto desde cero.',
+  },
+  {
+    title: 'Diseño de cocinas & baños a medida en Almería',
+    navTitle: 'Cocinas & baños',
+    eyebrow: 'Estética y ergonomía',
+    image: '/images/Cocina.webp',
+    alt: 'Cocina luminosa a medida en tonos neutros',
+    paragraphs: [
+      [
+        {
+          text:
+            'Diseñamos cocinas y baños que combinan estilo, funcionalidad y confort. ',
+        },
+        {
+          text:
+            'Cada proyecto parte de un análisis detallado de tus hábitos y necesidades para lograr espacios eficientes, bien aprovechados y visualmente atractivos.',
+          highlight: true,
+        },
+      ],
+      [
+        {
+          text: 'Nuestro servicio incluye:',
+        },
+      ],
+    ],
+    bullets: [
+      'Diseño ergonómico y optimización del espacio',
+      'Selección de materiales resistentes y estéticos',
+      'Distribución inteligente de zonas de trabajo y almacenaje',
+      'Iluminación funcional y ambiental',
+      'Soluciones técnicas y decorativas integradas',
+    ],
+    note: 'Ideal para reformas parciales o proyectos nuevos que buscan calidad, durabilidad y un toque personalizado.',
+  },
+  {
+    title: 'Home Staging profesional',
+    navTitle: 'Home Staging',
+    eyebrow: 'Venta y alquiler',
+    image: '/images/Home-staging.webp',
+    alt: 'Salón preparado para home staging con decoración neutra',
+    paragraphs: [
+      [
+        {
+          text:
+            'Preparamos tu propiedad para destacar en el mercado inmobiliario. Con nuestro servicio de Home Staging en Almería, ',
+        },
+        {
+          text:
+            'mejoramos la apariencia de la vivienda para captar más visitas, acortar los tiempos de venta o alquiler y aumentar su valor percibido.',
+          highlight: true,
+        },
+      ],
+      [
+        {
+          text:
+            'Nos enfocamos en mostrar el máximo potencial del espacio mediante:',
+        },
+      ],
+    ],
+    bullets: [
+      'Organización y estilismo estratégico',
+      'Decoración neutra y atractiva para todos los públicos',
+      'Soluciones económicas de gran impacto visual',
+      'Producción y dirección de fotografía profesional',
+    ],
+    note:
+      'Especialmente recomendado para propietarios particulares, agencias inmobiliarias y promotoras que desean acelerar la comercialización de sus inmuebles.',
+  },
+  {
+    title: 'Asesoría online de decoración e interiorismo',
+    navTitle: 'Asesoría online',
+    eyebrow: 'Sesión personalizada',
+    image: '/images/Asesoramiento.webp',
+    alt: 'Sesión online de decoración con portátil y materiales de trabajo',
+    paragraphs: [
+      [
+        {
+          text:
+            'Accede a nuestro conocimiento y estilo desde cualquier lugar. Te ofrecemos una sesión personalizada por videollamada en la que ',
+        },
+        {
+          text:
+            'analizamos tus espacios, resolvemos dudas y te damos recomendaciones claras para transformar tu hogar.',
+          highlight: true,
+        },
+      ],
+    ],
+    bullets: [
+      'Análisis de tus espacios con base en fotos y planos',
+      'Sugerencias sobre distribución, colores, mobiliario y estilo',
+      'Entrega de guía con ideas clave tras la sesión',
+    ],
+    note: 'Ideal si buscas orientación profesional.',
+  },
+];
+
+const reviews = [
+  {
+    name: 'Rafael A.',
+    time: '5 months ago',
+    avatar:
+      'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_46c7ce7891060670cac5aa35a95ce15f.jpg',
+    text:
+      'MHK Studio Design ha sido una ayuda incalculable en la renovación de nuestro apartamento de Vera Playa. Desde el diseño y la elección de materiales hasta los más mínimos detalles, Marta ha transformado un apartamento anticuado en un nuevo y elegante hogar.',
+  },
+  {
+    name: 'Clinton L.',
+    time: '8 months ago',
+    avatar:
+      'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_cedcd2103dd0d399a43619f9f4e4f577.jpg',
+    text:
+      'Marta (MHK Studio.Design) es una diseñadora profesional excelente y confiable que nos ayudó con la abrumadora tarea de rediseñar el espacio de nuestro apartamento y elegir materiales y colores para que un lugar antiguo luzca como nuevo.',
+  },
+  {
+    name: 'Frédéric J.',
+    time: '8 months ago',
+    avatar:
+      'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_9293f569f19c8f8148d24445acc60d60.jpg',
+    text:
+      'Una persona amable que comprende las necesidades de la gente. Marta me ayudó a crear una primera cocina y luego una segunda. Sus ideas y consejos fueron invaluables.',
+  },
+  {
+    name: 'Christine Le M.',
+    time: '9 months ago',
+    avatar:
+      'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_08b443c0153ea3fe7ffb684fa1d042c9.jpg',
+    text:
+      'Marta es la mejor diseñadora de interiores que he conocido. Trabajó en varios proyectos para mi casa en La Parata, Mojácar Playa. Tiene muchas ideas, es proactiva, precisa, puntual y muy confiable.',
+  },
+  {
+    name: 'Alvaro R.',
+    time: '9 months ago',
+    avatar:
+      'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_e9b4e0b14c78175760c3c99ebecf0318.jpg',
+    text:
+      'Marta me asesoró en la reforma y amueblamiento y el resultado fue brutal. Convirtió la casa de la abuela en un pisazo moderno, súper bien de precio.',
+  },
+  {
+    name: 'claudio P.',
+    time: '4 months ago',
+    avatar:
+      'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_6dac4e0a4d638c21f9a126850cc50dcd.jpg',
+    text:
+      'Excelente profesional. Nos ayudó a pensar y resolver dudas, aportando soluciones creativas. Muy recomendable.',
+  },
+];
 ---
 
 <Layout
   title="Servicios de interiorismo y decoración"
-  description="Descubre todos los servicios de MHK Studio: decoración de interiores, proyectos de interiorismo, diseño de cocinas y baños, home staging y asesoría online."
+  description="Servicios de MHK Studio: decoración de interiores, proyectos de interiorismo, diseño de cocinas y baños, home staging y asesoría online."
   canonical={`${siteConfig.url}/servicios`}
 >
-  <!-- Hero -->
-  <section class="relative h-[60vh] min-h-[400px] flex items-end pb-16 overflow-hidden">
-    <div class="absolute inset-0">
-      <img src="/images/PortadaServicios.webp" alt="Servicios de interiorismo MHK Studio" class="w-full h-full object-cover" loading="eager" />
-      <div class="absolute inset-0 bg-[#201400]/50"></div>
-    </div>
-    <div class="relative z-10 max-w-6xl mx-auto px-6 w-full">
-      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-3">MHK Studio</p>
-      <h1 class="text-4xl md:text-5xl font-light text-white leading-tight">
-        Servicios de interiorismo<br />y decoración
+  <section class="relative flex min-h-[58vh] items-center justify-center overflow-hidden bg-[#d4c0ab] px-6 py-20 text-center md:min-h-[66vh]">
+    <img
+      src="/images/servicios-hero.webp"
+      alt="Composición de jarrones y ramas sobre pared neutra"
+      class="absolute inset-0 h-full w-full scale-[1.04] object-cover blur-[5px]"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-[#fdfaf7]/30"></div>
+    <div class="relative z-10 mx-auto max-w-4xl">
+      <h1 class="text-[clamp(2rem,10vw,3.75rem)] font-light leading-tight text-[#201400]">
+        Servicios de interiorismo y decoración
       </h1>
     </div>
   </section>
 
-  <!-- Intro -->
-  <section class="py-20 px-6 bg-[#fdfaf7]">
-    <div class="max-w-3xl mx-auto text-center">
-      <p class="text-base text-[#201400]/70 leading-relaxed">
-        En MHK Studio transformamos espacios cotidianos en ambientes únicos, acogedores y llenos de estilo. Cada proyecto es un proceso de escucha, diseño y ejecución personalizado para cada cliente.
+  <section class="border-b border-[#bda589]/35 bg-white px-6 py-16">
+    <div class="mx-auto max-w-5xl text-center">
+      <p class="text-lg leading-relaxed text-[#201400]">
+        En <span class="text-[#9a7d62]">MHK Studio</span> transformamos espacios cotidianos en ambientes únicos,
+        acogedores y llenos de estilo. Cada proyecto parte de una escucha real para encontrar el servicio que mejor
+        encaja con tu vivienda, tu forma de vivir y tus objetivos.
       </p>
     </div>
   </section>
 
-  <!-- Services detail -->
-  {services.map((service, i) => (
-    <section class={`py-20 px-6 ${i % 2 === 0 ? 'bg-white' : 'bg-[#fdfaf7]'}`}>
-      <div class="max-w-6xl mx-auto">
-        <div class={`grid grid-cols-1 md:grid-cols-2 gap-12 items-center ${i % 2 !== 0 ? 'md:[&>*:first-child]:order-2' : ''}`}>
-          <div class="overflow-hidden">
-            <img src={service.image} alt={service.alt} class="w-full aspect-[4/3] object-cover" loading="lazy" />
+  <section class="bg-[#fdfaf7] px-6 py-8">
+    <nav class="mx-auto flex max-w-6xl flex-wrap justify-center gap-3" aria-label="Servicios disponibles">
+      {serviceDetails.map((service, index) => (
+        <a
+          href={`#servicio-${index + 1}`}
+          class="rounded-full border border-[#bda589]/45 px-5 py-3 text-center text-xs uppercase tracking-[0.18em] text-[#201400] transition-colors hover:bg-[#bda589] hover:text-white"
+        >
+          {service.navTitle}
+        </a>
+      ))}
+    </nav>
+  </section>
+
+  {serviceDetails.map((service, index) => (
+    <section
+      id={`servicio-${index + 1}`}
+      class={`relative overflow-hidden px-6 py-16 md:py-20 ${index % 2 === 0 ? 'bg-[#fdfaf7]' : 'bg-white'}`}
+    >
+      <div class={`mx-auto grid max-w-6xl grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-16 ${index % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}>
+        <figure class="relative">
+          <img
+            src="/images/Circulo.webp"
+            alt=""
+            class={`absolute ${index % 2 === 0 ? '-left-8 -top-8' : '-right-8 -top-8 rotate-45'} h-24 w-24 opacity-80`}
+            aria-hidden="true"
+          />
+          <div class="relative overflow-hidden rounded-[28px] border border-[#bda589]/35 bg-[#d4c0ab] shadow-[0_24px_60px_rgba(32,20,0,0.10)]">
+            <img src={service.image} alt={service.alt} class="aspect-[4/3] w-full object-cover" loading="lazy" />
           </div>
-          <div>
-            <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-4">Servicio {String(i + 1).padStart(2, '0')}</p>
-            <h2 class="text-2xl md:text-3xl font-light text-[#201400] mb-6 leading-snug">{service.title}</h2>
-            <p class="text-base text-[#201400]/65 leading-relaxed mb-8">{service.description}</p>
-            <a
-              href="/contacto"
-              class="inline-block border border-[#bda589] text-[#bda589] text-xs tracking-[0.3em] uppercase px-8 py-3 hover:bg-[#bda589] hover:text-white transition-all duration-300"
-            >
-              Solicitar información
-            </a>
-          </div>
+        </figure>
+
+        <div>
+          <h2 class="mb-6 text-3xl font-light leading-tight text-[#201400] md:text-5xl">
+            {service.title}
+          </h2>
+          {service.paragraphs.map((paragraph, paragraphIndex) => (
+            <p class={`${paragraphIndex > 0 ? 'mt-5' : ''} text-lg leading-relaxed text-[#201400]/80`}>
+              {paragraph.map((part) => (
+                <span class={part.highlight ? 'text-[#b58f73]' : ''}>{part.text}</span>
+              ))}
+            </p>
+          ))}
+
+          {service.bullets.length > 0 && (
+            <ul class="mt-7 grid gap-3 text-base leading-relaxed text-[#201400]/75">
+              {service.bullets.map((item) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-[0.58em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <p class="mt-8 border-l-2 border-[#bda589] pl-5 text-lg italic leading-relaxed text-[#9a7d62]">
+            {service.note}
+          </p>
         </div>
       </div>
     </section>
   ))}
 
-  <!-- CTA -->
-  <section class="py-24 px-6 bg-[#bda589]">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl font-light text-white mb-6">¿Hablamos de tu proyecto?</h2>
-      <p class="text-white/85 mb-10 font-light leading-relaxed">
-        Cuéntanos qué tienes en mente y encontraremos el servicio ideal para ti.
-      </p>
-      <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a href="/contacto" class="inline-block w-full bg-white text-center text-[#201400] text-xs uppercase px-10 py-4 hover:bg-[#201400] hover:text-white transition-all duration-300 sm:w-auto">
-          Contactar
-        </a>
-        <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="inline-block w-full border border-white/70 text-center text-white text-xs uppercase px-10 py-4 hover:bg-white hover:text-[#201400] transition-all duration-300 sm:w-auto">
-          WhatsApp
-        </a>
+  <section id="solicitar-asesoria" class="bg-[#fdfaf7] px-6 pb-14 pt-4 text-center">
+    <button
+      type="button"
+      data-open-asesoria-modal
+      class="inline-flex min-w-[230px] items-center justify-center rounded-[8px] bg-[#bda589] px-10 py-4 text-center text-sm uppercase tracking-[0.14em] text-[#201400] transition-colors hover:bg-[#201400] hover:text-white"
+    >
+      Solicitar Asesoría
+    </button>
+  </section>
+
+  <section class="bg-white px-6 py-16">
+    <div class="mx-auto max-w-7xl">
+      <div class="relative" data-reviews-carousel>
+        <div class="overflow-hidden px-1 py-2">
+          <div class="flex gap-6 transition-transform duration-500 ease-out" data-reviews-track>
+            {reviews.map((review) => (
+              <article class="min-h-[230px] w-full shrink-0 basis-full rounded-[8px] bg-[#bda589] p-5 text-[#201400] shadow-[0_2px_8px_rgba(32,20,0,0.24)] sm:basis-[calc((100%_-_24px)/2)] lg:basis-[calc((100%_-_48px)/3)]">
+                <div class="mb-4 flex items-start justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src={review.avatar}
+                      alt={`Foto de perfil de ${review.name}`}
+                      class="h-12 w-12 shrink-0 rounded-full border border-[#201400]/20 object-cover"
+                      loading="lazy"
+                    />
+                    <div>
+                      <p class="font-semibold leading-tight text-[#0057d8]">{review.name}</p>
+                      <p class="mt-1 text-sm text-[#201400]/75">{review.time}</p>
+                    </div>
+                  </div>
+                  <div class="font-semibold text-[#4285f4]" aria-label="Google">G</div>
+                </div>
+                <div class="mb-4 text-xl tracking-[0.05em] text-[#201400]" aria-label="5 estrellas">★★★★★</div>
+                <p class="line-clamp-5 text-base leading-relaxed text-[#201400]">{review.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          data-reviews-prev
+          class="absolute left-0 top-1/2 grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#bda589]/45 bg-white text-xl text-[#201400] shadow-[0_4px_14px_rgba(32,20,0,0.18)] transition-colors hover:bg-[#bda589]"
+          aria-label="Reseña anterior"
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          data-reviews-next
+          class="absolute right-0 top-1/2 grid h-10 w-10 translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#bda589]/45 bg-white text-xl text-[#201400] shadow-[0_4px_14px_rgba(32,20,0,0.18)] transition-colors hover:bg-[#bda589]"
+          aria-label="Reseña siguiente"
+        >
+          ›
+        </button>
+
+        <div class="mt-5 flex justify-center gap-2" data-reviews-dots aria-label="Indicadores de reseñas"></div>
       </div>
     </div>
   </section>
+
+  <section class="relative h-20 overflow-hidden bg-[#201400]">
+    <div class="absolute -right-16 top-12 opacity-20">
+      <img src="/images/Circulo.webp" alt="" class="h-48 w-48 rotate-45" aria-hidden="true" />
+    </div>
+  </section>
+
+  <dialog
+    id="asesoria-modal"
+    class="w-[min(92vw,760px)] rounded-[18px] border border-[#bda589]/30 bg-[#fdfaf7] p-0 text-left text-[#201400] shadow-[0_28px_80px_rgba(0,0,0,0.28)] backdrop:bg-[#201400]/70"
+    aria-labelledby="asesoria-modal-title"
+  >
+    <div class="flex items-start justify-between gap-5 border-b border-[#bda589]/25 px-5 py-5 md:px-8">
+      <div>
+        <p class="mb-2 text-xs uppercase tracking-[0.32em] text-[#bda589]">Asesoría personalizada</p>
+        <h3 id="asesoria-modal-title" class="text-2xl font-light leading-tight md:text-3xl">
+          Solicitar Asesoría
+        </h3>
+      </div>
+      <button
+        type="button"
+        data-close-asesoria-modal
+        class="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#bda589]/45 text-2xl leading-none text-[#201400] transition-colors hover:bg-[#bda589] hover:text-white"
+        aria-label="Cerrar formulario"
+      >
+        ×
+      </button>
+    </div>
+    <div class="max-h-[72vh] overflow-y-auto px-5 py-6 md:px-8">
+      <p data-hubspot-loading class="text-sm leading-relaxed text-[#201400]/65">Cargando formulario...</p>
+      <div id="mhk-hubspot-asesoria-form" class="hbspt-form"></div>
+    </div>
+  </dialog>
+
+  <script is:inline src="https://js.hsforms.net/forms/embed/v2.js"></script>
+  <script is:inline>
+    (() => {
+      const modal = document.getElementById('asesoria-modal');
+      const openButton = document.querySelector('[data-open-asesoria-modal]');
+      const closeButton = document.querySelector('[data-close-asesoria-modal]');
+      const formTarget = document.getElementById('mhk-hubspot-asesoria-form');
+      const loadingMessage = document.querySelector('[data-hubspot-loading]');
+      const reviewsCarousel = document.querySelector('[data-reviews-carousel]');
+      let formLoaded = false;
+
+      const loadHubSpotForm = (attempt = 0) => {
+        if (formLoaded || !formTarget) return;
+
+        if (!window.hbspt?.forms) {
+          if (attempt < 20) window.setTimeout(() => loadHubSpotForm(attempt + 1), 150);
+          return;
+        }
+
+        formLoaded = true;
+        loadingMessage?.remove();
+        window.hbspt.forms.create({
+          portalId: '49385837',
+          formId: 'f07fd6a8-686f-4879-9230-7ba46a86744c',
+          region: 'na1',
+          target: '#mhk-hubspot-asesoria-form',
+        });
+      };
+
+      const openModal = () => {
+        loadHubSpotForm();
+        if (modal instanceof HTMLDialogElement) {
+          if (modal.open) return;
+          modal.showModal();
+          return;
+        }
+        modal?.setAttribute('open', '');
+      };
+
+      const closeModal = () => {
+        if (modal instanceof HTMLDialogElement) {
+          modal.close();
+          return;
+        }
+        modal?.removeAttribute('open');
+      };
+
+      openButton?.addEventListener('click', openModal);
+      closeButton?.addEventListener('click', closeModal);
+      modal?.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+      });
+      window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#solicitar-asesoria') openModal();
+      });
+
+      if (window.location.hash === '#solicitar-asesoria') {
+        window.setTimeout(openModal, 250);
+      }
+
+      if (reviewsCarousel) {
+        const track = reviewsCarousel.querySelector('[data-reviews-track]');
+        const cards = Array.from(track?.children ?? []);
+        const prevButton = reviewsCarousel.querySelector('[data-reviews-prev]');
+        const nextButton = reviewsCarousel.querySelector('[data-reviews-next]');
+        const dotsWrap = reviewsCarousel.querySelector('[data-reviews-dots]');
+        let currentIndex = 0;
+        let intervalId;
+
+        const getPerView = () => {
+          if (window.matchMedia('(min-width: 1024px)').matches) return 3;
+          if (window.matchMedia('(min-width: 640px)').matches) return 2;
+          return 1;
+        };
+
+        const getMaxIndex = () => Math.max(cards.length - getPerView(), 0);
+
+        const renderDots = () => {
+          if (!dotsWrap) return;
+          dotsWrap.innerHTML = '';
+          for (let index = 0; index <= getMaxIndex(); index += 1) {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'h-2 w-2 rounded-full bg-[#bda589]/45 transition-all data-[active=true]:w-6 data-[active=true]:bg-[#bda589]';
+            dot.setAttribute('aria-label', `Ver grupo de reseñas ${index + 1}`);
+            dot.addEventListener('click', () => {
+              currentIndex = index;
+              updateCarousel();
+              restartAutoplay();
+            });
+            dotsWrap.append(dot);
+          }
+        };
+
+        const updateCarousel = () => {
+          if (!track || cards.length === 0) return;
+          currentIndex = Math.min(currentIndex, getMaxIndex());
+          const card = cards[0];
+          const cardWidth = card.getBoundingClientRect().width;
+          const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
+          track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+          dotsWrap?.querySelectorAll('button').forEach((dot, index) => {
+            dot.dataset.active = String(index === currentIndex);
+          });
+        };
+
+        const goToNext = () => {
+          currentIndex = currentIndex >= getMaxIndex() ? 0 : currentIndex + 1;
+          updateCarousel();
+        };
+
+        const goToPrev = () => {
+          currentIndex = currentIndex <= 0 ? getMaxIndex() : currentIndex - 1;
+          updateCarousel();
+        };
+
+        const restartAutoplay = () => {
+          window.clearInterval(intervalId);
+          intervalId = window.setInterval(goToNext, 5000);
+        };
+
+        prevButton?.addEventListener('click', () => {
+          goToPrev();
+          restartAutoplay();
+        });
+        nextButton?.addEventListener('click', () => {
+          goToNext();
+          restartAutoplay();
+        });
+        window.addEventListener('resize', () => {
+          renderDots();
+          updateCarousel();
+        });
+
+        renderDots();
+        updateCarousel();
+        restartAutoplay();
+      }
+    })();
+  </script>
 </Layout>

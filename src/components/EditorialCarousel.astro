@@ -8,15 +8,14 @@ interface Props {
 const { slides } = Astro.props;
 ---
 
-<div class="relative" data-editorial-carousel>
+<div class="relative">
   <div
-    class="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-8 md:gap-6"
-    data-carousel-track
+    class="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3"
     aria-label="Inspiración visual de MHK Studio"
   >
     {slides.map((slide) => (
       <article
-        class="group relative min-w-[82%] snap-start overflow-hidden bg-[#fdfaf7] sm:min-w-[46%] lg:min-w-[31%]"
+        class="group relative overflow-hidden bg-[#fdfaf7]"
       >
         <div class="aspect-[3/4] overflow-hidden">
           <picture>
@@ -36,92 +35,4 @@ const { slides } = Astro.props;
       </article>
     ))}
   </div>
-
-  <div class="flex items-center justify-between gap-6">
-    <div class="flex items-center gap-2" aria-label="Diapositivas del carrusel">
-      {slides.map((slide, index) => (
-        <button
-          type="button"
-          class={`h-2.5 w-2.5 border border-[#bda589] transition-colors ${index === 0 ? 'bg-[#bda589]' : 'bg-transparent'}`}
-          aria-label={`Ver imagen: ${slide.category}`}
-          data-carousel-dot={index}
-        />
-      ))}
-    </div>
-
-    <div class="flex items-center gap-2">
-      <button
-        type="button"
-        class="grid h-11 w-11 place-items-center border border-[#bda589]/60 text-2xl leading-none text-[#201400] transition-colors hover:bg-[#bda589] hover:text-white focus-visible:bg-[#bda589] focus-visible:text-white"
-        aria-label="Imagen anterior"
-        title="Imagen anterior"
-        data-carousel-prev
-      >
-        <span aria-hidden="true">‹</span>
-      </button>
-      <button
-        type="button"
-        class="grid h-11 w-11 place-items-center border border-[#bda589]/60 text-2xl leading-none text-[#201400] transition-colors hover:bg-[#bda589] hover:text-white focus-visible:bg-[#bda589] focus-visible:text-white"
-        aria-label="Imagen siguiente"
-        title="Imagen siguiente"
-        data-carousel-next
-      >
-        <span aria-hidden="true">›</span>
-      </button>
-    </div>
-  </div>
 </div>
-
-<script>
-  document.querySelectorAll('[data-editorial-carousel]').forEach((carousel) => {
-    const track = carousel.querySelector('[data-carousel-track]');
-    const prev = carousel.querySelector('[data-carousel-prev]');
-    const next = carousel.querySelector('[data-carousel-next]');
-    const slides = Array.from(track?.children ?? []);
-    const dots = Array.from(carousel.querySelectorAll('[data-carousel-dot]'));
-    let activeIndex = 0;
-    let ticking = false;
-
-    const setActive = (index) => {
-      activeIndex = Math.max(0, Math.min(index, slides.length - 1));
-      dots.forEach((dot, dotIndex) => {
-        dot.classList.toggle('bg-[#bda589]', dotIndex === activeIndex);
-        dot.classList.toggle('bg-transparent', dotIndex !== activeIndex);
-      });
-    };
-
-    const updateActiveFromScroll = () => {
-      if (!track) return;
-      const trackLeft = track.getBoundingClientRect().left;
-      const closest = slides.reduce(
-        (best, slide, index) => {
-          const distance = Math.abs(slide.getBoundingClientRect().left - trackLeft);
-          return distance < best.distance ? { distance, index } : best;
-        },
-        { distance: Number.POSITIVE_INFINITY, index: 0 }
-      );
-      setActive(closest.index);
-      ticking = false;
-    };
-
-    const scrollToSlide = (index) => {
-      slides[index]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-      setActive(index);
-    };
-
-    prev?.addEventListener('click', () => scrollToSlide(activeIndex - 1));
-    next?.addEventListener('click', () => scrollToSlide(activeIndex + 1));
-    dots.forEach((dot, index) => dot.addEventListener('click', () => scrollToSlide(index)));
-
-    track?.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          window.requestAnimationFrame(updateActiveFromScroll);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-  });
-</script>
