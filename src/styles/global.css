@@ -20,14 +20,22 @@
 
 html {
   font-family: 'Albert Sans', sans-serif;
-  background-color: var(--color-bg);
+  background-color: var(--color-dark);
   color: var(--color-dark);
+  overscroll-behavior-y: none;
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  background-color: var(--color-dark);
+  overscroll-behavior-y: none;
+}
+
+main {
+  background-color: var(--color-bg);
 }
 
 ::selection {
