@@ -5,7 +5,7 @@ import { siteConfig, locations } from '../data/locations';
 <footer class="bg-[#201400] text-[#fdfaf7] pt-16 pb-8 mt-0">
   <div class="max-w-6xl mx-auto px-6">
     <!-- Top grid -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+    <div class="grid grid-cols-1 gap-10 mb-12 md:grid-cols-5">
 
       <!-- Brand -->
       <div class="md:col-span-1">
@@ -19,6 +19,17 @@ import { siteConfig, locations } from '../data/locations';
           <a href={siteConfig.facebook} target="_blank" rel="noopener" class="text-xs text-[#bda589]/70 hover:text-[#bda589] transition-colors uppercase tracking-widest">Facebook</a>
           <a href={siteConfig.pinterest} target="_blank" rel="noopener" class="text-xs text-[#bda589]/70 hover:text-[#bda589] transition-colors uppercase tracking-widest">Pinterest</a>
         </div>
+      </div>
+
+      <!-- Recursos -->
+      <div>
+        <h3 class="text-xs font-medium tracking-[0.3em] uppercase text-[#bda589] mb-4">Recursos</h3>
+        <ul class="space-y-2">
+          <li><a href="/aviso-legal" class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">Aviso legal</a></li>
+          <li><a href="/politica-de-privacidad" class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">Política de privacidad</a></li>
+          <li><a href="/politica-de-cookies" class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">Política de cookies</a></li>
+          <li><a href="/condiciones-generales" class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">Condiciones generales</a></li>
+        </ul>
       </div>
 
       <!-- MHK Studio links -->
@@ -68,12 +79,6 @@ import { siteConfig, locations } from '../data/locations';
     <!-- Bottom bar -->
     <div class="border-t border-[#bda589]/20 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
       <p class="text-xs text-[#fdfaf7]/40">© {new Date().getFullYear()} MHK Studio · Todos los derechos reservados</p>
-      <div class="flex gap-6">
-        <a href="/aviso-legal" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Aviso legal</a>
-        <a href="/politica-de-privacidad" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Privacidad</a>
-        <a href="/politica-de-cookies" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Cookies</a>
-        <a href="/condiciones-generales" class="text-xs text-[#fdfaf7]/40 hover:text-[#fdfaf7]/70 transition-colors">Condiciones</a>
-      </div>
     </div>
   </div>
 </footer>

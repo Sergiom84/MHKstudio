@@ -4,21 +4,89 @@ import { siteConfig } from '../data/locations';
 ---
 
 <Layout title="Condiciones Generales | MHK Studio" description="Condiciones generales de MHK Studio." canonical={`${siteConfig.url}/condiciones-generales`} noindex={true}>
-  <section class="py-32 px-6 bg-[#fdfaf7] min-h-screen">
-    <div class="max-w-3xl mx-auto">
-      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-6">Legal</p>
-      <h1 class="text-3xl font-light text-[#201400] mb-12">Condiciones Generales</h1>
-      <div class="text-[#201400]/70 space-y-6 leading-relaxed text-sm">
-        <h2 class="text-lg font-medium text-[#201400]">Servicios contratados</h2>
-        <p>Las condiciones específicas de cada servicio se detallarán en el presupuesto o contrato que se firme entre MHK Studio y el cliente.</p>
-        <h2 class="text-lg font-medium text-[#201400]">Presupuestos</h2>
-        <p>Los presupuestos tienen una validez de 30 días desde su emisión. Cualquier modificación en el alcance del proyecto puede suponer una revisión del presupuesto.</p>
-        <h2 class="text-lg font-medium text-[#201400]">Propiedad intelectual</h2>
-        <p>Los diseños y proyectos elaborados por MHK Studio son propiedad intelectual del estudio hasta la liquidación total del proyecto.</p>
-        <h2 class="text-lg font-medium text-[#201400]">Legislación aplicable</h2>
-        <p>Las presentes condiciones se rigen por la legislación española. Para cualquier controversia, las partes se someten a los juzgados de Almería.</p>
-        <p>Contacto: <a href={`mailto:${siteConfig.email}`} class="text-[#bda589] underline">{siteConfig.email}</a></p>
+  <section class="min-h-screen bg-[#fdfaf7] px-6 py-32 md:px-9">
+    <div class="mx-auto max-w-[1680px]">
+      <h1 class="mb-9 text-5xl font-semibold uppercase leading-none text-[#bda589] md:text-6xl lg:text-7xl">
+        Condiciones Generales
+      </h1>
+
+      <div class="legal-content border-t border-[#bda589]/55 pt-8 text-[#201400]">
+        <p>Bienvenido/a a <span class="text-[#9a7d62]">MHKstudio.design</span>. Estas Condiciones Generales de Uso regulan el acceso y uso de nuestro sitio web, aplicaciones móviles y servicios relacionados. Al acceder o utilizar nuestros servicios, aceptas estar legalmente vinculado/a por estas condiciones. Si no estás de acuerdo con alguna parte de estas condiciones, por favor no utilices nuestros servicios.</p>
+
+        <section>
+          <h2>1. Uso del Sitio Web</h2>
+          <p><strong>1.1.</strong> El acceso y uso de nuestro sitio web están sujetos a estas condiciones y a todas las leyes y regulaciones aplicables.</p>
+          <p><strong>1.2.</strong> Te comprometes a utilizar nuestro sitio web de manera responsable y de acuerdo con estos términos y condiciones.</p>
+          <p><strong>1.3.</strong> Nos reservamos el derecho de modificar, suspender o descontinuar cualquier aspecto de nuestro sitio web en cualquier momento y sin previo aviso.</p>
+        </section>
+
+        <section>
+          <h2>2. Propiedad Intelectual</h2>
+          <p><strong>2.1.</strong> Todo el contenido de nuestro sitio web, incluyendo pero no limitado a textos, gráficos, logotipos, imágenes y software, está protegido por derechos de autor y otras leyes de propiedad intelectual.</p>
+          <p><strong>2.2.</strong> No puedes reproducir, distribuir, modificar o utilizar nuestro contenido de ninguna manera sin nuestro consentimiento previo por escrito.</p>
+        </section>
+
+        <section>
+          <h2>3. Privacidad y Protección de Datos</h2>
+          <p><strong>3.1.</strong> Respetamos tu privacidad y nos comprometemos a proteger tus datos personales de acuerdo con nuestra <a href="/politica-de-privacidad">Política de Privacidad</a>.</p>
+          <p><strong>3.2.</strong> Al utilizar nuestros servicios, aceptas el procesamiento de tus datos personales de acuerdo con nuestra <a href="/politica-de-privacidad">Política de Privacidad</a>.</p>
+        </section>
+
+        <section>
+          <h2>4. Limitación de Responsabilidad</h2>
+          <p><strong>4.1.</strong> En la medida máxima permitida por la ley, no seremos responsables por ningún daño directo, indirecto, incidental, especial, consecuencial o punitivo que surja del uso o la imposibilidad de usar nuestros servicios.</p>
+        </section>
+
+        <section>
+          <h2>5. Limitación de Responsabilidad</h2>
+          <p><strong>5.1.</strong> Estas condiciones se rigen por las leyes del estado de España.</p>
+          <p><strong>5.2.</strong> Cualquier disputa relacionada con estas condiciones se someterá a la jurisdicción exclusiva de los tribunales ubicados en España.</p>
+        </section>
+
+        <section>
+          <p>Gracias por utilizar <span class="text-[#9a7d62]">MHK studio.design</span>. Si tienes alguna pregunta o comentario sobre estas condiciones, no dudes en contactarnos.</p>
+          <p><strong>Fecha de entrada en vigor:</strong> 2 de junio de 2025.</p>
+        </section>
       </div>
     </div>
   </section>
+
+  <style>
+    .legal-content {
+      font-size: clamp(1.35rem, 1.45vw, 1.72rem);
+      font-weight: 300;
+      line-height: 1.45;
+    }
+
+    .legal-content section {
+      margin-top: 1.55rem;
+    }
+
+    .legal-content h2 {
+      margin: 0 0 1rem;
+      color: #020202;
+      font-size: clamp(1.7rem, 1.8vw, 2rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .legal-content p {
+      margin: 0 0 1.1rem;
+      max-width: 100%;
+    }
+
+    .legal-content strong {
+      color: #020202;
+      font-weight: 700;
+    }
+
+    .legal-content a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .legal-content a:hover {
+      color: #9a7d62;
+    }
+  </style>
 </Layout>
