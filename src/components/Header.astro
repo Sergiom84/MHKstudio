@@ -1,14 +1,29 @@
 ---
 import { siteConfig } from '../data/locations';
+import { getLocalizedPath, getRoutePath, languages, resolveLocalizedPath, type Lang, type RouteKey } from '../i18n/routes';
+import { ui } from '../i18n/content';
 
-const navLinks = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Servicios', href: '/servicios' },
-  { label: 'Sobre nosotros', href: '/sobre-nosotros' },
-  { label: 'Contáctanos', href: '/contacto' },
-];
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
+const copy = ui[lang];
 const currentPath = Astro.url.pathname;
-const isHome = currentPath === '/';
+const currentRoute = resolveLocalizedPath(currentPath);
+const summaryFlag = lang;
+
+const navLinks: Array<{ label: string; href: string; routeKey: RouteKey }> = [
+  { label: copy.nav.home, href: getRoutePath('home', lang), routeKey: 'home' },
+  { label: copy.nav.services, href: getRoutePath('services', lang), routeKey: 'services' },
+  { label: copy.nav.about, href: getRoutePath('about', lang), routeKey: 'about' },
+  { label: copy.nav.contact, href: getRoutePath('contact', lang), routeKey: 'contact' },
+];
+const hasHeaderHeroOverlay =
+  currentRoute.routeKey === 'home' ||
+  currentRoute.routeKey === 'services' ||
+  currentRoute.routeKey === 'about' ||
+  currentRoute.routeKey === 'contact';
 
 const socialLinks = [
   {
@@ -34,9 +49,9 @@ const socialLinks = [
 ];
 ---
 
-<header class={`fixed left-0 right-0 top-0 z-50 border-b border-[#201400]/15 ${isHome ? 'bg-[#f2eadd]/30 backdrop-blur-md' : 'bg-[#fdfaf7]/95 backdrop-blur-sm'}`}>
+<header class={`fixed left-0 right-0 top-0 z-50 border-b border-[#201400]/15 ${hasHeaderHeroOverlay ? 'bg-[#f2eadd]/30 backdrop-blur-md' : 'bg-[#fdfaf7]/95 backdrop-blur-sm'}`}>
   <div class="flex h-[72px] w-full items-center justify-between px-6 sm:px-8 lg:h-[92px] lg:px-12 xl:px-16">
-    <a href="/" class="flex items-center">
+    <a href={getRoutePath('home', lang)} class="flex items-center">
       <img src="/images/MHK.webp" alt="MHK Studio" class="h-10 w-auto lg:h-11" loading="eager" />
     </a>
 
@@ -45,11 +60,32 @@ const socialLinks = [
       {navLinks.map(link => (
         <a
           href={link.href}
-          class={`text-sm font-normal uppercase tracking-[0.12em] text-[#120c00] transition-colors hover:text-[#9a7d62] ${link.href === '/' ? (isHome ? 'text-[#9a7d62]' : '') : (currentPath.startsWith(link.href) ? 'text-[#9a7d62]' : '')}`}
+          class={`text-sm font-normal uppercase tracking-[0.12em] text-[#120c00] transition-colors hover:text-[#9a7d62] ${currentRoute.routeKey === link.routeKey ? 'text-[#9a7d62]' : ''}`}
         >
           {link.label}
         </a>
       ))}
+      <details class="language-switcher relative">
+        <summary
+          class="grid h-8 w-8 cursor-pointer list-none place-items-center text-base leading-none transition-opacity hover:opacity-75"
+          aria-label={copy.languageAria}
+          title={copy.languages}
+        >
+          <span class={`language-flag language-flag-${summaryFlag}`} aria-hidden="true"></span>
+        </summary>
+        <div class="language-switcher-panel absolute right-0 top-[calc(100%+14px)] min-w-44 border border-[#bda589]/35 bg-[#fdfaf7]/98 p-2 shadow-[0_18px_45px_rgba(32,20,0,0.12)] backdrop-blur-sm">
+          {languages.map((language) => (
+            <a
+              href={getLocalizedPath(currentPath, language.code)}
+              hreflang={language.hreflang}
+              class={`flex w-full items-center gap-3 whitespace-nowrap px-3 py-2 text-left text-xs uppercase tracking-[0.14em] transition-colors hover:bg-[#bda589]/12 hover:text-[#201400] ${language.code === lang ? 'text-[#201400]' : 'text-[#201400]/75'}`}
+            >
+              <span class={`language-flag language-flag-${language.flag}`} aria-hidden="true"></span>
+              <span>{language.label}</span>
+            </a>
+          ))}
+        </div>
+      </details>
       <div class="ml-1 flex items-center gap-6">
         {socialLinks.map((link) => (
           <a
@@ -81,9 +117,11 @@ const socialLinks = [
       id="menu-toggle"
       type="button"
       class="flex flex-col gap-1.5 p-2 transition-colors lg:hidden"
-      aria-label="Abrir menú"
+      aria-label={copy.menuOpen}
       aria-controls="mobile-menu"
       aria-expanded="false"
+      data-menu-open-label={copy.menuOpen}
+      data-menu-close-label={copy.menuClose}
     >
       <span class="block w-6 h-px bg-[#201400] transition-all"></span>
       <span class="block w-6 h-px bg-[#201400] transition-all"></span>
@@ -97,26 +135,34 @@ const socialLinks = [
       {navLinks.map(link => (
         <a
           href={link.href}
-          class={`text-sm tracking-widest uppercase font-light hover:text-[#bda589] transition-colors ${link.href === '/' ? (isHome ? 'text-[#bda589]' : 'text-[#201400]') : (currentPath.startsWith(link.href) ? 'text-[#bda589]' : 'text-[#201400]')}`}
+          class={`text-sm tracking-widest uppercase font-light hover:text-[#bda589] transition-colors ${currentRoute.routeKey === link.routeKey ? 'text-[#bda589]' : 'text-[#201400]'}`}
         >
           {link.label}
         </a>
       ))}
-      <a
-        href={siteConfig.whatsapp}
-        target="_blank"
-        rel="noopener"
-        class="mt-2 inline-block border border-[#bda589]/60 px-4 py-3 text-center text-sm uppercase text-[#201400] transition-all hover:bg-[#bda589] hover:text-white"
-      >
-        WhatsApp
-      </a>
+      <div class="mt-2 border-t border-[#bda589]/30 pt-4">
+        <p class="mb-3 text-xs uppercase tracking-[0.22em] text-[#bda589]">{copy.languages}</p>
+        <div class="flex flex-wrap gap-2">
+          {languages.map((language) => (
+            <a
+              href={getLocalizedPath(currentPath, language.code)}
+              hreflang={language.hreflang}
+              class={`inline-flex items-center gap-2 rounded-full border border-[#bda589]/45 px-3 py-2 text-xs uppercase tracking-[0.12em] ${language.code === lang ? 'text-[#201400]' : 'text-[#201400]/75'}`}
+            >
+              <span class={`language-flag language-flag-${language.flag}`} aria-hidden="true"></span>
+              <span>{language.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
       <div class="flex items-center gap-5 pt-2">
-        {socialLinks.slice(1).map((link) => (
+        {socialLinks.map((link) => (
           <a
             href={link.href}
             target="_blank"
             rel="noopener"
             aria-label={link.label}
+            title={link.label}
             class="grid h-8 w-8 place-items-center text-[#201400]"
           >
             <svg
@@ -140,11 +186,25 @@ const socialLinks = [
 <script>
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
+  const languageSwitchers = document.querySelectorAll('.language-switcher');
+
+  const closeLanguageSwitchers = () => {
+    languageSwitchers.forEach((switcher) => {
+      if (switcher instanceof HTMLDetailsElement) switcher.open = false;
+
+      if (document.activeElement instanceof HTMLElement && switcher.contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
+    });
+  };
 
   const setMenuOpen = (open) => {
     menu?.classList.toggle('hidden', !open);
     toggle?.setAttribute('aria-expanded', String(open));
-    toggle?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    toggle?.setAttribute(
+      'aria-label',
+      open ? toggle?.dataset.menuCloseLabel ?? 'Close menu' : toggle?.dataset.menuOpenLabel ?? 'Open menu'
+    );
   };
 
   toggle?.addEventListener('click', () => {
@@ -156,9 +216,22 @@ const socialLinks = [
     link.addEventListener('click', () => setMenuOpen(false));
   });
 
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Node)) return;
+
+    const clickedInsideLanguageSwitcher = Array.from(languageSwitchers).some((switcher) =>
+      switcher.contains(event.target)
+    );
+
+    if (!clickedInsideLanguageSwitcher) {
+      closeLanguageSwitchers();
+    }
+  });
+
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       setMenuOpen(false);
+      closeLanguageSwitchers();
     }
   });
 </script>

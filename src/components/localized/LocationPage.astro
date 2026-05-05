@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { brandLogos, services as spanishServices, siteConfig, type Location } from '../../data/locations';
+import { locationContent, serviceCards, ui } from '../../i18n/content';
+import { absoluteUrl, getLocationPath, getRoutePath, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  location: Location;
+}
+
+const { lang, location } = Astro.props;
+const copy = ui[lang];
+const content = locationContent[lang];
+const services = serviceCards[lang];
+const canonicalPath = getLocationPath(location.slug, lang);
+const canonical = absoluteUrl(siteConfig.url, canonicalPath);
+const title = content.title(location.city);
+const description = content.description(location.city);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${canonical}#webpage`,
+  "url": canonical,
+  "name": title,
+  "description": description,
+  "isPartOf": { "@id": `${siteConfig.url}/#website` },
+  "inLanguage": lang,
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": content.breadcrumbHome, "item": absoluteUrl(siteConfig.url, getRoutePath('home', lang)) },
+      { "@type": "ListItem", "position": 2, "name": title }
+    ]
+  }
+};
+---
+
+<Layout title={title} description={description} canonical={canonical} schema={schema} lang={lang}>
+  <section class="relative h-[60vh] min-h-[420px] flex items-end pb-16 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/PortadaInicio-1.webp" alt={title} class="w-full h-full object-cover" loading="eager" />
+      <div class="absolute inset-0 bg-[#201400]/50"></div>
+    </div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 w-full">
+      <nav class="text-xs text-white/50 mb-6 flex gap-2">
+        <a href={getRoutePath('home', lang)} class="hover:text-[#bda589] transition-colors">{content.breadcrumbHome}</a>
+        <span>/</span>
+        <span class="text-white/80">{title}</span>
+      </nav>
+      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-3">designing for living</p>
+      <h1 class="text-4xl md:text-5xl font-light text-white leading-tight max-w-2xl">{title}</h1>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 bg-[#fdfaf7]">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl md:text-3xl font-light text-[#201400] mb-8 leading-relaxed">
+        {content.introTitle(location.city)}
+      </h2>
+      <p class="text-base text-[#201400]/65 leading-relaxed max-w-2xl mx-auto">
+        {content.introBody(location.city, location.province)}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-4">{content.servicesEyebrow(location.city)}</p>
+        <h2 class="text-3xl font-light text-[#201400]">{content.servicesTitle}</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map((service, index) => (
+          <article class="bg-[#fdfaf7] overflow-hidden group">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src={spanishServices[index].image} alt={`${service.title} ${location.city}`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+            </div>
+            <div class="p-6">
+              <h3 class="text-base font-medium text-[#201400] mb-2">{service.title}</h3>
+              <p class="text-sm text-[#201400]/60 leading-relaxed">{service.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 px-6 bg-[#fdfaf7]">
+    <div class="max-w-6xl mx-auto">
+      <p class="mhk-text-strong text-center text-xs tracking-[0.4em] uppercase text-[#bda589] mb-10">{content.brands}</p>
+      <div class="flex flex-wrap justify-center items-center gap-10 md:gap-12">
+        {brandLogos.slice(0, 10).map((logo) => (
+          <img src={logo.src} alt={logo.name} class="h-9 w-auto object-contain grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300 md:h-11" loading="lazy" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-light text-[#201400] mb-8">
+        {content.seoTitle(location.city)}
+      </h2>
+      <div class="space-y-5 text-base text-[#201400]/65 leading-relaxed">
+        {content.seoParagraphs(location.city, location.province).map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 bg-[#bda589]">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-light text-white mb-6">{content.ctaTitle(location.city)}</h2>
+      <p class="text-white/85 mb-10 font-light leading-relaxed">{content.ctaBody}</p>
+      <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href={getRoutePath('contact', lang)} class="inline-block w-full bg-white text-center text-[#201400] text-xs uppercase px-10 py-4 hover:bg-[#201400] hover:text-white transition-all duration-300 sm:w-auto">
+          {copy.actions.budget}
+        </a>
+        <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="inline-block w-full border border-white/70 text-center text-white text-xs uppercase px-10 py-4 hover:bg-white hover:text-[#201400] transition-all duration-300 sm:w-auto">
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,21 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import ThanksPage from '../components/localized/ThanksPage.astro';
 ---
 
-<Layout title="¡Mensaje enviado! | MHK Studio" description="Hemos recibido tu mensaje. Te responderemos en menos de 24 horas." noindex={true}>
-  <section class="min-h-screen flex items-center justify-center px-6 bg-[#fdfaf7]">
-    <div class="text-center max-w-lg">
-      <div class="w-16 h-px bg-[#bda589] mx-auto mb-10"></div>
-      <p class="text-xs tracking-[0.4em] uppercase text-[#bda589] mb-6">Mensaje recibido</p>
-      <h1 class="text-3xl md:text-4xl font-light text-[#201400] mb-6">
-        ¡Gracias por contactarnos!
-      </h1>
-      <p class="text-base text-[#201400]/65 leading-relaxed mb-10">
-        Hemos recibido tu mensaje. Nos pondremos en contacto contigo en menos de 24 horas.
-      </p>
-      <a href="/" class="inline-block border border-[#bda589] text-[#bda589] text-xs tracking-[0.3em] uppercase px-10 py-4 hover:bg-[#bda589] hover:text-white transition-all duration-300">
-        Volver al inicio
-      </a>
-    </div>
-  </section>
-</Layout>
+<ThanksPage lang="es" />

@@ -1,0 +1,28 @@
+# Canonical host
+https://www.mhkstudio.design/* https://mhkstudio.design/:splat 301!
+
+# Canonical slashless URLs
+/servicios/ /servicios 301
+/sobre-nosotros/ /sobre-nosotros 301
+/contacto/ /contacto 301
+/aviso-legal/ /aviso-legal 301
+/politica-de-privacidad/ /politica-de-privacidad 301
+/politica-de-cookies/ /politica-de-cookies 301
+/condiciones-generales/ /condiciones-generales 301
+
+# WordPress/legal legacy routes
+/personalizar-cookies /politica-de-cookies 301
+/personalizar-cookies/ /politica-de-cookies 301
+
+# Local landing canonical URLs
+/disenadora-de-interiores-en-mojacar/ /disenadora-de-interiores-en-mojacar 301
+/disenadora-de-interiores-almeria/ /disenadora-de-interiores-almeria 301
+/disenadora-de-interiores-lorca/ /disenadora-de-interiores-lorca 301
+/disenadora-de-interiores-aguilas/ /disenadora-de-interiores-aguilas 301
+/disenadora-de-interiores-vera/ /disenadora-de-interiores-vera 301
+/disenadora-de-interiores-carboneras/ /disenadora-de-interiores-carboneras 301
+/disenadora-de-interiores-garrucha/ /disenadora-de-interiores-garrucha 301
+/disenadora-de-interiores-san-juan-de-los-terreros/ /disenadora-de-interiores-san-juan-de-los-terreros 301
+/disenadora-de-interiores-roquetas-de-mar/ /disenadora-de-interiores-roquetas-de-mar 301
+/disenadora-de-interiores-agua-amarga/ /disenadora-de-interiores-agua-amarga 301
+/disenadora-de-interiores-cabo-de-gata/ /disenadora-de-interiores-cabo-de-gata 301
