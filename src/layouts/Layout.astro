@@ -3,6 +3,8 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/locations';
+import { absoluteUrl, getAlternatePaths, getLangFromPath, languages, resolveLocalizedPath, type Lang } from '../i18n/routes';
+import { siteDescriptions } from '../i18n/content';
 
 interface Props {
   title: string;
@@ -12,11 +14,13 @@ interface Props {
   schema?: object;
   noindex?: boolean;
   noHeaderOffset?: boolean;
+  lang?: Lang;
 }
 
 const {
   title,
-  description = siteConfig.description,
+  lang = getLangFromPath(Astro.url.pathname),
+  description = siteDescriptions[lang],
   canonical = Astro.url.href,
   ogImage = `${siteConfig.url}/images/destacada.png`,
   schema,
@@ -25,14 +29,60 @@ const {
 } = Astro.props;
 
 const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
+const alternatePaths = getAlternatePaths(Astro.url.pathname);
+const resolvedPath = resolveLocalizedPath(Astro.url.pathname);
+const hasTranslatedAlternates = Boolean(resolvedPath.routeKey);
+const currentLanguage = languages.find((language) => language.code === lang) ?? languages[0];
+const backToTopLabels: Record<Lang, string> = {
+  es: 'Volver al inicio',
+  en: 'Back to top',
+  de: 'Zurück zum Anfang',
+  ru: 'Вернуться наверх',
+  it: 'Torna all\'inizio',
+  fr: 'Retour en haut',
+};
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "InteriorDesigner",
+  "@id": `${siteConfig.url}/#organization`,
+  "name": "MHK Studio",
+  "alternateName": "MHK Studio | Interior Design Studio",
+  "url": siteConfig.url,
+  "logo": `${siteConfig.url}/images/MHK.webp`,
+  "image": `${siteConfig.url}/images/destacada.png`,
+  "description": siteDescriptions[lang],
+  "telephone": siteConfig.phone,
+  "email": siteConfig.email,
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Mojácar",
+    "addressLocality": "Mojácar",
+    "postalCode": "04638",
+    "addressRegion": "Almería",
+    "addressCountry": "ES"
+  },
+  "areaServed": ["Almería", "Mojácar", "Lorca", "Águilas", "Vera", "Carboneras", "Garrucha", "Cabo de Gata"],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": siteConfig.phone,
+    "email": siteConfig.email,
+    "contactType": "customer service",
+    "areaServed": "ES",
+    "availableLanguage": languages.map((language) => language.code)
+  },
+  "sameAs": [siteConfig.facebook, siteConfig.instagram, siteConfig.pinterest]
+};
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#fdfaf7" />
+    <meta name="format-detection" content="telephone=no" />
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
@@ -40,6 +90,14 @@ const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
     {!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
 
     <link rel="canonical" href={canonical} />
+    {hasTranslatedAlternates && languages.map((language) => (
+      <link
+        rel="alternate"
+        hreflang={language.hreflang}
+        href={absoluteUrl(siteConfig.url, alternatePaths[language.code])}
+      />
+    ))}
+    {hasTranslatedAlternates && <link rel="alternate" hreflang="x-default" href={siteConfig.url} />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -47,7 +105,10 @@ const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content="MHK Studio Interior Design Studio" />
+    <meta property="og:locale" content={currentLanguage.locale} />
     <meta property="og:site_name" content="MHK Studio" />
 
     <!-- Twitter Card -->
@@ -56,10 +117,11 @@ const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://js.hs-scripts.com" />
+    <link rel="preconnect" href="https://js.hsforms.net" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/images/icono-del-sitio-1.png" />
@@ -70,34 +132,48 @@ const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
     )}
 
     <!-- Schema.org Organization (sitewide) -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "InteriorDesigner",
-      "@id": `${siteConfig.url}/#organization`,
-      "name": "MHK Studio",
-      "alternateName": "MHK Studio | Interior Design Studio",
-      "url": siteConfig.url,
-      "logo": `${siteConfig.url}/images/MHK.webp`,
-      "telephone": siteConfig.phone,
-      "email": siteConfig.email,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Mojácar",
-        "addressLocality": "Mojácar",
-        "postalCode": "04638",
-        "addressRegion": "Almería",
-        "addressCountry": "ES"
-      },
-      "areaServed": ["Almería", "Mojácar", "Lorca", "Águilas", "Vera", "Carboneras"],
-      "sameAs": [siteConfig.facebook, siteConfig.instagram]
-    })} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
   </head>
-  <body>
-    <Header />
+  <body id="site-top">
+    <Header lang={lang} />
     <main class={noHeaderOffset ? '' : 'pt-[92px]'}>
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
+    <a
+      href="#"
+      class="mhk-home-floating-button"
+      aria-label={backToTopLabels[lang]}
+      title={backToTopLabels[lang]}
+      data-scroll-top
+    >
+      <svg viewBox="0 0 64 64" aria-hidden="true" class="h-9 w-9">
+        <path
+          d="M15.5 30.5 32 16l16.5 14.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="4.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M20.5 29.5v18h23v-18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="4.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M27.2 42.5V35l4.8 4.9 4.8-4.9v7.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </a>
     <script
       is:inline
       type="text/javascript"
@@ -106,5 +182,15 @@ const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
       defer
       src="https://js.hs-scripts.com/49385837.js"
     ></script>
+    <script is:inline>
+      (() => {
+        document.querySelectorAll('[data-scroll-top]').forEach((button) => {
+          button.addEventListener('click', (event) => {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'auto' });
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

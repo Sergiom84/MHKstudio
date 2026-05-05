@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { thanksContent } from '../../i18n/content';
+import { absoluteUrl, getRoutePath, type Lang } from '../../i18n/routes';
+import { siteConfig } from '../../data/locations';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const content = thanksContent[lang];
+const canonicalPath = getRoutePath('thanks', lang);
+---
+
+<Layout
+  title={content.title}
+  description={content.description}
+  canonical={absoluteUrl(siteConfig.url, canonicalPath)}
+  noindex={true}
+  lang={lang}
+>
+  <section class="min-h-[60vh] px-6 py-24 flex items-center justify-center bg-[#fdfaf7]">
+    <div class="max-w-2xl text-center">
+      <h1 class="text-4xl md:text-5xl font-light text-[#201400] mb-6">{content.heading}</h1>
+      <p class="text-lg text-[#201400]/70 leading-relaxed mb-10">{content.body}</p>
+      <a href={getRoutePath('home', lang)} class="inline-block border border-[#bda589] text-[#bda589] text-xs tracking-[0.3em] uppercase px-10 py-4 hover:bg-[#bda589] hover:text-white transition-all duration-300">
+        {content.backHome}
+      </a>
+    </div>
+  </section>
+</Layout>

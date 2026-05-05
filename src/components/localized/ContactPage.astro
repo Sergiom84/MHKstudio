@@ -1,0 +1,157 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { siteConfig } from '../../data/locations';
+import { contactContent, ui } from '../../i18n/content';
+import { absoluteUrl, getRoutePath, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const copy = ui[lang];
+const content = contactContent[lang];
+const canonicalPath = getRoutePath('contact', lang);
+const canonical = absoluteUrl(siteConfig.url, canonicalPath);
+
+const contactSocialLinks = [
+  {
+    label: 'WhatsApp',
+    href: siteConfig.whatsapp,
+    icon: '<path d="M12.04 2a9.86 9.86 0 0 0-8.47 14.9L2.5 22l5.23-1.37A9.96 9.96 0 1 0 12.04 2Zm.01 1.8a8.15 8.15 0 0 1 6.9 12.5 8.17 8.17 0 0 1-10.75 2.5l-.37-.2-3.1.82.82-3.02-.23-.39A8.07 8.07 0 0 1 3.9 12a8.16 8.16 0 0 1 8.15-8.2Zm-3.3 4.3c-.18 0-.47.07-.72.34-.25.28-.95.93-.95 2.26 0 1.34.98 2.63 1.12 2.82.14.18 1.9 3.04 4.7 4.14 2.33.92 2.8.74 3.31.69.5-.05 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.18-.53-.32-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.18.27-.72.9-.88 1.08-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.38-.82-.74-1.38-1.65-1.54-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.04-.34-.02-.48-.07-.14-.62-1.5-.85-2.05-.22-.53-.45-.46-.62-.47h-.52Z" />',
+  },
+  {
+    label: 'Instagram',
+    href: siteConfig.instagram,
+    icon: '<rect x="4" y="4" width="16" height="16" rx="5" ry="5"></rect><path d="M16.2 11.37a4.2 4.2 0 1 1-8.4 0 4.2 4.2 0 0 1 8.4 0Z"></path><path d="M17.5 6.5h.01"></path>',
+  },
+  {
+    label: 'Facebook',
+    href: siteConfig.facebook,
+    icon: '<path d="M14 8h2.2V4.4A24.8 24.8 0 0 0 13 4c-3.16 0-5.32 1.93-5.32 5.45V12H4.2v4h3.48v8h4.26v-8h3.34l.53-4h-3.87V9.85C11.94 8.7 12.25 8 14 8Z" />',
+  },
+  {
+    label: 'Pinterest',
+    href: siteConfig.pinterest,
+    icon: '<path d="M12.04 2.5a9.5 9.5 0 0 0-3.46 18.35c-.08-.79-.16-2 .03-2.86l1.1-4.67s-.28-.57-.28-1.4c0-1.32.76-2.3 1.7-2.3.8 0 1.2.6 1.2 1.33 0 .81-.52 2.03-.79 3.16-.22.94.47 1.7 1.4 1.7 1.68 0 2.98-1.78 2.98-4.34 0-2.27-1.63-3.86-3.96-3.86-2.7 0-4.29 2.02-4.29 4.12 0 .81.31 1.68.7 2.15.08.1.09.18.07.28l-.26 1.06c-.04.17-.14.2-.32.12-1.2-.56-1.95-2.32-1.95-3.74 0-3.04 2.2-5.82 6.35-5.82 3.34 0 5.93 2.38 5.93 5.55 0 3.32-2.1 5.99-5 5.99-.98 0-1.9-.5-2.2-1.1l-.6 2.29c-.22.86-.81 1.93-1.2 2.58A9.5 9.5 0 1 0 12.04 2.5Z" />',
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": `${canonical}#webpage`,
+  "url": canonical,
+  "name": content.title,
+  "description": content.description,
+  "isPartOf": { "@id": `${siteConfig.url}/#website` },
+  "about": { "@id": `${siteConfig.url}/#organization` },
+  "inLanguage": lang
+};
+---
+
+<Layout title={content.title} description={content.description} canonical={canonical} schema={schema} lang={lang} noHeaderOffset={true}>
+  <section class="relative flex min-h-[58vh] items-center justify-center overflow-hidden px-6 py-20 text-center md:min-h-[66vh]">
+    <div class="mhk-hero-tint absolute inset-0">
+      <img src="/images/Contacto.png" alt={content.title} class="h-full w-full object-cover" loading="eager" />
+    </div>
+    <div class="relative z-10 mx-auto max-w-6xl">
+      <h1 class="page-hero-title text-[#120c00]" set:html={content.hero} />
+    </div>
+  </section>
+
+  <section class="bg-white px-6 py-20">
+    <div class="mx-auto max-w-[1500px]">
+      <p class="mx-auto max-w-4xl text-center text-lg font-light leading-relaxed text-[#120c00]" set:html={content.intro} />
+      <div class="mt-20 h-px w-full bg-[#bda589]/65"></div>
+    </div>
+  </section>
+
+  <section class="px-6 pb-24 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-20">
+        <div class="overflow-hidden border border-[#bda589]/30 bg-white shadow-[0_18px_45px_rgba(32,20,0,0.08)]">
+          <iframe
+            src="https://www.google.com/maps?q=Calle%20la%20Mata%2C%20Moj%C3%A1car%2C%20Almer%C3%ADa%2C%20Espa%C3%B1a&output=embed"
+            title={content.mapTitle}
+            class="h-[360px] w-full md:h-[430px]"
+            style="border:0;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+      <div id="formulario" class="grid scroll-mt-28 grid-cols-1 gap-16 md:grid-cols-2">
+        <div>
+          <p class="mhk-text-strong text-xs tracking-[0.4em] uppercase text-[#bda589] mb-8">{content.contactInfo}</p>
+          <div class="space-y-8">
+            <div>
+              <p class="mhk-text-strong text-xs uppercase tracking-widest text-[#bda589]/70 mb-2">{copy.footer.phone}</p>
+              <a href={siteConfig.phoneHref} class="text-xl font-light text-[#201400] hover:text-[#bda589] transition-colors">{siteConfig.phone}</a>
+            </div>
+            <div>
+              <p class="mhk-text-strong text-xs uppercase tracking-widest text-[#bda589]/70 mb-2">{copy.footer.email}</p>
+              <a href={`mailto:${siteConfig.email}`} class="text-xl font-light text-[#201400] hover:text-[#bda589] transition-colors">{siteConfig.email}</a>
+            </div>
+            <div>
+              <p class="mhk-text-strong text-xs uppercase tracking-widest text-[#bda589]/70 mb-2">{copy.footer.address}</p>
+              <p class="text-lg font-light text-[#201400]">{siteConfig.address}</p>
+            </div>
+            <div>
+              <p class="mhk-text-strong text-xs uppercase tracking-widest text-[#bda589]/70 mb-4">{content.social}</p>
+              <div class="flex items-center gap-4">
+                {contactSocialLinks.map((link) => (
+                  <a href={link.href} target="_blank" rel="noopener" aria-label={link.label} title={link.label} class="grid h-9 w-9 place-items-center text-[#201400] transition-colors hover:text-[#bda589]">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5" fill={link.label === 'Instagram' ? 'none' : 'currentColor'} stroke={link.label === 'Instagram' ? 'currentColor' : 'none'} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={link.icon} />
+                  </a>
+                ))}
+              </div>
+            </div>
+            <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="inline-block border border-[#bda589] px-8 py-4 text-xs uppercase text-[#201400] transition-all hover:bg-[#bda589] hover:text-white">
+              {copy.actions.whatsapp}
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <p class="mhk-text-strong text-xs tracking-[0.4em] uppercase text-[#bda589] mb-8">{content.formTitle}</p>
+          <p data-hubspot-loading class="text-sm leading-relaxed text-[#201400]/65">{content.loadingForm}</p>
+          <div id="mhk-hubspot-contact-form" class="hbspt-form"></div>
+          <p class="mt-5 text-xs leading-relaxed text-[#201400]/55">
+            {content.privacy} <a href="/politica-de-privacidad" class="underline hover:text-[#bda589]">{content.privacyLink}</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline src="https://js.hsforms.net/forms/embed/v2.js"></script>
+  <script is:inline>
+    (() => {
+      const formTarget = document.getElementById('mhk-hubspot-contact-form');
+      const loadingMessage = document.querySelector('[data-hubspot-loading]');
+      let formLoaded = false;
+
+      const loadHubSpotForm = (attempt = 0) => {
+        if (formLoaded || !formTarget) return;
+
+        if (!window.hbspt?.forms) {
+          if (attempt < 20) window.setTimeout(() => loadHubSpotForm(attempt + 1), 150);
+          return;
+        }
+
+        formLoaded = true;
+        loadingMessage?.remove();
+        window.hbspt.forms.create({
+          portalId: '49385837',
+          formId: 'f07fd6a8-686f-4879-9230-7ba46a86744c',
+          region: 'na1',
+          target: '#mhk-hubspot-contact-form',
+        });
+      };
+
+      loadHubSpotForm();
+    })();
+  </script>
+</Layout>

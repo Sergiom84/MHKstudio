@@ -1,0 +1,418 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ReviewsCarousel from './ReviewsCarousel.astro';
+import { brandLogos, siteConfig } from '../../data/locations';
+import { homeContent, homeServiceScrollStories, serviceCards, servicesContent, siteDescriptions, ui } from '../../i18n/content';
+import { absoluteUrl, getRoutePath, type Lang } from '../../i18n/routes';
+import { createTextHighlighter, homeSpanishHighlightTerms } from '../../utils/textHighlight';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const copy = ui[lang];
+const content = homeContent[lang];
+const servicesCopy = servicesContent[lang];
+const services = serviceCards[lang];
+const serviceScrollStories = homeServiceScrollStories[lang];
+const canonicalPath = getRoutePath('home', lang);
+const canonical = absoluteUrl(siteConfig.url, canonicalPath);
+const highlightHomeText = createTextHighlighter(lang === 'es' ? homeSpanishHighlightTerms : []);
+
+const heroSlides = [
+  '/images/hero-portada-inicio-clean.webp',
+  '/images/hero-kitchen-minimalist-1.webp',
+  '/images/hero-kitchen-minimalist-2.webp',
+  '/images/hero-kitchen-modern.webp',
+];
+const heroSlideInterval = 4;
+const getHeroSlideDelay = (index: number) =>
+  index === 0 ? '0s' : `-${(heroSlides.length - index) * heroSlideInterval}s`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      "url": canonical,
+      "name": "MHK Studio",
+      "description": siteDescriptions[lang],
+      "inLanguage": lang
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonical}#webpage`,
+      "url": canonical,
+      "name": content.title,
+      "isPartOf": { "@id": `${siteConfig.url}/#website` },
+      "inLanguage": lang
+    }
+  ]
+};
+---
+
+<Layout
+  title={content.title}
+  description={siteDescriptions[lang]}
+  canonical={canonical}
+  schema={schema}
+  lang={lang}
+  noHeaderOffset={true}
+>
+  <section class="relative flex min-h-[620px] h-screen items-center justify-center overflow-hidden">
+    <div class="home-hero-carousel absolute inset-0" aria-hidden="true">
+      {heroSlides.map((src, index) => (
+        <img
+          src={src}
+          alt=""
+          class="home-hero-slide"
+          loading="eager"
+          style={`--slide-delay: ${getHeroSlideDelay(index)};`}
+        />
+      ))}
+      <div class="absolute inset-0 bg-[#fdfaf7]/10"></div>
+    </div>
+    <div class="home-hero-brand relative z-10 flex w-full flex-col items-center justify-center px-8 pt-16 lg:pt-24">
+      <img
+        src="/images/mhk-interior-design-studio-lockup.png"
+        alt="MHK Interior Design Studio"
+        class="home-hero-lockup"
+        loading="eager"
+      />
+    </div>
+  </section>
+
+  <section class="bg-white px-6 py-20 md:py-24">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-[0.68fr_minmax(0,2fr)] md:items-start md:gap-20 lg:gap-32">
+      <div class="md:pt-10">
+        <img src="/images/icono-comillas.webp" alt="" class="home-intro-quote" loading="lazy" />
+        <p class="home-intro-signature" aria-label="Designing for Living">
+          <span class="home-intro-signature-line home-intro-signature-strong">Designing</span>
+          <span class="home-intro-signature-line">
+            <span class="home-intro-signature-light">for</span>
+            <span class="home-intro-signature-strong">Living</span>
+          </span>
+        </p>
+      </div>
+      <div>
+        <div class="space-y-7">
+          <div>
+            <h2 class="home-intro-title-strong mb-8 text-lg leading-snug text-[#bda589] lg:whitespace-nowrap">
+              {lang === 'es' ? (
+                'Diseño de interiores personalizado que transforma tu hogar y tu bienestar'
+              ) : (
+                <span set:html={highlightHomeText(content.introTitle)}></span>
+              )}
+            </h2>
+            <div class="home-intro-copy max-w-[960px] space-y-6 text-[#020202]">
+              {content.introParagraphs.map((paragraph) => (
+                <p>
+                  <span set:html={highlightHomeText(paragraph)}></span>
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div class="border-t border-[#bda589]/35 pt-7">
+            <h3 class="mhk-text-strong mb-5 text-base leading-snug text-[#bda589]">
+              {content.accentTitle}
+            </h3>
+            <p class="max-w-[960px] text-base leading-relaxed text-[#020202]">
+              <span set:html={highlightHomeText(content.accentBody)}></span>
+            </p>
+          </div>
+        </div>
+        <a
+          href={getRoutePath('about', lang)}
+          class="mhk-button-strong-black mt-9 inline-block w-full max-w-[670px] rounded-[8px] bg-[#bda589] px-8 py-4 text-center uppercase text-[#020202] transition-colors duration-300 hover:bg-[#9a7d62]"
+        >
+          {copy.actions.learnMore}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {serviceScrollStories.map((story, storyIndex) => (
+    <section
+      id={storyIndex === 0 ? 'servicios' : undefined}
+      class={`service-scroll-section ${storyIndex % 2 === 0 ? 'bg-[#fdfaf7]' : 'bg-white'}`}
+      data-scroll-service
+      data-steps={story.steps.length}
+    >
+      <div class="service-scroll-sticky">
+        <div class="service-scroll-inner mx-auto flex max-w-6xl flex-col justify-center px-6 py-8 md:py-10">
+          <div class="service-scroll-stage grid min-h-[440px] grid-cols-1 gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center md:gap-12">
+            <div class="service-scroll-visual" aria-live="polite">
+              {story.steps.map((step, index) => (
+                <figure
+                  class={`service-scroll-card ${index === 0 ? 'is-active' : ''}`}
+                  data-service-panel={index}
+                >
+                  <img src={step.image} alt={step.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+                </figure>
+              ))}
+            </div>
+
+            <div class="service-scroll-copy-wrap">
+              <div class="mb-8 flex items-center gap-3">
+                {story.steps.map((_, index) => (
+                  <span
+                    class={`service-scroll-dot ${index === 0 ? 'is-active' : ''}`}
+                    data-service-dot={index}
+                    aria-hidden="true"
+                  ></span>
+                ))}
+              </div>
+
+              {story.steps.map((step, index) => (
+                <article
+                  class={`service-scroll-copy ${index === 0 ? 'is-active' : ''}`}
+                  data-service-copy={index}
+                >
+                  {storyIndex === 0 ? (
+                    <>
+                      <h3 class={`service-scroll-decor-heading mb-5 text-3xl leading-tight text-[#201400] md:text-5xl ${index === 0 || index === 2 ? 'service-scroll-heading-single' : ''}`}>
+                        {index === 0 && lang === 'es' ? (
+                          <>
+                            Decoración de interiores<br />en Almería
+                          </>
+                        ) : (
+                          step.title
+                        )}
+                      </h3>
+                      <p class="service-scroll-kicker mb-6 text-sm uppercase tracking-[0.28em] text-[#bda589]">
+                        {step.label}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h3 class={`mb-5 text-3xl font-medium leading-tight text-[#201400] md:text-5xl ${storyIndex === 1 && index === 0 ? 'service-scroll-heading-single' : ''}`}>
+                        {step.title}
+                      </h3>
+                      <p class="service-scroll-kicker mb-6 text-sm uppercase tracking-[0.28em] text-[#bda589]">
+                        {step.label}
+                      </p>
+                    </>
+                  )}
+                  <p class="text-lg leading-relaxed text-[#201400]/80">
+                    <span set:html={highlightHomeText(step.body)}></span>
+                  </p>
+                  {step.extraBody && (
+                    <p class="mt-5 text-lg leading-relaxed text-[#201400]/80">
+                      <span set:html={highlightHomeText(step.extraBody)}></span>
+                    </p>
+                  )}
+                  {step.bullets && (
+                    <ul class="mt-5 space-y-2 text-lg leading-relaxed text-[#201400]/80">
+                      {step.bullets.map((item) => (
+                        <li class="flex gap-3">
+                          <span class="mt-[0.62em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
+                          <span set:html={highlightHomeText(item)}></span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <p class="mt-6 text-base italic leading-relaxed text-[#201400]">
+                    <span set:html={highlightHomeText(step.note)}></span>
+                  </p>
+                  {step.cta && (
+                    <a
+                      href={`${getRoutePath('services', lang)}#servicio-${storyIndex + 1}`}
+                      class="mhk-button-strong-black mt-8 inline-block w-full max-w-md rounded-[8px] bg-[#bda589] px-8 py-4 text-center uppercase text-[#201400] transition-colors duration-300 hover:bg-[#9a7d62]"
+                    >
+                      {copy.actions.learnMore}
+                    </a>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <script>
+    let serviceScrollTicking = false;
+
+    const setServiceStep = (section, activeStep) => {
+      section.querySelectorAll('[data-service-panel], [data-service-copy], [data-service-dot]').forEach((element) => {
+        const elementStep =
+          element.getAttribute('data-service-panel') ??
+          element.getAttribute('data-service-copy') ??
+          element.getAttribute('data-service-dot');
+
+        element.classList.toggle('is-active', Number(elementStep) === activeStep);
+      });
+    };
+
+    const updateServiceScroll = () => {
+      const serviceScrollSections = document.querySelectorAll('[data-scroll-service]');
+
+      serviceScrollSections.forEach((section) => {
+        const steps = Number(section.getAttribute('data-steps') ?? 1);
+        const rect = section.getBoundingClientRect();
+        const scrollDistance = Math.max(section.clientHeight - window.innerHeight, 1);
+        const progress = Math.min(Math.max(-rect.top / scrollDistance, 0), 0.999);
+        const activeStep = Math.min(steps - 1, Math.floor(progress * steps));
+
+        setServiceStep(section, activeStep);
+      });
+
+      serviceScrollTicking = false;
+    };
+
+    const requestServiceScrollUpdate = () => {
+      if (serviceScrollTicking) return;
+      serviceScrollTicking = true;
+      window.requestAnimationFrame(updateServiceScroll);
+    };
+
+    updateServiceScroll();
+    window.addEventListener('scroll', requestServiceScrollUpdate, { passive: true });
+    window.addEventListener('resize', requestServiceScrollUpdate);
+  </script>
+
+  <section class="bg-[#fdfaf7] px-6 py-16 md:py-20">
+    <div class="mx-auto grid min-h-[440px] max-w-6xl grid-cols-1 gap-10 border-t border-[#bda589]/25 pt-12 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-center md:gap-12">
+      <div class="order-1 min-w-0">
+        <h2 class="home-staging-heading-single mb-7 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.homeStagingTitle}</h2>
+        <p class="max-w-[760px] text-lg leading-relaxed text-[#201400]/80">
+          <span set:html={highlightHomeText(content.homeStagingBody)}></span>
+        </p>
+        <ul class="mt-7 space-y-3 text-lg leading-relaxed text-[#201400]/80">
+          {content.homeStagingBullets.map((item) => (
+            <li class="flex gap-3">
+              <span class="mt-[0.62em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
+              <span set:html={highlightHomeText(item)}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-7 text-base italic leading-relaxed text-[#201400]">
+          <span set:html={highlightHomeText(content.homeStagingNote)}></span>
+        </p>
+        <a href={`${getRoutePath('services', lang)}#servicio-4`} class="mhk-button-strong-black mt-8 inline-block w-full max-w-md rounded-[8px] bg-[#bda589] px-8 py-4 text-center uppercase text-[#201400] transition-colors duration-300 hover:bg-[#9a7d62]">
+          {copy.actions.learnMore}
+        </a>
+      </div>
+      <figure class="home-staging-visual order-2">
+        <img src="/images/Home-staging.webp" alt={services[3].alt} class="h-full w-full object-cover" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="service-scroll-section bg-white" data-scroll-service data-steps="2">
+    <div class="service-scroll-sticky">
+      <div class="service-scroll-inner mx-auto flex max-w-6xl flex-col justify-center border-t border-[#bda589]/25 px-6 py-8 md:py-10">
+        <div class="service-scroll-stage grid min-h-[440px] grid-cols-1 gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center md:gap-12">
+          <div class="service-scroll-visual" aria-live="polite">
+            <figure class="service-scroll-card is-active" data-service-panel="0">
+              <img src="/images/Asesoramiento.webp" alt={services[4].alt} loading="lazy" />
+            </figure>
+            <figure class="service-scroll-card" data-service-panel="1">
+              <img src="/images/plano-asesoria.png" alt="Plano de asesoría online de decoración e interiorismo" loading="lazy" />
+            </figure>
+          </div>
+
+          <div class="service-scroll-copy-wrap">
+            <div class="mb-8 flex items-center gap-3">
+              <span class="service-scroll-dot is-active" data-service-dot="0" aria-hidden="true"></span>
+              <span class="service-scroll-dot" data-service-dot="1" aria-hidden="true"></span>
+            </div>
+
+            <article class="service-scroll-copy is-active" data-service-copy="0">
+              <h3 class="advisory-heading-single mb-5 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.advisoryTitle}</h3>
+              <p class="text-lg italic leading-relaxed text-[#201400]">
+                <span set:html={highlightHomeText(content.advisoryLead)}></span>
+              </p>
+              <p class="mt-6 text-base leading-relaxed text-[#201400]/75 md:text-lg">
+                <span set:html={highlightHomeText(content.advisoryParagraphs[0])}></span>
+              </p>
+              <a href={`${getRoutePath('services', lang)}#servicio-5`} class="mhk-button-strong-black mt-8 inline-block w-full max-w-md rounded-[8px] bg-[#bda589] px-8 py-4 text-center uppercase text-[#201400] transition-colors duration-300 hover:bg-[#9a7d62]">
+                {copy.actions.learnMore}
+              </a>
+            </article>
+
+            <article class="service-scroll-copy" data-service-copy="1">
+              <h3 class="advisory-heading-single mb-5 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.advisoryTitle}</h3>
+              <p class="text-lg italic leading-relaxed text-[#201400]">
+                <span set:html={highlightHomeText(content.advisoryParagraphs[1])}></span>
+              </p>
+              <ul class="mt-7 space-y-3 text-base leading-relaxed text-[#201400]/80 md:text-lg">
+                {content.advisorySteps.map((item) => (
+                  <li class="flex gap-3">
+                    <span class="mt-[0.62em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
+                    <span set:html={highlightHomeText(item)}></span>
+                  </li>
+                ))}
+              </ul>
+              <a href={`${getRoutePath('services', lang)}#servicio-5`} class="mhk-button-strong-black mt-8 inline-block w-full max-w-md rounded-[8px] bg-[#bda589] px-8 py-4 text-center uppercase text-[#201400] transition-colors duration-300 hover:bg-[#9a7d62]">
+                {copy.actions.learnMore}
+              </a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-6 bg-white overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+      <p class="mhk-text-strong text-center text-xs tracking-[0.4em] uppercase text-[#bda589] mb-12">{content.brands}</p>
+      <div class="flex flex-wrap justify-center items-center gap-10 md:gap-14">
+        {brandLogos.map((logo) => (
+          <img src={logo.src} alt={logo.name} class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 md:h-12" loading="lazy" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ReviewsCarousel lang={lang} />
+
+  <section class="py-24 px-6 bg-[#bda589]">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-light text-white mb-6">{content.ctaTitle}</h2>
+      <p class="text-white/85 mb-10 text-lg font-light leading-relaxed">{content.ctaBody}</p>
+      <div class="flex flex-col items-center justify-center gap-3">
+        <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="inline-block w-full border border-white/70 text-center text-white text-xs uppercase px-10 py-4 hover:bg-white hover:text-[#201400] transition-all duration-300 sm:w-auto">
+          {copy.actions.whatsapp}
+        </a>
+        <div class="mt-8 w-full rounded-[8px] bg-[#fdfaf7] p-5 text-left text-[#201400] shadow-[0_18px_45px_rgba(32,20,0,0.14)] md:p-8">
+          <p data-hubspot-home-loading class="text-sm leading-relaxed text-[#201400]/65">{servicesCopy.loadingForm}</p>
+          <div id="mhk-hubspot-home-form" class="hbspt-form"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline src="https://js.hsforms.net/forms/embed/v2.js"></script>
+  <script is:inline>
+    (() => {
+      const formTarget = document.getElementById('mhk-hubspot-home-form');
+      const loadingMessage = document.querySelector('[data-hubspot-home-loading]');
+      let formLoaded = false;
+
+      const loadHubSpotForm = (attempt = 0) => {
+        if (formLoaded || !formTarget) return;
+
+        if (!window.hbspt?.forms) {
+          if (attempt < 20) window.setTimeout(() => loadHubSpotForm(attempt + 1), 150);
+          return;
+        }
+
+        formLoaded = true;
+        loadingMessage?.remove();
+        window.hbspt.forms.create({
+          portalId: '49385837',
+          formId: 'f07fd6a8-686f-4879-9230-7ba46a86744c',
+          region: 'na1',
+          target: '#mhk-hubspot-home-form',
+        });
+      };
+
+      loadHubSpotForm();
+    })();
+  </script>
+</Layout>
