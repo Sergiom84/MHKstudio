@@ -22,13 +22,18 @@ const {
   lang = getLangFromPath(Astro.url.pathname),
   description = siteDescriptions[lang],
   canonical = Astro.url.href,
-  ogImage = `${siteConfig.url}/images/destacada.png`,
+  ogImage = new URL('/images/destacada-og.png', Astro.url.origin).href,
   schema,
   noindex = false,
   noHeaderOffset = false,
 } = Astro.props;
 
 const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
+const socialTitle = 'MHK studio';
+const socialDescription =
+  'Descubre MHK Studio, expertos en diseño de interiores personalizado en Almería. Creamos espacios funcionales, elegantes y hechos a tu medida. Solicita tu asesoría.';
+const socialUrl = Astro.url.href;
+const siteLogoUrl = new URL('/images/MHK.webp', Astro.url.origin).href;
 const alternatePaths = getAlternatePaths(Astro.url.pathname);
 const resolvedPath = resolveLocalizedPath(Astro.url.pathname);
 const hasTranslatedAlternates = Boolean(resolvedPath.routeKey);
@@ -41,6 +46,45 @@ const backToTopLabels: Record<Lang, string> = {
   it: 'Torna all\'inizio',
   fr: 'Retour en haut',
 };
+const cookieBannerLabels: Record<Lang, { text: string; more: string; reject: string; accept: string }> = {
+  es: {
+    text: 'Esta web utiliza cookies propias y de terceros para su correcto funcionamiento y para fines analíticos. Contiene enlaces a sitios web de terceros con políticas de privacidad ajenas que podrás aceptar o no cuando accedas a ellos. Al hacer clic en el botón Aceptar, acepta el uso de estas tecnologías y el procesamiento de tus datos para estos propósitos.',
+    more: 'Más información',
+    reject: 'Rechazar',
+    accept: 'Aceptar',
+  },
+  en: {
+    text: 'This website uses first-party and third-party cookies for proper operation and analytics purposes. It contains links to third-party websites with their own privacy policies, which you may accept or reject when accessing them. By clicking Accept, you agree to the use of these technologies and the processing of your data for these purposes.',
+    more: 'More information',
+    reject: 'Reject',
+    accept: 'Accept',
+  },
+  de: {
+    text: 'Diese Website verwendet eigene Cookies und Cookies von Drittanbietern fuer den ordnungsgemaessen Betrieb und zu Analysezwecken. Sie enthaelt Links zu Websites Dritter mit eigenen Datenschutzrichtlinien, die Sie beim Zugriff akzeptieren oder ablehnen koennen. Mit Klick auf Akzeptieren stimmen Sie der Nutzung dieser Technologien und der Verarbeitung Ihrer Daten zu diesen Zwecken zu.',
+    more: 'Weitere Informationen',
+    reject: 'Ablehnen',
+    accept: 'Akzeptieren',
+  },
+  ru: {
+    text: 'Этот сайт использует собственные и сторонние cookie-файлы для корректной работы и аналитики. Он содержит ссылки на сторонние сайты с собственными политиками конфиденциальности, которые можно принять или отклонить при переходе. Нажимая Принять, вы соглашаетесь на использование этих технологий и обработку ваших данных для этих целей.',
+    more: 'Подробнее',
+    reject: 'Отклонить',
+    accept: 'Принять',
+  },
+  it: {
+    text: 'Questo sito utilizza cookie propri e di terze parti per il corretto funzionamento e per finalita analitiche. Contiene link a siti web di terze parti con informative privacy proprie, che potrai accettare o rifiutare quando vi accedi. Facendo clic su Accetta, acconsenti all’uso di queste tecnologie e al trattamento dei tuoi dati per questi scopi.',
+    more: 'Maggiori informazioni',
+    reject: 'Rifiutare',
+    accept: 'Accettare',
+  },
+  fr: {
+    text: 'Ce site utilise des cookies internes et tiers pour son bon fonctionnement et a des fins analytiques. Il contient des liens vers des sites tiers ayant leurs propres politiques de confidentialite, que vous pourrez accepter ou refuser lorsque vous y accederez. En cliquant sur Accepter, vous acceptez l’utilisation de ces technologies et le traitement de vos donnees a ces fins.',
+    more: 'Plus d’informations',
+    reject: 'Refuser',
+    accept: 'Accepter',
+  },
+};
+const cookieBanner = cookieBannerLabels[lang];
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "InteriorDesigner",
@@ -48,8 +92,8 @@ const organizationSchema = {
   "name": "MHK Studio",
   "alternateName": "MHK Studio | Interior Design Studio",
   "url": siteConfig.url,
-  "logo": `${siteConfig.url}/images/MHK.webp`,
-  "image": `${siteConfig.url}/images/destacada.png`,
+  "logo": siteLogoUrl,
+  "image": ogImage,
   "description": siteDescriptions[lang],
   "telephone": siteConfig.phone,
   "email": siteConfig.email,
@@ -101,10 +145,12 @@ const organizationSchema = {
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={socialTitle} />
+    <meta property="og:description" content={socialDescription} />
+    <meta property="og:url" content={socialUrl} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1080" />
     <meta property="og:image:height" content="1080" />
     <meta property="og:image:alt" content="MHK Studio Interior Design Studio" />
@@ -113,8 +159,8 @@ const organizationSchema = {
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={socialDescription} />
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -124,7 +170,7 @@ const organizationSchema = {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/images/icono-del-sitio-1.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-mhk-large.png" />
 
     <!-- Schema.org -->
     {schema && (
@@ -140,6 +186,23 @@ const organizationSchema = {
       <slot />
     </main>
     <Footer lang={lang} />
+    <aside
+      class="mhk-cookie-banner"
+      data-cookie-banner
+      role="dialog"
+      aria-live="polite"
+      aria-label="Aviso de cookies"
+      hidden
+    >
+      <p>
+        {cookieBanner.text}
+        <a href="/politica-de-cookies">{cookieBanner.more}</a>
+      </p>
+      <div class="mhk-cookie-actions">
+        <button type="button" data-cookie-choice="rejected">{cookieBanner.reject}</button>
+        <button type="button" data-cookie-choice="accepted">{cookieBanner.accept}</button>
+      </div>
+    </aside>
     <a
       href="#"
       class="mhk-home-floating-button"
@@ -184,6 +247,32 @@ const organizationSchema = {
     ></script>
     <script is:inline>
       (() => {
+        const cookieBanner = document.querySelector('[data-cookie-banner]');
+        const cookieConsentKey = 'mhk-cookie-consent';
+
+        if (cookieBanner) {
+          try {
+            if (!window.localStorage.getItem(cookieConsentKey)) {
+              cookieBanner.hidden = false;
+            }
+          } catch {
+            cookieBanner.hidden = false;
+          }
+
+          cookieBanner.querySelectorAll('[data-cookie-choice]').forEach((button) => {
+            button.addEventListener('click', () => {
+              const choice = button.getAttribute('data-cookie-choice') ?? 'rejected';
+
+              try {
+                window.localStorage.setItem(cookieConsentKey, choice);
+              } catch {}
+
+              cookieBanner.hidden = true;
+              window.dispatchEvent(new CustomEvent('mhk-cookie-consent', { detail: { choice } }));
+            });
+          });
+        }
+
         document.querySelectorAll('[data-scroll-top]').forEach((button) => {
           button.addEventListener('click', (event) => {
             event.preventDefault();

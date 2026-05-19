@@ -173,7 +173,7 @@ export const editorialSlides: EditorialSlide[] = [
 export const siteConfig = {
   name: 'MHK Studio',
   tagline: 'designing for living',
-  description: 'Estudio de diseño de interiores en Mojácar. Decoración de interiores, proyectos llave en mano, cocinas y baños a medida y home staging profesional.',
+  description: 'Estudio de diseño de interiores en Almería. Decoración de interiores, proyectos llave en mano, cocinas y baños a medida y home staging profesional.',
   url: 'https://mhkstudio.design',
   phone: '+34 608 18 79 21',
   phoneHref: 'tel:+34608187921',

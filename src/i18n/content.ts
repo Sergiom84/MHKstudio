@@ -214,7 +214,7 @@ export const ui = {
 } satisfies Record<Lang, any>;
 
 export const siteDescriptions = {
-  es: 'Estudio de diseño de interiores en Mojácar. Decoración de interiores, proyectos llave en mano, cocinas y baños a medida y home staging profesional.',
+  es: 'Estudio de diseño de interiores en Almería. Decoración de interiores, proyectos llave en mano, cocinas y baños a medida y home staging profesional.',
   en: 'Interior design studio in Mojácar. Interior decoration, turnkey projects, bespoke kitchens and bathrooms, and professional home staging.',
   de: 'Innenarchitektur-Studio in Mojácar. Raumgestaltung, schlüsselfertige Projekte, maßgefertigte Küchen und Bäder sowie professionelles Home Staging.',
   ru: 'Студия дизайна интерьеров в Мохакаре. Декорирование, проекты под ключ, кухни и ванные на заказ и профессиональный хоумстейджинг.',
@@ -543,7 +543,7 @@ export const homeServiceScrollStories = {
           image: '/images/service-interiorismo-comedor.webp',
           alt: 'Comedor con mesa de madera natural, cerámica artesanal y cocina al fondo',
           label: 'Proyecto integral',
-          title: 'Proyectos de interiorismo',
+          title: 'Proyectos de interiorismo en Almería',
           body: 'Ofrecemos un servicio integral de interiorismo personalizado en Almería. Realizamos un estudio completo del espacio y desarrollamos un proyecto técnico y estético que incluye:',
           bullets: ['Planos de zonificación y distribución', 'Selección de materiales y revestimiento', 'Soluciones funcionales y sostenibles'],
           note: 'Perfecto para reformas completas o nuevas viviendas.',
@@ -1073,7 +1073,7 @@ export const homeServiceScrollStories = {
 
 export const homeContent = {
   es: {
-    title: 'Diseño de interiores en Mojácar | MHK Studio Interiorismo',
+    title: 'Diseño de interiores en Almería | MHK Studio Interiorismo',
     introTitle: 'Diseño de interiores personalizado que transforma tu hogar y tu bienestar',
     introParagraphs: [
       'En MHK Studio somos un estudio de diseño de interiores en Almería apasionado por crear espacios únicos, funcionales y con alma. Diseñamos ambientes que reflejan la personalidad, el estilo de vida y las emociones de cada cliente, cuidando cada detalle del proceso creativo y técnico.',
