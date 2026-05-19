@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://mhkstudio.design',
+  site: process.env.PUBLIC_SITE_URL ?? 'https://mhkstudio.design',
   output: 'static',
   trailingSlash: 'never',
   build: {

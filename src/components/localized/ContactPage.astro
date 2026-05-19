@@ -52,17 +52,21 @@ const schema = {
 
 <Layout title={content.title} description={content.description} canonical={canonical} schema={schema} lang={lang} noHeaderOffset={true}>
   <section class="relative flex min-h-[58vh] items-center justify-center overflow-hidden px-6 py-20 text-center md:min-h-[66vh]">
-    <div class="mhk-hero-tint absolute inset-0">
-      <img src="/images/Contacto.png" alt={content.title} class="h-full w-full object-cover" loading="eager" />
-    </div>
+    <img
+      src="/images/PortadaContacto.png"
+      alt={content.title}
+      class="absolute inset-0 h-full w-full scale-[1.04] object-cover blur-[5px]"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-[#fdfaf7]/30"></div>
     <div class="relative z-10 mx-auto max-w-6xl">
       <h1 class="page-hero-title text-[#120c00]" set:html={content.hero} />
     </div>
   </section>
 
-  <section class="bg-white px-6 py-20">
+  <section class="bg-white px-6 pb-20 pt-20 md:pt-24">
     <div class="mx-auto max-w-[1500px]">
-      <p class="mx-auto max-w-4xl text-center text-lg font-light leading-relaxed text-[#120c00]" set:html={content.intro} />
+      <p class="mhk-body-reference mx-auto max-w-4xl text-center text-[#201400]/80" set:html={content.intro} />
       <div class="mt-20 h-px w-full bg-[#bda589]/65"></div>
     </div>
   </section>
@@ -84,7 +88,7 @@ const schema = {
 
       <div id="formulario" class="grid scroll-mt-28 grid-cols-1 gap-16 md:grid-cols-2">
         <div>
-          <p class="mhk-text-strong text-xs tracking-[0.4em] uppercase text-[#bda589] mb-8">{content.contactInfo}</p>
+          <p class="home-intro-title-strong mb-8 text-lg leading-snug text-[#bda589]">{content.contactInfo}</p>
           <div class="space-y-8">
             <div>
               <p class="mhk-text-strong text-xs uppercase tracking-widest text-[#bda589]/70 mb-2">{copy.footer.phone}</p>
@@ -115,7 +119,7 @@ const schema = {
         </div>
 
         <div>
-          <p class="mhk-text-strong text-xs tracking-[0.4em] uppercase text-[#bda589] mb-8">{content.formTitle}</p>
+          <p class="home-intro-title-strong mb-8 text-lg leading-snug text-[#bda589]">{content.formTitle}</p>
           <p data-hubspot-loading class="text-sm leading-relaxed text-[#201400]/65">{content.loadingForm}</p>
           <div id="mhk-hubspot-contact-form" class="hbspt-form"></div>
           <p class="mt-5 text-xs leading-relaxed text-[#201400]/55">

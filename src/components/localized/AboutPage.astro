@@ -43,17 +43,21 @@ const schema = {
 
 <Layout title={content.title} description={content.description} canonical={canonical} schema={schema} lang={lang} noHeaderOffset={true}>
   <section class="relative flex min-h-[58vh] items-center justify-center overflow-hidden px-6 py-20 text-center md:min-h-[66vh]">
-    <div class="mhk-hero-tint absolute inset-0">
-      <img src="/images/SobreNosotros.png" alt="MHK Studio interior design" class="h-full w-full object-cover" loading="eager" />
-    </div>
+    <img
+      src="/images/SobreNosotros.png"
+      alt="MHK Studio interior design"
+      class="absolute inset-0 h-full w-full scale-[1.04] object-cover blur-[5px]"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-[#fdfaf7]/30"></div>
     <div class="relative z-10 mx-auto max-w-6xl">
       <h1 class="page-hero-title text-[#120c00]" set:html={content.hero} />
     </div>
   </section>
 
-  <section class="bg-white px-6 pb-24 pt-6">
+  <section class="bg-white px-6 pb-24 pt-20 md:pt-24">
     <div class="mx-auto max-w-5xl">
-      <div class="mx-auto space-y-8 text-center text-lg leading-relaxed text-[#201400]">
+      <div class="mhk-body-reference mx-auto space-y-8 text-center text-[#201400]/80">
         {content.intro.map((paragraph) => <p set:html={paragraph} />)}
       </div>
       <div class="mt-24 h-px w-full bg-[#bda589]/65"></div>
@@ -70,7 +74,7 @@ const schema = {
               {item.title}
             </h2>
           </div>
-          <div class="max-w-3xl space-y-8 text-justify text-lg leading-relaxed tracking-[0.03em] text-[#020202]">
+          <div class="mhk-body-reference max-w-3xl space-y-8 text-justify text-[#201400]/80">
             {item.paragraphs.map((paragraph) => <p set:html={paragraph} />)}
           </div>
         </div>
@@ -86,7 +90,7 @@ const schema = {
           <span class="mhk-text-strong">Designing</span> <span class="font-light">for</span> <span class="mhk-text-strong">Living</span>
         </h2>
         <span class="mx-auto mb-24 mt-28 block h-8 w-8 rounded-full bg-[#bda589]"></span>
-        <p class="text-2xl font-semibold text-[#bda589]">{content.methodTitle}</p>
+        <p class="home-intro-title-strong text-lg leading-snug text-[#bda589]">{content.methodTitle}</p>
       </div>
 
       <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
@@ -99,7 +103,7 @@ const schema = {
               loading="lazy"
             />
             <h3 class="mb-7 text-xl font-medium uppercase tracking-[0.04em] text-[#020202]">{step[0]}</h3>
-            <p class="mx-auto max-w-[260px] text-base leading-relaxed text-[#020202]">{step[1]}</p>
+            <p class="mhk-body-reference mx-auto max-w-[260px] text-[#201400]/80">{step[1]}</p>
           </article>
         ))}
       </div>
@@ -111,7 +115,7 @@ const schema = {
   <section id="solicitar-asesoria" class="bg-[#bda589] px-6 py-24">
     <div class="mx-auto max-w-3xl text-center">
       <h2 class="mb-6 text-3xl font-light text-white md:text-4xl">{content.ctaTitle}</h2>
-      <p class="mb-10 text-lg font-light leading-relaxed text-white/85">{content.ctaBody}</p>
+      <p class="mhk-body-reference mb-10 text-white/85">{content.ctaBody}</p>
       <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="inline-block w-full border border-white/70 px-10 py-4 text-center text-xs uppercase text-white transition-all duration-300 hover:bg-white hover:text-[#201400] sm:w-auto">
         {copy.actions.whatsapp}
       </a>

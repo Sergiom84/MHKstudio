@@ -106,7 +106,7 @@ const schema = {
                 <span set:html={highlightHomeText(content.introTitle)}></span>
               )}
             </h2>
-            <div class="home-intro-copy max-w-[960px] space-y-6 text-[#020202]">
+            <div class="home-intro-copy mhk-body-reference max-w-[960px] space-y-6 text-[#201400]/80">
               {content.introParagraphs.map((paragraph) => (
                 <p>
                   <span set:html={highlightHomeText(paragraph)}></span>
@@ -116,10 +116,10 @@ const schema = {
           </div>
 
           <div class="border-t border-[#bda589]/35 pt-7">
-            <h3 class="mhk-text-strong mb-5 text-base leading-snug text-[#bda589]">
+            <h3 class="home-intro-title-strong mb-5 text-lg leading-snug text-[#bda589]">
               {content.accentTitle}
             </h3>
-            <p class="max-w-[960px] text-base leading-relaxed text-[#020202]">
+            <p class="mhk-body-reference max-w-[960px] text-[#201400]/80">
               <span set:html={highlightHomeText(content.accentBody)}></span>
             </p>
           </div>
@@ -189,23 +189,29 @@ const schema = {
                   ) : (
                     <>
                       <h3 class={`mb-5 text-3xl font-medium leading-tight text-[#201400] md:text-5xl ${storyIndex === 1 && index === 0 ? 'service-scroll-heading-single' : ''}`}>
-                        {step.title}
+                        {storyIndex === 1 && index === 0 && lang === 'es' ? (
+                          <>
+                            Proyectos de interiorismo<br />en Almería
+                          </>
+                        ) : (
+                          step.title
+                        )}
                       </h3>
                       <p class="service-scroll-kicker mb-6 text-sm uppercase tracking-[0.28em] text-[#bda589]">
                         {step.label}
                       </p>
                     </>
                   )}
-                  <p class="text-lg leading-relaxed text-[#201400]/80">
+                  <p class="mhk-body-reference text-[#201400]/80">
                     <span set:html={highlightHomeText(step.body)}></span>
                   </p>
                   {step.extraBody && (
-                    <p class="mt-5 text-lg leading-relaxed text-[#201400]/80">
+                    <p class="mhk-body-reference mt-5 text-[#201400]/80">
                       <span set:html={highlightHomeText(step.extraBody)}></span>
                     </p>
                   )}
                   {step.bullets && (
-                    <ul class="mt-5 space-y-2 text-lg leading-relaxed text-[#201400]/80">
+                    <ul class="mhk-body-reference mt-5 space-y-2 text-[#201400]/80">
                       {step.bullets.map((item) => (
                         <li class="flex gap-3">
                           <span class="mt-[0.62em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
@@ -275,11 +281,11 @@ const schema = {
     window.addEventListener('resize', requestServiceScrollUpdate);
   </script>
 
-  <section class="bg-[#fdfaf7] px-6 py-16 md:py-20">
-    <div class="mx-auto grid min-h-[440px] max-w-6xl grid-cols-1 gap-10 border-t border-[#bda589]/25 pt-12 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-center md:gap-12">
-      <div class="order-1 min-w-0">
+  <section class="flex min-h-screen items-center bg-white px-6 py-14 md:py-[4.25rem]">
+    <div class="mx-auto grid min-h-[440px] max-w-6xl grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center md:gap-12">
+      <div class="min-w-0">
         <h2 class="home-staging-heading-single mb-7 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.homeStagingTitle}</h2>
-        <p class="max-w-[760px] text-lg leading-relaxed text-[#201400]/80">
+        <p class="mhk-body-reference max-w-[760px] text-[#201400]/80">
           <span set:html={highlightHomeText(content.homeStagingBody)}></span>
         </p>
         <ul class="mt-7 space-y-3 text-lg leading-relaxed text-[#201400]/80">
@@ -297,25 +303,16 @@ const schema = {
           {copy.actions.learnMore}
         </a>
       </div>
-      <figure class="home-staging-visual order-2">
+      <figure class="home-staging-visual">
         <img src="/images/Home-staging.webp" alt={services[3].alt} class="h-full w-full object-cover" loading="lazy" />
       </figure>
     </div>
   </section>
 
-  <section class="service-scroll-section bg-white" data-scroll-service data-steps="2">
+  <section class="service-scroll-section bg-[#fdfaf7]" data-scroll-service data-steps="2">
     <div class="service-scroll-sticky">
-      <div class="service-scroll-inner mx-auto flex max-w-6xl flex-col justify-center border-t border-[#bda589]/25 px-6 py-8 md:py-10">
-        <div class="service-scroll-stage grid min-h-[440px] grid-cols-1 gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center md:gap-12">
-          <div class="service-scroll-visual" aria-live="polite">
-            <figure class="service-scroll-card is-active" data-service-panel="0">
-              <img src="/images/Asesoramiento.webp" alt={services[4].alt} loading="lazy" />
-            </figure>
-            <figure class="service-scroll-card" data-service-panel="1">
-              <img src="/images/plano-asesoria.png" alt="Plano de asesoría online de decoración e interiorismo" loading="lazy" />
-            </figure>
-          </div>
-
+      <div class="service-scroll-inner mx-auto flex max-w-6xl flex-col justify-center px-6 py-8 md:py-10">
+        <div class="service-scroll-stage grid min-h-[440px] grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center md:gap-12">
           <div class="service-scroll-copy-wrap">
             <div class="mb-8 flex items-center gap-3">
               <span class="service-scroll-dot is-active" data-service-dot="0" aria-hidden="true"></span>
@@ -327,12 +324,9 @@ const schema = {
               <p class="text-lg italic leading-relaxed text-[#201400]">
                 <span set:html={highlightHomeText(content.advisoryLead)}></span>
               </p>
-              <p class="mt-6 text-base leading-relaxed text-[#201400]/75 md:text-lg">
+              <p class="mhk-body-reference mt-6 text-[#201400]/80">
                 <span set:html={highlightHomeText(content.advisoryParagraphs[0])}></span>
               </p>
-              <a href={`${getRoutePath('services', lang)}#servicio-5`} class="mhk-button-strong-black mt-8 inline-block w-full max-w-md rounded-[8px] bg-[#bda589] px-8 py-4 text-center uppercase text-[#201400] transition-colors duration-300 hover:bg-[#9a7d62]">
-                {copy.actions.learnMore}
-              </a>
             </article>
 
             <article class="service-scroll-copy" data-service-copy="1">
@@ -353,6 +347,16 @@ const schema = {
               </a>
             </article>
           </div>
+
+          <div class="service-scroll-visual" aria-live="polite">
+            <figure class="service-scroll-card is-active" data-service-panel="0">
+              <img src="/images/Asesoramiento.webp" alt={services[4].alt} loading="lazy" />
+            </figure>
+            <figure class="service-scroll-card" data-service-panel="1">
+              <img src="/images/plano-asesoria.png" alt="Plano de asesoría online de decoración e interiorismo" loading="lazy" />
+            </figure>
+          </div>
+
         </div>
       </div>
     </div>
@@ -360,7 +364,7 @@ const schema = {
 
   <section class="py-20 px-6 bg-white overflow-hidden">
     <div class="max-w-6xl mx-auto">
-      <p class="mhk-text-strong text-center text-xs tracking-[0.4em] uppercase text-[#bda589] mb-12">{content.brands}</p>
+      <p class="home-intro-title-strong mb-12 text-center text-lg leading-snug text-[#bda589]">{content.brands}</p>
       <div class="flex flex-wrap justify-center items-center gap-10 md:gap-14">
         {brandLogos.map((logo) => (
           <img src={logo.src} alt={logo.name} class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 md:h-12" loading="lazy" />
@@ -374,7 +378,7 @@ const schema = {
   <section class="py-24 px-6 bg-[#bda589]">
     <div class="max-w-3xl mx-auto text-center">
       <h2 class="text-3xl md:text-4xl font-light text-white mb-6">{content.ctaTitle}</h2>
-      <p class="text-white/85 mb-10 text-lg font-light leading-relaxed">{content.ctaBody}</p>
+      <p class="mhk-body-reference mb-10 text-white/85">{content.ctaBody}</p>
       <div class="flex flex-col items-center justify-center gap-3">
         <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="inline-block w-full border border-white/70 text-center text-white text-xs uppercase px-10 py-4 hover:bg-white hover:text-[#201400] transition-all duration-300 sm:w-auto">
           {copy.actions.whatsapp}
