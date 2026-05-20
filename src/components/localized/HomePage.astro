@@ -106,7 +106,7 @@ const schema = {
                 <span set:html={highlightHomeText(content.introTitle)}></span>
               )}
             </h2>
-            <div class="home-intro-copy mhk-body-reference max-w-[960px] space-y-6 text-[#201400]/80">
+            <div class="home-intro-copy home-uniform-body mhk-body-reference max-w-[960px] space-y-6 text-[#201400]/80">
               {content.introParagraphs.map((paragraph) => (
                 <p>
                   <span set:html={highlightHomeText(paragraph)}></span>
@@ -119,7 +119,7 @@ const schema = {
             <h3 class="home-intro-title-strong mb-5 text-lg leading-snug text-[#bda589]">
               {content.accentTitle}
             </h3>
-            <p class="mhk-body-reference max-w-[960px] text-[#201400]/80">
+            <p class="home-uniform-body mhk-body-reference max-w-[960px] text-[#201400]/80">
               <span set:html={highlightHomeText(content.accentBody)}></span>
             </p>
           </div>
@@ -202,16 +202,16 @@ const schema = {
                       </p>
                     </>
                   )}
-                  <p class="mhk-body-reference text-[#201400]/80">
+                  <p class="home-uniform-body mhk-body-reference text-[#201400]/80">
                     <span set:html={highlightHomeText(step.body)}></span>
                   </p>
                   {step.extraBody && (
-                    <p class="mhk-body-reference mt-5 text-[#201400]/80">
+                    <p class="home-uniform-body mhk-body-reference mt-5 text-[#201400]/80">
                       <span set:html={highlightHomeText(step.extraBody)}></span>
                     </p>
                   )}
                   {step.bullets && (
-                    <ul class="mhk-body-reference mt-5 space-y-2 text-[#201400]/80">
+                    <ul class="home-uniform-body mhk-body-reference mt-5 space-y-2 text-[#201400]/80">
                       {step.bullets.map((item) => (
                         <li class="flex gap-3">
                           <span class="mt-[0.62em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
@@ -220,7 +220,7 @@ const schema = {
                       ))}
                     </ul>
                   )}
-                  <p class="mt-6 text-base italic leading-relaxed text-[#201400]">
+                  <p class="home-uniform-body mhk-body-reference mt-6 italic text-[#201400]">
                     <span set:html={highlightHomeText(step.note)}></span>
                   </p>
                   {step.cta && (
@@ -285,10 +285,10 @@ const schema = {
     <div class="mx-auto grid min-h-[440px] max-w-6xl grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center md:gap-12">
       <div class="min-w-0">
         <h2 class="home-staging-heading-single mb-7 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.homeStagingTitle}</h2>
-        <p class="mhk-body-reference max-w-[760px] text-[#201400]/80">
+        <p class="home-uniform-body mhk-body-reference max-w-[760px] text-[#201400]/80">
           <span set:html={highlightHomeText(content.homeStagingBody)}></span>
         </p>
-        <ul class="mt-7 space-y-3 text-lg leading-relaxed text-[#201400]/80">
+        <ul class="home-uniform-body mt-7 space-y-3 text-[#201400]/80">
           {content.homeStagingBullets.map((item) => (
             <li class="flex gap-3">
               <span class="mt-[0.62em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
@@ -296,7 +296,7 @@ const schema = {
             </li>
           ))}
         </ul>
-        <p class="mt-7 text-base italic leading-relaxed text-[#201400]">
+        <p class="home-uniform-body mt-7 italic text-[#201400]">
           <span set:html={highlightHomeText(content.homeStagingNote)}></span>
         </p>
         <a href={`${getRoutePath('services', lang)}#servicio-4`} class="mhk-button-strong-black mt-8 inline-block w-full max-w-md rounded-[8px] bg-[#bda589] px-8 py-4 text-center uppercase text-[#201400] transition-colors duration-300 hover:bg-[#9a7d62]">
@@ -321,20 +321,20 @@ const schema = {
 
             <article class="service-scroll-copy is-active" data-service-copy="0">
               <h3 class="advisory-heading-single mb-5 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.advisoryTitle}</h3>
-              <p class="text-lg italic leading-relaxed text-[#201400]">
+              <p class="home-uniform-body italic text-[#201400]">
                 <span set:html={highlightHomeText(content.advisoryLead)}></span>
               </p>
-              <p class="mhk-body-reference mt-6 text-[#201400]/80">
+              <p class="home-uniform-body mhk-body-reference mt-6 text-[#201400]/80">
                 <span set:html={highlightHomeText(content.advisoryParagraphs[0])}></span>
               </p>
             </article>
 
             <article class="service-scroll-copy" data-service-copy="1">
               <h3 class="advisory-heading-single mb-5 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.advisoryTitle}</h3>
-              <p class="text-lg italic leading-relaxed text-[#201400]">
+              <p class="home-uniform-body italic text-[#201400]">
                 <span set:html={highlightHomeText(content.advisoryParagraphs[1])}></span>
               </p>
-              <ul class="mt-7 space-y-3 text-base leading-relaxed text-[#201400]/80 md:text-lg">
+              <ul class="home-uniform-body mt-7 space-y-3 text-[#201400]/80">
                 {content.advisorySteps.map((item) => (
                   <li class="flex gap-3">
                     <span class="mt-[0.62em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>

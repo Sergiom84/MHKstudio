@@ -151,6 +151,11 @@ h4 {
   line-height: 1.625;
 }
 
+.home-uniform-body {
+  font-size: 1.125rem;
+  line-height: 1.625;
+}
+
 .home-intro-quote {
   display: block;
   width: auto;
@@ -803,6 +808,11 @@ header summary:focus-visible {
     letter-spacing: 0.32em;
   }
 
+  .home-uniform-body {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
   .service-scroll-section {
     height: 320vh;
   }
@@ -957,8 +967,8 @@ header summary:focus-visible {
 
   .service-scroll-copy .mhk-body-reference,
   .service-scroll-copy > p:not(.mhk-body-reference) {
-    font-size: 0.96rem;
-    line-height: 1.48;
+    font-size: 1rem;
+    line-height: 1.55;
   }
 }
 
