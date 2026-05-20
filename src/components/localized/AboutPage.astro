@@ -57,7 +57,7 @@ const schema = {
 
   <section class="bg-white px-6 pb-24 pt-20 md:pt-24">
     <div class="mx-auto max-w-5xl">
-      <div class="mhk-body-reference mx-auto space-y-8 text-center text-[#201400]/80">
+      <div class="home-uniform-body mhk-body-reference mx-auto space-y-8 text-center text-[#201400]/80">
         {content.intro.map((paragraph) => <p set:html={paragraph} />)}
       </div>
       <div class="mt-24 h-px w-full bg-[#bda589]/65"></div>
@@ -74,7 +74,7 @@ const schema = {
               {item.title}
             </h2>
           </div>
-          <div class="mhk-body-reference max-w-3xl space-y-8 text-justify text-[#201400]/80">
+          <div class="home-uniform-body mhk-body-reference max-w-3xl space-y-8 text-justify text-[#201400]/80">
             {item.paragraphs.map((paragraph) => <p set:html={paragraph} />)}
           </div>
         </div>
@@ -103,7 +103,7 @@ const schema = {
               loading="lazy"
             />
             <h3 class="mb-7 text-xl font-medium uppercase tracking-[0.04em] text-[#020202]">{step[0]}</h3>
-            <p class="mhk-body-reference mx-auto max-w-[260px] text-[#201400]/80">{step[1]}</p>
+            <p class="home-uniform-body mhk-body-reference mx-auto max-w-[260px] text-[#201400]/80">{step[1]}</p>
           </article>
         ))}
       </div>

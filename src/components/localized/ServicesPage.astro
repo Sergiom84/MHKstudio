@@ -75,7 +75,7 @@ const schema = {
 
   <section class="border-b border-[#bda589]/35 bg-white px-6 pb-16 pt-20 md:pt-24">
     <div class="mx-auto max-w-5xl text-center">
-      <p class="mhk-body-reference text-[#201400]">
+      <p class="home-uniform-body mhk-body-reference text-[#201400]">
         {introParts.map((part, index) => (
           <>
             {index > 0 && <span class="text-[#b58f73]">MHK Studio</span>}
@@ -113,13 +113,13 @@ const schema = {
           <h2 class="services-detail-heading mb-6 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{service.title}</h2>
           <p class="mb-6 text-xs uppercase tracking-[0.32em] text-[#bda589]">{service.eyebrow}</p>
           {service.paragraphs.map((paragraph, paragraphIndex) => (
-            <p class={`${paragraphIndex > 0 ? 'mt-5' : ''} mhk-body-reference text-[#201400]/80`}>
+            <p class={`${paragraphIndex > 0 ? 'mt-5' : ''} home-uniform-body mhk-body-reference text-[#201400]/80`}>
               {paragraph.map((part) => <span class={part.highlight ? 'text-[#b58f73]' : ''}>{part.text}</span>)}
             </p>
           ))}
 
           {service.bullets.length > 0 && (
-            <ul class="mt-7 grid gap-3 text-base leading-relaxed text-[#201400]/75">
+            <ul class="home-uniform-body mhk-body-reference mt-7 grid gap-3 text-[#201400]/75">
               {service.bullets.map((item) => (
                 <li class="flex items-start gap-3">
                   <span class="mt-[0.58em] h-2 w-2 shrink-0 rounded-full bg-[#bda589]"></span>
@@ -129,7 +129,7 @@ const schema = {
             </ul>
           )}
 
-          <p class="mt-8 border-l-2 border-[#bda589] pl-5 text-lg italic leading-relaxed text-[#9a7d62]">{service.note}</p>
+          <p class="home-uniform-body mhk-body-reference mt-8 border-l-2 border-[#bda589] pl-5 italic text-[#9a7d62]">{service.note}</p>
         </div>
       </div>
     </section>
