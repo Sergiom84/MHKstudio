@@ -1,23 +1,39 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ReviewsCarousel from './ReviewsCarousel.astro';
-import { brandLogos, siteConfig } from '../../data/locations';
+import { brandLogos, siteConfig, type Location } from '../../data/locations';
 import { homeContent, homeServiceScrollStories, serviceCards, servicesContent, siteDescriptions, ui } from '../../i18n/content';
-import { absoluteUrl, getRoutePath, type Lang } from '../../i18n/routes';
+import { absoluteUrl, getLocationPath, getRoutePath, type Lang } from '../../i18n/routes';
 import { createTextHighlighter, homeSpanishHighlightTerms } from '../../utils/textHighlight';
 
 interface Props {
   lang: Lang;
+  location?: Location;
 }
 
-const { lang } = Astro.props;
+const { lang, location } = Astro.props;
+const city = location?.city ?? 'Almería';
+const replaceCityName = (value: string) =>
+  city === 'Almería' ? value : value.replace(/Almería/g, city).replace(/Almeria/g, city);
+const replaceCityNames = <T,>(value: T): T => {
+  if (typeof value === 'string') return replaceCityName(value) as T;
+  if (Array.isArray(value)) return value.map((item) => replaceCityNames(item)) as T;
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, replaceCityNames(item)])
+    ) as T;
+  }
+
+  return value;
+};
 const copy = ui[lang];
-const content = homeContent[lang];
+const content = replaceCityNames(homeContent[lang]);
 const servicesCopy = servicesContent[lang];
 const services = serviceCards[lang];
-const serviceScrollStories = homeServiceScrollStories[lang];
-const canonicalPath = getRoutePath('home', lang);
+const serviceScrollStories = replaceCityNames(homeServiceScrollStories[lang]);
+const canonicalPath = location ? getLocationPath(location.slug, lang) : getRoutePath('home', lang);
 const canonical = absoluteUrl(siteConfig.url, canonicalPath);
+const description = replaceCityName(siteDescriptions[lang]);
 const highlightHomeText = createTextHighlighter(lang === 'es' ? homeSpanishHighlightTerms : []);
 
 const heroSlides = [
@@ -38,7 +54,7 @@ const schema = {
       "@id": `${siteConfig.url}/#website`,
       "url": canonical,
       "name": "MHK Studio",
-      "description": siteDescriptions[lang],
+      "description": description,
       "inLanguage": lang
     },
     {
@@ -55,7 +71,8 @@ const schema = {
 
 <Layout
   title={content.title}
-  description={siteDescriptions[lang]}
+  description={description}
+  socialDescription={description}
   canonical={canonical}
   schema={schema}
   lang={lang}
@@ -176,7 +193,7 @@ const schema = {
                       <h3 class={`service-scroll-decor-heading mb-5 text-3xl leading-tight text-[#201400] md:text-5xl ${index === 0 || index === 2 ? 'service-scroll-heading-single' : ''}`}>
                         {index === 0 && lang === 'es' ? (
                           <>
-                            Decoración de interiores<br />en Almería
+                            Decoración de interiores<br />en {city}
                           </>
                         ) : (
                           step.title
@@ -191,7 +208,7 @@ const schema = {
                       <h3 class={`mb-5 text-3xl font-medium leading-tight text-[#201400] md:text-5xl ${storyIndex === 1 && index === 0 ? 'service-scroll-heading-single' : ''}`}>
                         {storyIndex === 1 && index === 0 && lang === 'es' ? (
                           <>
-                            Proyectos de interiorismo<br />en Almería
+                            Proyectos de interiorismo<br />en {city}
                           </>
                         ) : (
                           step.title

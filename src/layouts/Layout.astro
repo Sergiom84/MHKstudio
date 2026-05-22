@@ -11,6 +11,7 @@ interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  socialDescription?: string;
   schema?: object;
   noindex?: boolean;
   noHeaderOffset?: boolean;
@@ -23,6 +24,7 @@ const {
   description = siteDescriptions[lang],
   canonical = Astro.url.href,
   ogImage = new URL('/images/destacada-og.png', Astro.url.origin).href,
+  socialDescription: providedSocialDescription,
   schema,
   noindex = false,
   noHeaderOffset = false,
@@ -30,7 +32,7 @@ const {
 
 const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
 const socialTitle = 'MHK studio';
-const socialDescription =
+const socialDescription = providedSocialDescription ??
   'Descubre MHK Studio, expertos en diseño de interiores personalizado en Almería. Creamos espacios funcionales, elegantes y hechos a tu medida. Solicita tu asesoría.';
 const socialUrl = Astro.url.href;
 const siteLogoUrl = new URL('/images/MHK.webp', Astro.url.origin).href;

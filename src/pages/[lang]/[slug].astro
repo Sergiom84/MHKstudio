@@ -1,7 +1,7 @@
 ---
 import AboutPage from '../../components/localized/AboutPage.astro';
 import ContactPage from '../../components/localized/ContactPage.astro';
-import LocationPage from '../../components/localized/LocationPage.astro';
+import HomePage from '../../components/localized/HomePage.astro';
 import ServicesPage from '../../components/localized/ServicesPage.astro';
 import ThanksPage from '../../components/localized/ThanksPage.astro';
 import { locations, type Location } from '../../data/locations';
@@ -43,4 +43,4 @@ const { lang, routeKey, location } = Astro.props as Props;
 {routeKey === 'about' && <AboutPage lang={lang} />}
 {routeKey === 'contact' && <ContactPage lang={lang} />}
 {routeKey === 'thanks' && <ThanksPage lang={lang} />}
-{routeKey === 'location' && <LocationPage lang={lang} location={location} />}
+{routeKey === 'location' && <HomePage lang={lang} location={location} />}
