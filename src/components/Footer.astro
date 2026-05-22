@@ -1,6 +1,6 @@
 ---
 import { siteConfig, locations } from '../data/locations';
-import { getRoutePath, type Lang } from '../i18n/routes';
+import { getRoutePath, getLocationPath, type Lang } from '../i18n/routes';
 import { ui } from '../i18n/content';
 
 interface Props {
@@ -97,7 +97,7 @@ const socialLinks = [
         <ul class="space-y-2 columns-2">
           {locations.map(loc => (
             <li>
-              <a href={getRoutePath('services', lang)} class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">
+              <a href={getLocationPath(loc.slug, lang)} class="text-sm text-[#fdfaf7]/70 hover:text-[#fdfaf7] transition-colors">
                 {loc.city}
               </a>
             </li>
