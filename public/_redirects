@@ -1,6 +1,12 @@
-# Canonical host: www -> apex lo resuelve el dominio personalizado de Cloudflare.
-# No ponerlo aqui: Pages descarta las reglas con URL absoluta
-# ("Only relative URLs are allowed") y da una falsa sensacion de cobertura.
+# Canonical host: www -> apex NO hace falta declararlo aqui. Cloudflare Pages
+# ya lo resuelve cuando apex y www son dominios personalizados del proyecto.
+# Verificado en produccion el 2026-08-24 sin regla propia:
+#   www.mhkstudio.design/servicios -> 301 -> mhkstudio.design/servicios
+#
+# Nota: `wrangler pages dev` avisa "Only relative URLs are allowed" ante las
+# reglas con URL absoluta, pero ese aviso es del parser local. En produccion
+# si se aplican (comprobado en otro proyecto Pages de esta cuenta). Comprobar
+# siempre contra produccion antes de dar por muerta una regla.
 
 # Canonical slashless URLs
 /servicios/ /servicios 301
