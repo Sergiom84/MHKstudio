@@ -55,3 +55,6 @@ public/images/Servicios.png
 public/images/SobreNosotros.png
 public/images/SobreNosotros-optimized.avif
 public/images/SobreNosotros-optimized.webp
+
+# Cache local de Wrangler
+.wrangler/
