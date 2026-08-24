@@ -1,5 +1,6 @@
-# Canonical host
-https://www.mhkstudio.design/* https://mhkstudio.design/:splat 301!
+# Canonical host: www -> apex lo resuelve el dominio personalizado de Cloudflare.
+# No ponerlo aqui: Pages descarta las reglas con URL absoluta
+# ("Only relative URLs are allowed") y da una falsa sensacion de cobertura.
 
 # Canonical slashless URLs
 /servicios/ /servicios 301
@@ -13,6 +14,12 @@ https://www.mhkstudio.design/* https://mhkstudio.design/:splat 301!
 # WordPress/legal legacy routes
 /personalizar-cookies /politica-de-cookies 301
 /personalizar-cookies/ /politica-de-cookies 301
+
+# WordPress legacy: /proyectos era un indice de portfolio enlazado desde el menu
+# principal que nunca llego a tener obra real, solo 5 entradas de prueba.
+# Servicios es el destino mas cercano en intencion de busqueda.
+/proyectos /servicios 301
+/proyectos/ /servicios 301
 
 # Local landing canonical URLs
 /disenadora-de-interiores-en-mojacar/ /disenadora-de-interiores-en-mojacar 301
