@@ -9,6 +9,13 @@ interface Props {
 const { lang } = Astro.props;
 const copy = ui[lang];
 const reviews = getReviews(lang);
+const getReviewerInitials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toLocaleUpperCase())
+    .join('');
 ---
 
 <section class="bg-white px-6 py-16">
@@ -20,12 +27,12 @@ const reviews = getReviews(lang);
             <article class="min-h-[230px] w-full shrink-0 basis-full rounded-[8px] bg-[#bda589] p-5 text-[#201400] shadow-[0_2px_8px_rgba(32,20,0,0.24)] sm:basis-[calc((100%_-_24px)/2)] lg:basis-[calc((100%_-_48px)/3)]">
               <div class="mb-4 flex items-start justify-between gap-4">
                 <div class="flex items-center gap-3">
-                  <img
-                    src={review.avatar}
-                    alt={review.name}
-                    class="h-12 w-12 shrink-0 rounded-full border border-[#201400]/20 object-cover"
-                    loading="lazy"
-                  />
+                  <div
+                    class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[#201400]/20 bg-white/55 text-sm font-semibold tracking-[0.08em] text-[#201400]"
+                    aria-hidden="true"
+                  >
+                    {getReviewerInitials(review.name)}
+                  </div>
                   <div>
                     <p class="font-semibold leading-tight text-[#0057d8]">{review.name}</p>
                     <p class="mt-1 text-sm text-[#201400]/75">{review.time}</p>

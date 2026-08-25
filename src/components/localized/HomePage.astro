@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ReviewsCarousel from './ReviewsCarousel.astro';
 import { brandLogos, siteConfig, type Location } from '../../data/locations';
-import { homeContent, homeServiceScrollStories, serviceCards, servicesContent, siteDescriptions, ui } from '../../i18n/content';
+import { homeContent, homeServiceScrollStories, locationContent, serviceCards, servicesContent, siteDescriptions, ui } from '../../i18n/content';
 import { absoluteUrl, getLocationPath, getRoutePath, type Lang } from '../../i18n/routes';
 import { createTextHighlighter, homeSpanishHighlightTerms } from '../../utils/textHighlight';
 
@@ -13,8 +13,26 @@ interface Props {
 
 const { lang, location } = Astro.props;
 const city = location?.city ?? 'Almería';
-const replaceCityName = (value: string) =>
-  city === 'Almería' ? value : value.replace(/Almería/g, city).replace(/Almeria/g, city);
+// The translated home copy uses either Mojácar or Almería as its source city.
+// For a location landing, replace only those existing, language-specific names
+// with the canonical city name from locations.ts. This keeps the translations
+// intact and avoids maintaining invented city translations in a second table.
+const sourceCityNames: Record<Lang, readonly string[]> = {
+  es: ['Almería', 'Almeria'],
+  en: ['Mojácar', 'Almería', 'Almeria'],
+  de: ['Mojácar', 'Almería', 'Almeria'],
+  ru: ['Мохакаре', 'Мохакар', 'Альмерии', 'Альмерия'],
+  it: ['Mojácar', 'Almería', 'Almeria'],
+  fr: ['Mojácar', 'Almería', 'Almeria'],
+};
+const replaceCityName = (value: string) => {
+  if (!location) return value;
+
+  return sourceCityNames[lang].reduce(
+    (localizedValue, sourceCity) => localizedValue.split(sourceCity).join(city),
+    value
+  );
+};
 const replaceCityNames = <T,>(value: T): T => {
   if (typeof value === 'string') return replaceCityName(value) as T;
   if (Array.isArray(value)) return value.map((item) => replaceCityNames(item)) as T;
@@ -33,7 +51,8 @@ const services = serviceCards[lang];
 const serviceScrollStories = replaceCityNames(homeServiceScrollStories[lang]);
 const canonicalPath = location ? getLocationPath(location.slug, lang) : getRoutePath('home', lang);
 const canonical = absoluteUrl(siteConfig.url, canonicalPath);
-const description = replaceCityName(siteDescriptions[lang]);
+const pageTitle = location ? locationContent[lang].title(city) : content.title;
+const description = location ? locationContent[lang].description(city) : siteDescriptions[lang];
 const highlightHomeText = createTextHighlighter(lang === 'es' ? homeSpanishHighlightTerms : []);
 
 const heroSlides = [
@@ -61,7 +80,7 @@ const schema = {
       "@type": "WebPage",
       "@id": `${canonical}#webpage`,
       "url": canonical,
-      "name": content.title,
+      "name": pageTitle,
       "isPartOf": { "@id": `${siteConfig.url}/#website` },
       "inLanguage": lang
     }
@@ -70,7 +89,7 @@ const schema = {
 ---
 
 <Layout
-  title={content.title}
+  title={pageTitle}
   description={description}
   socialDescription={description}
   canonical={canonical}

@@ -27,6 +27,52 @@
 /proyectos /servicios 301
 /proyectos/ /servicios 301
 
+# WordPress WXR 2026-08-25: five published placeholder posts used dated
+# permalinks. They belonged to the old projects index, so Servicios is the
+# closest surviving destination. The dated wildcard covers the attachment
+# pages that WordPress nested below those posts.
+/2025/05/21/* /servicios 301
+/proyecto-de-prueba-1 /servicios 301
+/proyecto-de-prueba-1/ /servicios 301
+/proyecto-de-prueba-2 /servicios 301
+/proyecto-de-prueba-2/ /servicios 301
+/proyecto-de-prueba-3 /servicios 301
+/proyecto-de-prueba-3/ /servicios 301
+/proyecto-de-prueba-4 /servicios 301
+/proyecto-de-prueba-4/ /servicios 301
+/proyecto-de-prueba-5 /servicios 301
+/proyecto-de-prueba-5/ /servicios 301
+
+# Published WordPress attachment pages with root-level pretty permalinks.
+/2149741786-1/* /servicios 301
+/2149741786/* /servicios 301
+/asesoramiento/* /servicios 301
+/decoracion-2/* /servicios 301
+/encuentro/* /servicios 301
+/mt-sample-background/* /servicios 301
+/planificacion/* /servicios 301
+/satistaccion/* /servicios 301
+/servicios/destacada/* /servicios 301
+/servicios/destacada/destacada-2/* /servicios 301
+
+# The export contained only placeholder project posts in these archives.
+/category/* /servicios 301
+/tag/* /servicios 301
+/2025 /servicios 301
+/2025/ /servicios 301
+/2025/05 /servicios 301
+/2025/05/ /servicios 301
+/author/* /sobre-nosotros 301
+
+# WXR media whose binary already exists in the migrated site.
+/wp-content/uploads/2025/05/icono-del-sitio-1.png /images/icono-del-sitio-1.png 301
+/wp-content/uploads/2025/05/boton-inicio-1.png /images/boton-inicio-1.png 301
+/wp-content/uploads/2025/05/destacada.png /images/destacada.png 301
+/wp-content/uploads/2025/05/1-2.png /images/1-2.png 301
+/wp-content/uploads/2025/05/2-2.png /images/2-2.png 301
+/wp-content/uploads/2025/05/3-2.png /images/3-2.png 301
+/wp-content/uploads/2025/05/4-2.png /images/4-2.png 301
+
 # Local landing canonical URLs
 /disenadora-de-interiores-en-mojacar/ /disenadora-de-interiores-en-mojacar 301
 /disenadora-de-interiores-almeria/ /disenadora-de-interiores-almeria 301

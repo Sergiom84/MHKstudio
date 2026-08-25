@@ -21,11 +21,11 @@ export const nonDefaultLanguages = languages
 export const routePaths: Record<RouteKey, Record<Lang, string>> = {
   home: {
     es: '/',
-    en: '/en/',
-    de: '/de/',
-    ru: '/ru/',
-    it: '/it/',
-    fr: '/fr/',
+    en: '/en',
+    de: '/de',
+    ru: '/ru',
+    it: '/it',
+    fr: '/fr',
   },
   services: {
     es: '/servicios',

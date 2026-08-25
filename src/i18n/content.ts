@@ -277,32 +277,26 @@ export const reviewProfiles = [
   {
     name: 'Rafael A.',
     time: { es: 'hace 5 meses', en: '5 months ago', de: 'vor 5 Monaten', ru: '5 месяцев назад', it: '5 mesi fa', fr: 'il y a 5 mois' },
-    avatar: 'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_46c7ce7891060670cac5aa35a95ce15f.jpg',
   },
   {
     name: 'Clinton L.',
     time: { es: 'hace 8 meses', en: '8 months ago', de: 'vor 8 Monaten', ru: '8 месяцев назад', it: '8 mesi fa', fr: 'il y a 8 mois' },
-    avatar: 'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_cedcd2103dd0d399a43619f9f4e4f577.jpg',
   },
   {
     name: 'Frédéric J.',
     time: { es: 'hace 8 meses', en: '8 months ago', de: 'vor 8 Monaten', ru: '8 месяцев назад', it: '8 mesi fa', fr: 'il y a 8 mois' },
-    avatar: 'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_9293f569f19c8f8148d24445acc60d60.jpg',
   },
   {
     name: 'Christine Le M.',
     time: { es: 'hace 9 meses', en: '9 months ago', de: 'vor 9 Monaten', ru: '9 месяцев назад', it: '9 mesi fa', fr: 'il y a 9 mois' },
-    avatar: 'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_08b443c0153ea3fe7ffb684fa1d042c9.jpg',
   },
   {
     name: 'Alvaro R.',
     time: { es: 'hace 9 meses', en: '9 months ago', de: 'vor 9 Monaten', ru: '9 месяцев назад', it: '9 mesi fa', fr: 'il y a 9 mois' },
-    avatar: 'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_e9b4e0b14c78175760c3c99ebecf0318.jpg',
   },
   {
     name: 'claudio P.',
     time: { es: 'hace 4 meses', en: '4 months ago', de: 'vor 4 Monaten', ru: '4 месяца назад', it: '4 mesi fa', fr: 'il y a 4 mois' },
-    avatar: 'https://mhkstudio.design/wp-content/uploads/2025/12/ChIJwVEHXJOVEaIRdkJv6JlTkfk_6dac4e0a4d638c21f9a126850cc50dcd.jpg',
   },
 ] as const;
 
@@ -310,7 +304,6 @@ export const getReviews = (lang: Lang) =>
   reviewProfiles.map((profile, index) => ({
     name: profile.name,
     time: profile.time[lang],
-    avatar: profile.avatar,
     text: reviews[lang][index],
   }));
 
@@ -2061,7 +2054,7 @@ export const locationContent = {
     ctaBody: 'Tell us about your project. We will reply within 24 hours.',
   },
   de: {
-    title: (city: string) => `Innenarchitektur in ${city}`,
+    title: (city: string) => `Innenarchitektin in ${city}`,
     description: (city: string) => `Innenarchitektur-Studio in ${city}. Dekoration, Interior-Design-Projekte, maßgefertigte Küchen und Bäder sowie professionelles Home Staging. MHK Studio.`,
     breadcrumbHome: 'Start',
     introTitle: (city: string) => `Individuelle Innenarchitektur in ${city}`,
