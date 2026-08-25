@@ -3,7 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import ReviewsCarousel from './ReviewsCarousel.astro';
 import { brandLogos, siteConfig, type Location } from '../../data/locations';
 import { homeContent, homeServiceScrollStories, locationContent, serviceCards, servicesContent, siteDescriptions, ui } from '../../i18n/content';
-import { absoluteUrl, getLocationPath, getRoutePath, type Lang } from '../../i18n/routes';
+import { absoluteUrl, getLocationPath, getRoutePath, getServicePagePath, type Lang } from '../../i18n/routes';
+import type { ServiceKey } from '../../i18n/servicePages';
 import { createTextHighlighter, homeSpanishHighlightTerms } from '../../utils/textHighlight';
 
 interface Props {
@@ -12,13 +13,13 @@ interface Props {
 }
 
 const { lang, location } = Astro.props;
-const city = location?.city ?? 'Almería';
+const city = location?.city ?? 'Mojácar';
 // The translated home copy uses either Mojácar or Almería as its source city.
 // For a location landing, replace only those existing, language-specific names
 // with the canonical city name from locations.ts. This keeps the translations
 // intact and avoids maintaining invented city translations in a second table.
 const sourceCityNames: Record<Lang, readonly string[]> = {
-  es: ['Almería', 'Almeria'],
+  es: ['Almería', 'Almeria', 'Mojácar'],
   en: ['Mojácar', 'Almería', 'Almeria'],
   de: ['Mojácar', 'Almería', 'Almeria'],
   ru: ['Мохакаре', 'Мохакар', 'Альмерии', 'Альмерия'],
@@ -55,6 +56,7 @@ const pageTitle = location ? locationContent[lang].title(city) : content.title;
 const description = location ? locationContent[lang].description(city) : siteDescriptions[lang];
 const primaryHeading = location ? locationContent[lang].introTitle(city) : content.introTitle;
 const highlightHomeText = createTextHighlighter(lang === 'es' ? homeSpanishHighlightTerms : []);
+const storyServiceKeys: ServiceKey[] = ['decoracion', 'interiorismo', 'cocinas'];
 
 const heroSlides = [
   '/images/hero-portada-inicio-clean.webp',
@@ -123,17 +125,7 @@ const schema = {
 
   <section class="bg-white px-6 py-20 md:py-24">
     <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-[0.68fr_minmax(0,2fr)] md:items-start md:gap-20 lg:gap-32">
-      <div class="md:pt-10">
-        <img src="/images/icono-comillas.webp" alt="" class="home-intro-quote" loading="lazy" />
-        <p class="home-intro-signature" aria-label="Designing for Living">
-          <span class="home-intro-signature-line home-intro-signature-strong">Designing</span>
-          <span class="home-intro-signature-line">
-            <span class="home-intro-signature-light">for</span>
-            <span class="home-intro-signature-strong">Living</span>
-          </span>
-        </p>
-      </div>
-      <div>
+      <div class="order-2 md:order-none md:col-start-2 md:row-start-1">
         <div class="space-y-7">
           <div>
             <h1 class="home-intro-title-strong mb-8 text-lg leading-snug text-[#bda589] lg:whitespace-nowrap">
@@ -155,6 +147,11 @@ const schema = {
             <p class="home-uniform-body mhk-body-reference max-w-[960px] text-[#201400]/80">
               <span set:html={highlightHomeText(content.accentBody)}></span>
             </p>
+            {content.accentSecondary && (
+              <p class="home-uniform-body mhk-body-reference mt-5 max-w-[960px] text-[#201400]/80">
+                <span set:html={highlightHomeText(content.accentSecondary)}></span>
+              </p>
+            )}
           </div>
         </div>
         <a
@@ -163,6 +160,16 @@ const schema = {
         >
           {copy.actions.learnMore}
         </a>
+      </div>
+      <div class="order-1 md:order-none md:col-start-1 md:row-start-1 md:pt-10">
+        <img src="/images/icono-comillas.webp" alt="" class="home-intro-quote" loading="lazy" />
+        <h2 class="home-intro-signature" aria-label="Designing for Living">
+          <span class="home-intro-signature-line home-intro-signature-strong">Designing</span>
+          <span class="home-intro-signature-line">
+            <span class="home-intro-signature-light">for</span>
+            <span class="home-intro-signature-strong">Living</span>
+          </span>
+        </h2>
       </div>
     </div>
   </section>
@@ -204,37 +211,26 @@ const schema = {
                   class={`service-scroll-copy ${index === 0 ? 'is-active' : ''}`}
                   data-service-copy={index}
                 >
-                  {storyIndex === 0 ? (
-                    <>
-                      <h3 class={`service-scroll-decor-heading mb-5 text-3xl leading-tight text-[#201400] md:text-5xl ${index === 0 || index === 2 ? 'service-scroll-heading-single' : ''}`}>
-                        {index === 0 && lang === 'es' ? (
+                  {index === 0 ? (
+                    <h2 class={`${storyIndex === 0 ? 'service-scroll-decor-heading' : 'font-medium'} mb-5 text-3xl leading-tight text-[#201400] md:text-5xl ${storyIndex === 0 || storyIndex === 1 ? 'service-scroll-heading-single' : ''}`}>
+                      <a href={getServicePagePath(storyServiceKeys[storyIndex], lang)} class="transition-colors hover:text-[#9a7d62]">
+                        {storyIndex === 0 && lang === 'es' ? (
                           <>
                             Decoración de interiores<br />en {city}
                           </>
                         ) : (
                           step.title
                         )}
-                      </h3>
-                      <p class="service-scroll-kicker mb-6 text-sm uppercase tracking-[0.28em] text-[#bda589]">
-                        {step.label}
-                      </p>
-                    </>
+                      </a>
+                    </h2>
                   ) : (
-                    <>
-                      <h3 class={`mb-5 text-3xl font-medium leading-tight text-[#201400] md:text-5xl ${storyIndex === 1 && index === 0 ? 'service-scroll-heading-single' : ''}`}>
-                        {storyIndex === 1 && index === 0 && lang === 'es' ? (
-                          <>
-                            Proyectos de interiorismo<br />en {city}
-                          </>
-                        ) : (
-                          step.title
-                        )}
-                      </h3>
-                      <p class="service-scroll-kicker mb-6 text-sm uppercase tracking-[0.28em] text-[#bda589]">
-                        {step.label}
-                      </p>
-                    </>
+                    <h3 class={`${storyIndex === 0 ? 'service-scroll-decor-heading' : 'font-medium'} mb-5 text-3xl leading-tight text-[#201400] md:text-5xl ${storyIndex === 0 && index === 2 ? 'service-scroll-heading-single' : ''}`}>
+                      {step.title}
+                    </h3>
                   )}
+                  <p class="service-scroll-kicker mb-6 text-sm uppercase tracking-[0.28em] text-[#bda589]">
+                    {step.label}
+                  </p>
                   <p class="home-uniform-body mhk-body-reference text-[#201400]/80">
                     <span set:html={highlightHomeText(step.body)}></span>
                   </p>
@@ -317,7 +313,9 @@ const schema = {
   <section class="flex min-h-screen items-center bg-white px-6 py-14 md:py-[4.25rem]">
     <div class="mx-auto grid min-h-[440px] max-w-6xl grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center md:gap-12">
       <div class="min-w-0">
-        <h2 class="home-staging-heading-single mb-7 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.homeStagingTitle}</h2>
+        <h2 class="home-staging-heading-single mb-7 text-3xl font-light leading-tight text-[#201400] md:text-5xl">
+          <a href={getServicePagePath('staging', lang)} class="transition-colors hover:text-[#9a7d62]">{content.homeStagingTitle}</a>
+        </h2>
         <p class="home-uniform-body mhk-body-reference max-w-[760px] text-[#201400]/80">
           <span set:html={highlightHomeText(content.homeStagingBody)}></span>
         </p>
@@ -353,7 +351,9 @@ const schema = {
             </div>
 
             <article class="service-scroll-copy is-active" data-service-copy="0">
-              <h3 class="advisory-heading-single mb-5 text-3xl font-light leading-tight text-[#201400] md:text-5xl">{content.advisoryTitle}</h3>
+              <h2 class="advisory-heading-single mb-5 text-3xl font-light leading-tight text-[#201400] md:text-5xl">
+                <a href={getServicePagePath('asesoria', lang)} class="transition-colors hover:text-[#9a7d62]">{content.advisoryTitle}</a>
+              </h2>
               <p class="home-uniform-body italic text-[#201400]">
                 <span set:html={highlightHomeText(content.advisoryLead)}></span>
               </p>
@@ -397,7 +397,7 @@ const schema = {
 
   <section class="py-20 px-6 bg-white overflow-hidden">
     <div class="max-w-6xl mx-auto">
-      <p class="home-intro-title-strong mb-12 text-center text-lg leading-snug text-[#bda589]">{content.brands}</p>
+      <h2 class="home-intro-title-strong mb-12 text-center text-lg leading-snug text-[#bda589]">{content.brands}</h2>
       <div class="flex flex-wrap justify-center items-center gap-10 md:gap-14">
         {brandLogos.map((logo) => (
           <img src={logo.src} alt={logo.name} class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 md:h-12" loading="lazy" />
