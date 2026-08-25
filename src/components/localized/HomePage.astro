@@ -53,6 +53,7 @@ const canonicalPath = location ? getLocationPath(location.slug, lang) : getRoute
 const canonical = absoluteUrl(siteConfig.url, canonicalPath);
 const pageTitle = location ? locationContent[lang].title(city) : content.title;
 const description = location ? locationContent[lang].description(city) : siteDescriptions[lang];
+const primaryHeading = location ? locationContent[lang].introTitle(city) : content.introTitle;
 const highlightHomeText = createTextHighlighter(lang === 'es' ? homeSpanishHighlightTerms : []);
 
 const heroSlides = [
@@ -135,13 +136,9 @@ const schema = {
       <div>
         <div class="space-y-7">
           <div>
-            <h2 class="home-intro-title-strong mb-8 text-lg leading-snug text-[#bda589] lg:whitespace-nowrap">
-              {lang === 'es' ? (
-                'Diseño de interiores personalizado que transforma tu hogar y tu bienestar'
-              ) : (
-                <span set:html={highlightHomeText(content.introTitle)}></span>
-              )}
-            </h2>
+            <h1 class="home-intro-title-strong mb-8 text-lg leading-snug text-[#bda589] lg:whitespace-nowrap">
+              <span set:html={highlightHomeText(primaryHeading)}></span>
+            </h1>
             <div class="home-intro-copy home-uniform-body mhk-body-reference max-w-[960px] space-y-6 text-[#201400]/80">
               {content.introParagraphs.map((paragraph) => (
                 <p>

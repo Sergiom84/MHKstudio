@@ -54,9 +54,11 @@ for (const url of urls) {
   const lang = html.match(/<html lang="([^"]+)"/)?.[1] ?? 'unknown';
   const title = html.match(/<title>([^<]+)<\/title>/)?.[1] ?? '';
   const description = html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '';
+  const h1Count = [...html.matchAll(/<h1(?:\s|>)/gi)].length;
 
   assert.equal(canonical, url, `Canonical mismatch for ${url}: ${canonical}`);
   assert.match(robots, /index\s*,\s*follow/, `Sitemap URL is not indexable: ${url}`);
+  assert.equal(h1Count, 1, `Indexable page must contain exactly one H1: ${url}`);
   assert.ok(!html.includes('/wp-content/uploads/'), `Legacy WordPress asset remains in ${url}`);
 
   const alternates = new Map(
