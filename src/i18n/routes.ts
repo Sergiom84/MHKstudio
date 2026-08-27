@@ -1,4 +1,5 @@
 import { locations } from '../data/locations';
+import { serviceKeys, servicePageSlugs, type ServiceKey } from './servicePages';
 
 export const defaultLang = 'es';
 
@@ -114,6 +115,11 @@ export const getLocationPath = (spanishSlug: string, lang: Lang) => {
   return lang === 'es' ? `/${slug}` : `/${lang}/${slug}`;
 };
 
+export const getServicePagePath = (key: ServiceKey, lang: Lang) => {
+  const slug = servicePageSlugs[key][lang];
+  return lang === 'es' ? `/${slug}` : `/${lang}/${slug}`;
+};
+
 export const getLangFromPath = (pathname: string): Lang => {
   const firstSegment = pathname.split('/').filter(Boolean)[0];
   return isLang(firstSegment) ? firstSegment : defaultLang;
@@ -138,6 +144,14 @@ export const resolveLocalizedPath = (pathname: string) => {
     }
   }
 
+  for (const serviceKey of serviceKeys) {
+    for (const language of languages) {
+      if (normalizePath(getServicePagePath(serviceKey, language.code)) === normalizedPath) {
+        return { lang: language.code, routeKey: 'service' as const, serviceKey };
+      }
+    }
+  }
+
   return { lang: getLangFromPath(pathname), routeKey: undefined };
 };
 
@@ -148,7 +162,11 @@ export const getLocalizedPath = (pathname: string, targetLang: Lang) => {
     return getLocationPath(resolved.locationSlug, targetLang);
   }
 
-  if (resolved.routeKey && resolved.routeKey !== 'location') {
+  if (resolved.routeKey === 'service' && resolved.serviceKey) {
+    return getServicePagePath(resolved.serviceKey, targetLang);
+  }
+
+  if (resolved.routeKey && resolved.routeKey !== 'location' && resolved.routeKey !== 'service') {
     return getRoutePath(resolved.routeKey, targetLang);
   }
 
