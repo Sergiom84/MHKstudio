@@ -15,6 +15,7 @@ const { lang, serviceKey } = Astro.props;
 const copy = ui[lang];
 const content = servicePagesContent[lang][serviceKey];
 const loadingForm = servicesContent[lang].loadingForm;
+const showHubSpotForm = lang === 'es';
 const canonicalPath = getServicePagePath(serviceKey, lang);
 const canonical = absoluteUrl(siteConfig.url, canonicalPath);
 const homePath = getRoutePath('home', lang);
@@ -133,9 +134,6 @@ const schema = {
           <p class="home-uniform-body mhk-body-reference mt-8 border-l-2 border-[#bda589] pl-5 italic text-[#9a7d62]">{section.closing}</p>
         )}
       </div>
-      {index === 0 && (
-        <img src="/images/Circulo.webp" alt="" class="absolute -right-10 -top-10 h-28 w-28 rotate-45 opacity-60" aria-hidden="true" />
-      )}
     </section>
   ))}
 
@@ -150,45 +148,47 @@ const schema = {
       <a href={siteConfig.whatsapp} target="_blank" rel="noopener" class="inline-block w-full border border-white/70 px-10 py-4 text-center text-xs uppercase text-white transition-all duration-300 hover:bg-white hover:text-[#201400] sm:w-auto">
         {copy.actions.whatsapp}
       </a>
-      <div class="mt-8 w-full rounded-[8px] bg-[#fdfaf7] p-5 text-left text-[#201400] shadow-[0_18px_45px_rgba(32,20,0,0.14)] md:p-8">
-        <p data-hubspot-loading class="text-sm leading-relaxed text-[#201400]/65">{loadingForm}</p>
-        <div id="mhk-hubspot-service-form" class="hbspt-form"></div>
-      </div>
+      {showHubSpotForm && (
+        <div class="mt-8 w-full rounded-[8px] bg-[#fdfaf7] p-5 text-left text-[#201400] shadow-[0_18px_45px_rgba(32,20,0,0.14)] md:p-8">
+          <p data-hubspot-loading class="text-sm leading-relaxed text-[#201400]/65">{loadingForm}</p>
+          <div id="mhk-hubspot-service-form" class="hbspt-form"></div>
+        </div>
+      )}
     </div>
   </section>
 
-  <section class="relative h-20 overflow-hidden bg-[#201400]">
-    <div class="absolute -right-16 top-12 opacity-20">
-      <img src="/images/Circulo.webp" alt="" class="h-48 w-48 rotate-45" aria-hidden="true" />
-    </div>
-  </section>
+  <section class="h-20 bg-[#201400]"></section>
 
-  <script is:inline src="https://js.hsforms.net/forms/embed/v2.js"></script>
-  <script is:inline>
-    (() => {
-      const formTarget = document.getElementById('mhk-hubspot-service-form');
-      const loadingMessage = document.querySelector('[data-hubspot-loading]');
-      let formLoaded = false;
+  {showHubSpotForm && (
+    <>
+      <script is:inline src="https://js.hsforms.net/forms/embed/v2.js"></script>
+      <script is:inline>
+        (() => {
+          const formTarget = document.getElementById('mhk-hubspot-service-form');
+          const loadingMessage = document.querySelector('[data-hubspot-loading]');
+          let formLoaded = false;
 
-      const loadHubSpotForm = (attempt = 0) => {
-        if (formLoaded || !formTarget) return;
+          const loadHubSpotForm = (attempt = 0) => {
+            if (formLoaded || !formTarget) return;
 
-        if (!window.hbspt?.forms) {
-          if (attempt < 20) window.setTimeout(() => loadHubSpotForm(attempt + 1), 150);
-          return;
-        }
+            if (!window.hbspt?.forms) {
+              if (attempt < 20) window.setTimeout(() => loadHubSpotForm(attempt + 1), 150);
+              return;
+            }
 
-        formLoaded = true;
-        loadingMessage?.remove();
-        window.hbspt.forms.create({
-          portalId: '49385837',
-          formId: 'f07fd6a8-686f-4879-9230-7ba46a86744c',
-          region: 'na1',
-          target: '#mhk-hubspot-service-form',
-        });
-      };
+            formLoaded = true;
+            loadingMessage?.remove();
+            window.hbspt.forms.create({
+              portalId: '49385837',
+              formId: 'f07fd6a8-686f-4879-9230-7ba46a86744c',
+              region: 'na1',
+              target: '#mhk-hubspot-service-form',
+            });
+          };
 
-      loadHubSpotForm();
-    })();
-  </script>
+          loadHubSpotForm();
+        })();
+      </script>
+    </>
+  )}
 </Layout>
