@@ -1,7 +1,8 @@
 ---
 import { siteConfig } from '../data/locations';
-import { getLocalizedPath, getRoutePath, languages, resolveLocalizedPath, type Lang, type RouteKey } from '../i18n/routes';
+import { getLocalizedPath, getRoutePath, getServicePagePath, languages, resolveLocalizedPath, type Lang, type RouteKey } from '../i18n/routes';
 import { ui } from '../i18n/content';
+import { serviceKeys, servicePagesContent } from '../i18n/servicePages';
 
 interface Props {
   lang?: Lang;
@@ -19,6 +20,11 @@ const navLinks: Array<{ label: string; href: string; routeKey: RouteKey }> = [
   { label: copy.nav.about, href: getRoutePath('about', lang), routeKey: 'about' },
   { label: copy.nav.contact, href: getRoutePath('contact', lang), routeKey: 'contact' },
 ];
+const serviceNavItems = serviceKeys.map((key) => ({
+  label: servicePagesContent[lang][key].navLabel,
+  href: getServicePagePath(key, lang),
+}));
+const isServicesRoute = currentRoute.routeKey === 'services' || currentRoute.routeKey === 'service';
 const hasHeaderHeroOverlay =
   currentRoute.routeKey === 'home' ||
   currentRoute.routeKey === 'services' ||
@@ -58,12 +64,35 @@ const socialLinks = [
     <!-- Desktop Nav -->
     <nav class="hidden items-center gap-8 lg:flex xl:gap-9">
       {navLinks.map(link => (
-        <a
-          href={link.href}
-          class={`text-sm font-normal uppercase tracking-[0.12em] text-[#120c00] transition-colors hover:text-[#9a7d62] ${currentRoute.routeKey === link.routeKey ? 'text-[#9a7d62]' : ''}`}
-        >
-          {link.label}
-        </a>
+        link.routeKey === 'services' ? (
+          <div class="nav-services-group relative">
+            <a
+              href={link.href}
+              class={`text-sm font-normal uppercase tracking-[0.12em] text-[#120c00] transition-colors hover:text-[#9a7d62] ${isServicesRoute ? 'text-[#9a7d62]' : ''}`}
+            >
+              {link.label}
+            </a>
+            <div class="nav-services-panel absolute left-1/2 top-full z-50 pt-4">
+              <div class="min-w-64 border border-[#bda589]/35 bg-[#fdfaf7]/98 p-2 shadow-[0_18px_45px_rgba(32,20,0,0.12)] backdrop-blur-sm">
+                {serviceNavItems.map((item) => (
+                  <a
+                    href={item.href}
+                    class="block w-full whitespace-nowrap px-3 py-2 text-left text-xs uppercase tracking-[0.14em] text-[#201400]/75 transition-colors hover:bg-[#bda589]/12 hover:text-[#201400]"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <a
+            href={link.href}
+            class={`text-sm font-normal uppercase tracking-[0.12em] text-[#120c00] transition-colors hover:text-[#9a7d62] ${currentRoute.routeKey === link.routeKey ? 'text-[#9a7d62]' : ''}`}
+          >
+            {link.label}
+          </a>
+        )
       ))}
       <details class="language-switcher relative">
         <summary
@@ -133,12 +162,26 @@ const socialLinks = [
   <div id="mobile-menu" class="hidden border-t border-[#201400]/15 bg-[#fdfaf7]/95 px-6 pb-6 lg:hidden">
     <nav class="flex flex-col gap-4 pt-4">
       {navLinks.map(link => (
-        <a
-          href={link.href}
-          class={`text-sm tracking-widest uppercase font-light hover:text-[#bda589] transition-colors ${currentRoute.routeKey === link.routeKey ? 'text-[#bda589]' : 'text-[#201400]'}`}
-        >
-          {link.label}
-        </a>
+        <>
+          <a
+            href={link.href}
+            class={`text-sm tracking-widest uppercase font-light hover:text-[#bda589] transition-colors ${(link.routeKey === 'services' ? isServicesRoute : currentRoute.routeKey === link.routeKey) ? 'text-[#bda589]' : 'text-[#201400]'}`}
+          >
+            {link.label}
+          </a>
+          {link.routeKey === 'services' && (
+            <div class="ml-3 flex flex-col gap-3 border-l border-[#bda589]/35 pl-4">
+              {serviceNavItems.map((item) => (
+                <a
+                  href={item.href}
+                  class="text-xs uppercase tracking-[0.14em] font-light text-[#201400]/75 transition-colors hover:text-[#bda589]"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </>
       ))}
       <div class="mt-2 border-t border-[#bda589]/30 pt-4">
         <p class="mb-3 text-xs uppercase tracking-[0.22em] text-[#bda589]">{copy.languages}</p>
@@ -182,6 +225,22 @@ const socialLinks = [
     </nav>
   </div>
 </header>
+
+<style>
+  .nav-services-panel {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  .nav-services-group:hover .nav-services-panel,
+  .nav-services-group:focus-within .nav-services-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+</style>
 
 <script>
   const toggle = document.getElementById('menu-toggle');
