@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/locations';
-import { absoluteUrl, defaultLang, getAlternatePaths, getLangFromPath, languages, resolveLocalizedPath, type Lang } from '../i18n/routes';
+import { absoluteUrl, defaultLang, getAlternatePaths, getLangFromPath, languages, type Lang } from '../i18n/routes';
 import { siteDescriptions } from '../i18n/content';
 
 interface Props {
@@ -31,14 +31,11 @@ const {
 } = Astro.props;
 
 const fullTitle = title.includes('MHK') ? title : `${title} | MHK Studio`;
-const socialTitle = 'MHK studio';
-const socialDescription = providedSocialDescription ??
-  'Descubre MHK Studio, expertos en diseño de interiores personalizado en Almería. Creamos espacios funcionales, elegantes y hechos a tu medida. Solicita tu asesoría.';
+const socialTitle = fullTitle;
+const socialDescription = providedSocialDescription ?? description;
 const socialUrl = Astro.url.href;
 const siteLogoUrl = new URL('/images/MHK.webp', Astro.url.origin).href;
 const alternatePaths = getAlternatePaths(Astro.url.pathname);
-const resolvedPath = resolveLocalizedPath(Astro.url.pathname);
-const hasTranslatedAlternates = Boolean(resolvedPath.routeKey);
 const currentLanguage = languages.find((language) => language.code === lang) ?? languages[0];
 const backToTopLabels: Record<Lang, string> = {
   es: 'Volver al inicio',
@@ -136,14 +133,14 @@ const organizationSchema = {
     {!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
 
     <link rel="canonical" href={canonical} />
-    {hasTranslatedAlternates && languages.map((language) => (
+    {alternatePaths && languages.map((language) => (
       <link
         rel="alternate"
         hreflang={language.hreflang}
         href={absoluteUrl(siteConfig.url, alternatePaths[language.code])}
       />
     ))}
-    {hasTranslatedAlternates && (
+    {alternatePaths && (
       <link
         rel="alternate"
         hreflang="x-default"

@@ -64,14 +64,12 @@
 /2025/05/ /servicios 301
 /author/* /sobre-nosotros 301
 
-# WXR media whose binary already exists in the migrated site.
+# WXR media whose binary already exists in the migrated site. The other four
+# placeholder images (1-2.png .. 4-2.png) were never migrated and have no
+# equivalent, so they 404 on purpose - see docs/wordpress-legacy-routes.json.
 /wp-content/uploads/2025/05/icono-del-sitio-1.png /images/icono-del-sitio-1.png 301
 /wp-content/uploads/2025/05/boton-inicio-1.png /images/boton-inicio-1.png 301
 /wp-content/uploads/2025/05/destacada.png /images/destacada.png 301
-/wp-content/uploads/2025/05/1-2.png /images/1-2.png 301
-/wp-content/uploads/2025/05/2-2.png /images/2-2.png 301
-/wp-content/uploads/2025/05/3-2.png /images/3-2.png 301
-/wp-content/uploads/2025/05/4-2.png /images/4-2.png 301
 
 # Local landing canonical URLs
 /disenadora-de-interiores-en-mojacar/ /disenadora-de-interiores-en-mojacar 301
@@ -85,3 +83,121 @@
 /disenadora-de-interiores-roquetas-de-mar/ /disenadora-de-interiores-roquetas-de-mar 301
 /disenadora-de-interiores-agua-amarga/ /disenadora-de-interiores-agua-amarga 301
 /disenadora-de-interiores-cabo-de-gata/ /disenadora-de-interiores-cabo-de-gata 301
+
+# Retired localized city landings (2026-09-12). Eleven cities were published in
+# each of the six languages, but every one of them was the language's home page
+# with the city name substituted: 66 near-duplicate URLs out of 90 indexable
+# ones. The translated sites keep their four canonical pages and the city
+# landings stay Spanish, where the local search intent is. Each retired URL
+# consolidates into the home page of its own language so a German visitor does
+# not land on Spanish copy.
+/en/interior-designer-in-mojacar /en 301
+/en/interior-designer-in-mojacar/ /en 301
+/en/interior-designer-in-almeria /en 301
+/en/interior-designer-in-almeria/ /en 301
+/en/interior-designer-in-lorca /en 301
+/en/interior-designer-in-lorca/ /en 301
+/en/interior-designer-in-aguilas /en 301
+/en/interior-designer-in-aguilas/ /en 301
+/en/interior-designer-in-vera /en 301
+/en/interior-designer-in-vera/ /en 301
+/en/interior-designer-in-carboneras /en 301
+/en/interior-designer-in-carboneras/ /en 301
+/en/interior-designer-in-garrucha /en 301
+/en/interior-designer-in-garrucha/ /en 301
+/en/interior-designer-in-san-juan-de-los-terreros /en 301
+/en/interior-designer-in-san-juan-de-los-terreros/ /en 301
+/en/interior-designer-in-roquetas-de-mar /en 301
+/en/interior-designer-in-roquetas-de-mar/ /en 301
+/en/interior-designer-in-agua-amarga /en 301
+/en/interior-designer-in-agua-amarga/ /en 301
+/en/interior-designer-in-cabo-de-gata /en 301
+/en/interior-designer-in-cabo-de-gata/ /en 301
+/de/innenarchitektur-mojacar /de 301
+/de/innenarchitektur-mojacar/ /de 301
+/de/innenarchitektur-almeria /de 301
+/de/innenarchitektur-almeria/ /de 301
+/de/innenarchitektur-lorca /de 301
+/de/innenarchitektur-lorca/ /de 301
+/de/innenarchitektur-aguilas /de 301
+/de/innenarchitektur-aguilas/ /de 301
+/de/innenarchitektur-vera /de 301
+/de/innenarchitektur-vera/ /de 301
+/de/innenarchitektur-carboneras /de 301
+/de/innenarchitektur-carboneras/ /de 301
+/de/innenarchitektur-garrucha /de 301
+/de/innenarchitektur-garrucha/ /de 301
+/de/innenarchitektur-san-juan-de-los-terreros /de 301
+/de/innenarchitektur-san-juan-de-los-terreros/ /de 301
+/de/innenarchitektur-roquetas-de-mar /de 301
+/de/innenarchitektur-roquetas-de-mar/ /de 301
+/de/innenarchitektur-agua-amarga /de 301
+/de/innenarchitektur-agua-amarga/ /de 301
+/de/innenarchitektur-cabo-de-gata /de 301
+/de/innenarchitektur-cabo-de-gata/ /de 301
+/ru/dizainer-intererov-mojacar /ru 301
+/ru/dizainer-intererov-mojacar/ /ru 301
+/ru/dizainer-intererov-almeria /ru 301
+/ru/dizainer-intererov-almeria/ /ru 301
+/ru/dizainer-intererov-lorca /ru 301
+/ru/dizainer-intererov-lorca/ /ru 301
+/ru/dizainer-intererov-aguilas /ru 301
+/ru/dizainer-intererov-aguilas/ /ru 301
+/ru/dizainer-intererov-vera /ru 301
+/ru/dizainer-intererov-vera/ /ru 301
+/ru/dizainer-intererov-carboneras /ru 301
+/ru/dizainer-intererov-carboneras/ /ru 301
+/ru/dizainer-intererov-garrucha /ru 301
+/ru/dizainer-intererov-garrucha/ /ru 301
+/ru/dizainer-intererov-san-juan-de-los-terreros /ru 301
+/ru/dizainer-intererov-san-juan-de-los-terreros/ /ru 301
+/ru/dizainer-intererov-roquetas-de-mar /ru 301
+/ru/dizainer-intererov-roquetas-de-mar/ /ru 301
+/ru/dizainer-intererov-agua-amarga /ru 301
+/ru/dizainer-intererov-agua-amarga/ /ru 301
+/ru/dizainer-intererov-cabo-de-gata /ru 301
+/ru/dizainer-intererov-cabo-de-gata/ /ru 301
+/it/interior-designer-mojacar /it 301
+/it/interior-designer-mojacar/ /it 301
+/it/interior-designer-almeria /it 301
+/it/interior-designer-almeria/ /it 301
+/it/interior-designer-lorca /it 301
+/it/interior-designer-lorca/ /it 301
+/it/interior-designer-aguilas /it 301
+/it/interior-designer-aguilas/ /it 301
+/it/interior-designer-vera /it 301
+/it/interior-designer-vera/ /it 301
+/it/interior-designer-carboneras /it 301
+/it/interior-designer-carboneras/ /it 301
+/it/interior-designer-garrucha /it 301
+/it/interior-designer-garrucha/ /it 301
+/it/interior-designer-san-juan-de-los-terreros /it 301
+/it/interior-designer-san-juan-de-los-terreros/ /it 301
+/it/interior-designer-roquetas-de-mar /it 301
+/it/interior-designer-roquetas-de-mar/ /it 301
+/it/interior-designer-agua-amarga /it 301
+/it/interior-designer-agua-amarga/ /it 301
+/it/interior-designer-cabo-de-gata /it 301
+/it/interior-designer-cabo-de-gata/ /it 301
+/fr/decoratrice-interieur-mojacar /fr 301
+/fr/decoratrice-interieur-mojacar/ /fr 301
+/fr/decoratrice-interieur-almeria /fr 301
+/fr/decoratrice-interieur-almeria/ /fr 301
+/fr/decoratrice-interieur-lorca /fr 301
+/fr/decoratrice-interieur-lorca/ /fr 301
+/fr/decoratrice-interieur-aguilas /fr 301
+/fr/decoratrice-interieur-aguilas/ /fr 301
+/fr/decoratrice-interieur-vera /fr 301
+/fr/decoratrice-interieur-vera/ /fr 301
+/fr/decoratrice-interieur-carboneras /fr 301
+/fr/decoratrice-interieur-carboneras/ /fr 301
+/fr/decoratrice-interieur-garrucha /fr 301
+/fr/decoratrice-interieur-garrucha/ /fr 301
+/fr/decoratrice-interieur-san-juan-de-los-terreros /fr 301
+/fr/decoratrice-interieur-san-juan-de-los-terreros/ /fr 301
+/fr/decoratrice-interieur-roquetas-de-mar /fr 301
+/fr/decoratrice-interieur-roquetas-de-mar/ /fr 301
+/fr/decoratrice-interieur-agua-amarga /fr 301
+/fr/decoratrice-interieur-agua-amarga/ /fr 301
+/fr/decoratrice-interieur-cabo-de-gata /fr 301
+/fr/decoratrice-interieur-cabo-de-gata/ /fr 301

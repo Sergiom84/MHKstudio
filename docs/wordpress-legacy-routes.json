@@ -26,12 +26,15 @@
     { "path": "/author/mhkstudiodesign/", "target": "/sobre-nosotros" },
     { "path": "/wp-content/uploads/2025/05/icono-del-sitio-1.png", "target": "/images/icono-del-sitio-1.png" },
     { "path": "/wp-content/uploads/2025/05/boton-inicio-1.png", "target": "/images/boton-inicio-1.png" },
-    { "path": "/wp-content/uploads/2025/05/destacada.png", "target": "/images/destacada.png" },
-    { "path": "/wp-content/uploads/2025/05/1-2.png", "target": "/images/1-2.png" },
-    { "path": "/wp-content/uploads/2025/05/2-2.png", "target": "/images/2-2.png" },
-    { "path": "/wp-content/uploads/2025/05/3-2.png", "target": "/images/3-2.png" },
-    { "path": "/wp-content/uploads/2025/05/4-2.png", "target": "/images/4-2.png" }
+    { "path": "/wp-content/uploads/2025/05/destacada.png", "target": "/images/destacada.png" }
   ],
   "queryAttachmentCount": 127,
-  "queryAttachmentNote": "WordPress attachment links using /?attachment_id=N require evidence from Search Console or backlinks before adding query-sensitive Cloudflare rules."
+  "queryAttachmentNote": "WordPress attachment links using /?attachment_id=N require evidence from Search Console or backlinks before adding query-sensitive Cloudflare rules.",
+  "droppedMedia": [
+    "/wp-content/uploads/2025/05/1-2.png",
+    "/wp-content/uploads/2025/05/2-2.png",
+    "/wp-content/uploads/2025/05/3-2.png",
+    "/wp-content/uploads/2025/05/4-2.png"
+  ],
+  "droppedMediaNote": "Placeholder images attached to the five fake WordPress project posts. No binary was migrated and no equivalent exists in public/images, so these URLs return 404 on purpose. Redirecting an image URL to a different image would misreport the asset to Google Images; a 404 is the correct signal for media that was deleted."
 }

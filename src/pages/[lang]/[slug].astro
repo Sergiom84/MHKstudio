@@ -1,46 +1,34 @@
 ---
 import AboutPage from '../../components/localized/AboutPage.astro';
 import ContactPage from '../../components/localized/ContactPage.astro';
-import HomePage from '../../components/localized/HomePage.astro';
 import ServicesPage from '../../components/localized/ServicesPage.astro';
 import ThanksPage from '../../components/localized/ThanksPage.astro';
-import { locations, type Location } from '../../data/locations';
-import { getLocationSlug, nonDefaultLanguages, routePaths, type Lang, type RouteKey } from '../../i18n/routes';
+import { nonDefaultLanguages, routePaths, type Lang, type RouteKey } from '../../i18n/routes';
 
 type LocalizedRouteKey = Exclude<RouteKey, 'home'>;
 
-type Props =
-  | { lang: Lang; routeKey: LocalizedRouteKey; location?: never }
-  | { lang: Lang; routeKey: 'location'; location: Location };
-
-export function getStaticPaths() {
-  const routeKeys: LocalizedRouteKey[] = ['services', 'about', 'contact', 'thanks'];
-  const paths = [];
-
-  for (const lang of nonDefaultLanguages) {
-    for (const routeKey of routeKeys) {
-      paths.push({
-        params: { lang, slug: routePaths[routeKey][lang].split('/').filter(Boolean).at(-1) },
-        props: { lang, routeKey },
-      });
-    }
-
-    for (const location of locations) {
-      paths.push({
-        params: { lang, slug: getLocationSlug(location.slug, lang) },
-        props: { lang, routeKey: 'location', location },
-      });
-    }
-  }
-
-  return paths;
+interface Props {
+  lang: Lang;
+  routeKey: LocalizedRouteKey;
 }
 
-const { lang, routeKey, location } = Astro.props as Props;
+// Only the four canonical pages are translated. City landings stay Spanish —
+// see the note on `locationLang` in src/i18n/routes.ts.
+export function getStaticPaths() {
+  const routeKeys: LocalizedRouteKey[] = ['services', 'about', 'contact', 'thanks'];
+
+  return nonDefaultLanguages.flatMap((lang) =>
+    routeKeys.map((routeKey) => ({
+      params: { lang, slug: routePaths[routeKey][lang].split('/').filter(Boolean).at(-1) },
+      props: { lang, routeKey },
+    }))
+  );
+}
+
+const { lang, routeKey } = Astro.props as Props;
 ---
 
 {routeKey === 'services' && <ServicesPage lang={lang} />}
 {routeKey === 'about' && <AboutPage lang={lang} />}
 {routeKey === 'contact' && <ContactPage lang={lang} />}
 {routeKey === 'thanks' && <ThanksPage lang={lang} />}
-{routeKey === 'location' && <HomePage lang={lang} location={location} />}
