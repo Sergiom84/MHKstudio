@@ -1,57 +1,41 @@
 ---
 import AboutPage from '../../components/localized/AboutPage.astro';
 import ContactPage from '../../components/localized/ContactPage.astro';
-import HomePage from '../../components/localized/HomePage.astro';
 import ServiceDetailPage from '../../components/localized/ServiceDetailPage.astro';
 import ServicesPage from '../../components/localized/ServicesPage.astro';
 import ThanksPage from '../../components/localized/ThanksPage.astro';
-import { locations, type Location } from '../../data/locations';
 import { serviceKeys, servicePageSlugs, type ServiceKey } from '../../i18n/servicePages';
-import { getLocationSlug, nonDefaultLanguages, routePaths, type Lang, type RouteKey } from '../../i18n/routes';
+import { nonDefaultLanguages, routePaths, type Lang, type RouteKey } from '../../i18n/routes';
 
 type LocalizedRouteKey = Exclude<RouteKey, 'home'>;
 
 type Props =
-  | { lang: Lang; routeKey: LocalizedRouteKey; location?: never; serviceKey?: never }
-  | { lang: Lang; routeKey: 'location'; location: Location; serviceKey?: never }
-  | { lang: Lang; routeKey: 'service'; serviceKey: ServiceKey; location?: never };
+  | { lang: Lang; routeKey: LocalizedRouteKey; serviceKey?: never }
+  | { lang: Lang; routeKey: 'service'; serviceKey: ServiceKey };
 
+// City landings are not translated - see the note on `locationLang` in
+// src/i18n/routes.ts. Service pages are: each one is distinct copy, not the
+// home page with a word swapped.
 export function getStaticPaths() {
   const routeKeys: LocalizedRouteKey[] = ['services', 'about', 'contact', 'thanks'];
-  const paths = [];
 
-  for (const lang of nonDefaultLanguages) {
-    for (const routeKey of routeKeys) {
-      paths.push({
-        params: { lang, slug: routePaths[routeKey][lang].split('/').filter(Boolean).at(-1) },
-        props: { lang, routeKey },
-      });
-    }
-
-    for (const location of locations) {
-      paths.push({
-        params: { lang, slug: getLocationSlug(location.slug, lang) },
-        props: { lang, routeKey: 'location', location },
-      });
-    }
-
-    for (const serviceKey of serviceKeys) {
-      paths.push({
-        params: { lang, slug: servicePageSlugs[serviceKey][lang] },
-        props: { lang, routeKey: 'service', serviceKey },
-      });
-    }
-  }
-
-  return paths;
+  return nonDefaultLanguages.flatMap((lang) => [
+    ...routeKeys.map((routeKey) => ({
+      params: { lang, slug: routePaths[routeKey][lang].split('/').filter(Boolean).at(-1) },
+      props: { lang, routeKey },
+    })),
+    ...serviceKeys.map((serviceKey) => ({
+      params: { lang, slug: servicePageSlugs[serviceKey][lang] },
+      props: { lang, routeKey: 'service' as const, serviceKey },
+    })),
+  ]);
 }
 
-const { lang, routeKey, location, serviceKey } = Astro.props as Props;
+const { lang, routeKey, serviceKey } = Astro.props as Props;
 ---
 
 {routeKey === 'services' && <ServicesPage lang={lang} />}
 {routeKey === 'about' && <AboutPage lang={lang} />}
 {routeKey === 'contact' && <ContactPage lang={lang} />}
 {routeKey === 'thanks' && <ThanksPage lang={lang} />}
-{routeKey === 'location' && <HomePage lang={lang} location={location} />}
 {routeKey === 'service' && serviceKey && <ServiceDetailPage lang={lang} serviceKey={serviceKey} />}

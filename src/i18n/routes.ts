@@ -84,36 +84,14 @@ export const absoluteUrl = (baseUrl: string, path: string) => {
 export const getRoutePath = (routeKey: RouteKey, lang: Lang, hash = '') =>
   `${routePaths[routeKey][lang]}${hash}`;
 
-const slugifyCity = (city: string) =>
-  city
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
+// City landing pages exist in Spanish only. Publishing one per city and per
+// language produced 66 near-identical copies of the home page (the same body
+// copy with the city name swapped), which is what buried the real pages in
+// Google. The translated sites keep their four canonical pages; the city
+// pages stay Spanish, where the local search intent actually lives.
+export const locationLang: Lang = defaultLang;
 
-export const getLocationSlug = (spanishSlug: string, lang: Lang) => {
-  const location = locations.find((item) => item.slug === spanishSlug);
-  if (!location) return spanishSlug;
-  if (lang === 'es') return location.slug;
-
-  const citySlug = slugifyCity(location.city);
-
-  const prefixes: Record<Exclude<Lang, 'es'>, string> = {
-    en: 'interior-designer-in',
-    de: 'innenarchitektur',
-    ru: 'dizainer-intererov',
-    it: 'interior-designer',
-    fr: 'decoratrice-interieur',
-  };
-
-  return `${prefixes[lang]}-${citySlug}`;
-};
-
-export const getLocationPath = (spanishSlug: string, lang: Lang) => {
-  const slug = getLocationSlug(spanishSlug, lang);
-  return lang === 'es' ? `/${slug}` : `/${lang}/${slug}`;
-};
+export const getLocationPath = (spanishSlug: string) => `/${spanishSlug}`;
 
 export const getServicePagePath = (key: ServiceKey, lang: Lang) => {
   const slug = servicePageSlugs[key][lang];
@@ -137,10 +115,8 @@ export const resolveLocalizedPath = (pathname: string) => {
   }
 
   for (const location of locations) {
-    for (const language of languages) {
-      if (normalizePath(getLocationPath(location.slug, language.code)) === normalizedPath) {
-        return { lang: language.code, routeKey: 'location' as const, locationSlug: location.slug };
-      }
+    if (normalizePath(getLocationPath(location.slug)) === normalizedPath) {
+      return { lang: locationLang, routeKey: 'location' as const, locationSlug: location.slug };
     }
   }
 
@@ -159,7 +135,9 @@ export const getLocalizedPath = (pathname: string, targetLang: Lang) => {
   const resolved = resolveLocalizedPath(pathname);
 
   if (resolved.routeKey === 'location' && resolved.locationSlug) {
-    return getLocationPath(resolved.locationSlug, targetLang);
+    return targetLang === locationLang
+      ? getLocationPath(resolved.locationSlug)
+      : getRoutePath('home', targetLang);
   }
 
   if (resolved.routeKey === 'service' && resolved.serviceKey) {
@@ -173,7 +151,17 @@ export const getLocalizedPath = (pathname: string, targetLang: Lang) => {
   return getRoutePath('home', targetLang);
 };
 
-export const getAlternatePaths = (pathname: string) =>
-  Object.fromEntries(
+/**
+ * hreflang alternates for a page, or null when the page has no translations.
+ * City landings are Spanish-only, so pointing hreflang at the localized homes
+ * would claim a translation that does not exist.
+ */
+export const getAlternatePaths = (pathname: string): Record<Lang, string> | null => {
+  const resolved = resolveLocalizedPath(pathname);
+
+  if (!resolved.routeKey || resolved.routeKey === 'location') return null;
+
+  return Object.fromEntries(
     languages.map((language) => [language.code, getLocalizedPath(pathname, language.code)])
   ) as Record<Lang, string>;
+};
