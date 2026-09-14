@@ -24,6 +24,7 @@
     { "path": "/category/cocinas/", "target": "/servicios" },
     { "path": "/tag/interiorismo/", "target": "/servicios" },
     { "path": "/author/mhkstudiodesign/", "target": "/sobre-nosotros" },
+    { "path": "/home-staging-mojacar/", "target": "/home-staging-almeria" },
     { "path": "/wp-content/uploads/2025/05/icono-del-sitio-1.png", "target": "/images/icono-del-sitio-1.png" },
     { "path": "/wp-content/uploads/2025/05/boton-inicio-1.png", "target": "/images/boton-inicio-1.png" },
     { "path": "/wp-content/uploads/2025/05/destacada.png", "target": "/images/destacada.png" },

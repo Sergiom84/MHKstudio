@@ -27,6 +27,12 @@
 /proyectos /servicios 301
 /proyectos/ /servicios 301
 
+# WordPress legacy: /home-staging-mojacar/ still 404s in Search Console (last
+# crawled 2026-04-09). The service page is the closest surviving intent - home
+# staging is the service, Mojacar is only where it was delivered.
+/home-staging-mojacar /home-staging-almeria 301
+/home-staging-mojacar/ /home-staging-almeria 301
+
 # WordPress WXR 2026-08-25: five published placeholder posts used dated
 # permalinks. They belonged to the old projects index, so Servicios is the
 # closest surviving destination. The dated wildcard covers the attachment
