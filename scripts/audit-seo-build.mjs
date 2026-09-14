@@ -118,4 +118,26 @@ for (const legacy of manifest.redirects) {
   }
 }
 
-console.log(`SEO audit passed: ${urls.length} indexable sitemap URLs, ${nonIndexablePaths.size} noindex pages and ${manifest.redirects.length} WordPress redirects verified.`);
+// Cloudflare Pages applies roughly the first hundred rules of _redirects and
+// drops the rest without warning. On 2026-09-14 a 169-rule file shipped with
+// its last 33 rules dead in production, so the retired Italian and French
+// landings kept answering 200. Prefer splat rules over one rule per URL and
+// keep the file comfortably below the ceiling.
+const RULE_BUDGET = 90;
+assert.ok(
+  rules.length <= RULE_BUDGET,
+  `_redirects has ${rules.length} rules; Cloudflare Pages silently ignores rules past ~100. Collapse them into splat rules.`
+);
+
+// A redirect takes precedence over a static asset with the same path, so a
+// splat rule that is too greedy takes a live page off the site.
+for (const url of urls) {
+  const pathname = new URL(url).pathname;
+  const shadowing = rules.find((rule) => ruleMatches(rule, pathname));
+  assert.ok(
+    !shadowing,
+    `Redirect "${shadowing?.source}" shadows the live page ${pathname}`
+  );
+}
+
+console.log(`SEO audit passed: ${urls.length} indexable sitemap URLs, ${nonIndexablePaths.size} noindex pages, ${manifest.redirects.length} WordPress redirects and ${rules.length}/${RULE_BUDGET} redirect rules verified.`);
