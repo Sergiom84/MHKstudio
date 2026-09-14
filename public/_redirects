@@ -99,11 +99,22 @@
 # where the local search intent is. Each retired URL consolidates into the home
 # page of its own language so a German visitor does not land on Spanish copy.
 #
-# These are splat rules on purpose. Cloudflare Pages silently ignores static
-# rules past roughly the hundredth, and the explicit two-rules-per-URL version
-# of this block (132 rules) pushed the file past that limit: the Italian and
-# French landings, and half the Russian ones, kept serving 200 in production on
-# 2026-09-14. The splat also absorbs the trailing-slash variant.
+# These are splat rules on purpose. The explicit two-rules-per-URL version of
+# this block (132 rules, 169 in the file) shipped on 2026-09-14 with its tail
+# dead in production: the Italian and French landings, and the Russian ones
+# from carboneras onwards, kept serving 200 while the earlier ones 301'd. The
+# splat also absorbs the trailing-slash variant.
+#
+# Cause, measured on the preview branch the same day, three deployments:
+#   200 static rules, no splat anywhere -> all 200 applied.
+#   29 splat rules + 200 static rules   -> only the first 100 rules applied.
+#   this file + 200 static rules        -> same cutoff.
+# So the documented ceiling of 2,000 static redirects only holds while the file
+# contains no dynamic rule. As soon as one splat is present, Cloudflare Pages
+# applies the first ~100 rules and drops the rest with no error at build time,
+# at deploy time, or in any log. Its own count runs about thirteen lower than a
+# naive count of this file, so treat 100 as the hard ceiling and stay well below
+# it. scripts/audit-seo-build.mjs fails the build past 90.
 #
 # Every prefix below is checked against the live sitemap by scripts/audit-seo-
 # build.mjs, which fails if a rule would shadow a page that still exists.

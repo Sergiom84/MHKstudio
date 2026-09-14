@@ -118,11 +118,13 @@ for (const legacy of manifest.redirects) {
   }
 }
 
-// Cloudflare Pages applies roughly the first hundred rules of _redirects and
-// drops the rest without warning. On 2026-09-14 a 169-rule file shipped with
-// its last 33 rules dead in production, so the retired Italian and French
-// landings kept answering 200. Prefer splat rules over one rule per URL and
-// keep the file comfortably below the ceiling.
+// Cloudflare documents 2,000 static redirects, but that ceiling only holds
+// while _redirects contains no dynamic rule. Measured on the preview branch on
+// 2026-09-14: 200 static rules with no splat all applied; add 29 splat rules
+// and only the first 100 rules of the file survived. A 169-rule file had
+// already shipped to production that day with its tail dead, so the retired
+// Italian and French landings kept answering 200. Prefer splat rules over one
+// rule per URL and keep the file well below 100.
 const RULE_BUDGET = 90;
 assert.ok(
   rules.length <= RULE_BUDGET,
