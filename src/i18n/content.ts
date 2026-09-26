@@ -215,11 +215,11 @@ export const ui = {
 
 export const siteDescriptions = {
   es: 'Estudio de diseño de interiores en Almería. Decoración de interiores, proyectos llave en mano, cocinas y baños a medida y home staging profesional.',
-  en: 'Interior design studio in Mojácar. Interior decoration, turnkey projects, bespoke kitchens and bathrooms, and professional home staging.',
-  de: 'Innenarchitektur-Studio in Mojácar. Raumgestaltung, schlüsselfertige Projekte, maßgefertigte Küchen und Bäder sowie professionelles Home Staging.',
-  ru: 'Студия дизайна интерьеров в Мохакаре. Декорирование, проекты под ключ, кухни и ванные на заказ и профессиональный хоумстейджинг.',
-  it: 'Studio di interior design a Mojácar. Decorazione d’interni, progetti chiavi in mano, cucine e bagni su misura e home staging professionale.',
-  fr: 'Studio de design d’intérieur à Mojácar. Décoration, projets clés en main, cuisines et salles de bains sur mesure et home staging professionnel.',
+  en: 'Interior design studio in Almería. Interior decoration, turnkey projects, bespoke kitchens and bathrooms, and professional home staging.',
+  de: 'Innenarchitektur-Studio in Almería. Raumgestaltung, schlüsselfertige Projekte, maßgefertigte Küchen und Bäder sowie professionelles Home Staging.',
+  ru: 'Студия дизайна интерьеров в Альмерии. Декорирование, проекты под ключ, кухни и ванные на заказ и профессиональный хоумстейджинг.',
+  it: 'Studio di interior design ad Almería. Decorazione d’interni, progetti chiavi in mano, cucine e bagni su misura e home staging professionale.',
+  fr: 'Studio de design d’intérieur à Almería. Décoration, projets clés en main, cuisines et salles de bains sur mesure et home staging professionnel.',
 } satisfies Record<Lang, string>;
 
 export const reviews = {
@@ -1099,7 +1099,7 @@ export const homeContent = {
     ctaBody: 'Si buscas una empresa de interiorismo en Mojácar que te acompañe con cercanía, profesionalidad y soluciones a medida, en MHK Studio estaremos encantados de ayudarte. Diseñamos espacios que reflejan tu estilo y se adaptan a tu forma de vivir. Contacta con nosotros y da el primer paso hacia tu nuevo hogar.',
   },
   en: {
-    title: 'Interior design in Mojácar | MHK Studio',
+    title: 'Interior design studio in Almería | MHK Studio',
     introTitle: 'Personalised interior design that transforms your home and your wellbeing',
     introParagraphs: [
       'At MHK Studio we are an interior design studio in Almería passionate about creating unique, functional spaces with soul. We design environments that reflect each client’s personality, lifestyle and emotions, caring for every creative and technical detail.',
@@ -1126,7 +1126,7 @@ export const homeContent = {
     ctaBody: 'If you are looking for an interior design company in Mojácar that supports you with closeness, professionalism and bespoke solutions, at MHK Studio we will be delighted to help. We design spaces that reflect your style and adapt to the way you live. Contact us and take the first step towards your new home.',
   },
   de: {
-    title: 'Innenarchitektur in Mojácar | MHK Studio',
+    title: 'Innenarchitektur-Studio in Almería | MHK Studio',
     introTitle: 'Individuelle Innenarchitektur, die Ihr Zuhause und Ihr Wohlbefinden verändert',
     introParagraphs: [
       'MHK Studio ist ein Innenarchitektur-Studio in Almería mit Leidenschaft für einzigartige, funktionale Räume mit Seele. Wir gestalten Umgebungen, die Persönlichkeit, Lebensstil und Emotionen jedes Kunden widerspiegeln.',
@@ -1153,7 +1153,7 @@ export const homeContent = {
     ctaBody: 'Wenn Sie ein Innenarchitektur-Studio in Mojácar suchen, das Sie mit Nähe, Professionalität und maßgeschneiderten Lösungen begleitet, hilft Ihnen MHK Studio gern. Wir gestalten Räume, die Ihren Stil widerspiegeln und zu Ihrer Lebensweise passen. Kontaktieren Sie uns und machen Sie den ersten Schritt zu Ihrem neuen Zuhause.',
   },
   ru: {
-    title: 'Дизайн интерьеров в Мохакаре | MHK Studio',
+    title: 'Студия дизайна интерьеров в Альмерии | MHK Studio',
     introTitle: 'Индивидуальный дизайн интерьера, который меняет дом и самочувствие',
     introParagraphs: [
       'MHK Studio — студия дизайна интерьеров в Альмерии, увлеченная созданием уникальных, функциональных пространств с душой. Мы проектируем интерьеры, отражающие личность, образ жизни и эмоции каждого клиента.',
@@ -1180,7 +1180,7 @@ export const homeContent = {
     ctaBody: 'Если вы ищете студию дизайна интерьеров в Мохакаре, которая сопровождает с вниманием, профессионализмом и персональными решениями, MHK Studio с радостью поможет. Мы создаем пространства, отражающие ваш стиль и образ жизни. Свяжитесь с нами и сделайте первый шаг к новому дому.',
   },
   it: {
-    title: 'Interior design a Mojácar | MHK Studio',
+    title: 'Studio di interior design ad Almería | MHK Studio',
     introTitle: 'Interior design personalizzato che trasforma la casa e il benessere',
     introParagraphs: [
       'MHK Studio è uno studio di interior design ad Almería appassionato nella creazione di spazi unici, funzionali e con anima. Progettiamo ambienti che riflettono personalità, stile di vita ed emozioni di ogni cliente.',
@@ -1207,7 +1207,7 @@ export const homeContent = {
     ctaBody: 'Se cerchi uno studio di interior design a Mojácar che ti accompagni con vicinanza, professionalità e soluzioni su misura, in MHK Studio saremo felici di aiutarti. Progettiamo spazi che riflettono il tuo stile e si adattano al tuo modo di vivere. Contattaci e fai il primo passo verso la tua nuova casa.',
   },
   fr: {
-    title: 'Design d’intérieur à Mojácar | MHK Studio',
+    title: 'Studio de design d’intérieur à Almería | MHK Studio',
     introTitle: 'Un design d’intérieur personnalisé qui transforme votre maison et votre bien-être',
     introParagraphs: [
       'MHK Studio est un studio de design d’intérieur à Almería passionné par la création d’espaces uniques, fonctionnels et pleins d’âme. Nous concevons des ambiances qui reflètent la personnalité, le mode de vie et les émotions de chaque client.',
