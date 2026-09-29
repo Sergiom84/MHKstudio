@@ -258,15 +258,46 @@ const organizationSchema = {
           document.body.appendChild(script);
         };
 
+        // The AEPD cookie guide treats 24 months as the longest a choice should
+        // last before the visitor is asked again.
+        const cookieConsentDateKey = 'mhk-cookie-consent-at';
+        const consentMaxAgeMs = 1000 * 60 * 60 * 24 * 730;
+        const hubSpotCookieNames = ['__hstc', '__hssc', '__hssrc', 'hubspotutk', 'messagesUtk'];
+
+        const clearHubSpotCookies = () => {
+          const host = window.location.hostname;
+          const domains = ['', host, `.${host}`, `.${host.replace(/^www\./, '')}`];
+          hubSpotCookieNames.forEach((name) => {
+            domains.forEach((domain) => {
+              const domainPart = domain ? `; domain=${domain}` : '';
+              document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domainPart}`;
+            });
+          });
+        };
+
         let storedChoice = null;
         try {
           storedChoice = window.localStorage.getItem(cookieConsentKey);
+          const storedAt = Number(window.localStorage.getItem(cookieConsentDateKey));
+          if (storedChoice && !storedAt) {
+            window.localStorage.setItem(cookieConsentDateKey, String(Date.now()));
+          } else if (storedChoice && Date.now() - storedAt > consentMaxAgeMs) {
+            window.localStorage.removeItem(cookieConsentKey);
+            window.localStorage.removeItem(cookieConsentDateKey);
+            storedChoice = null;
+          }
         } catch {}
 
         if (storedChoice === 'accepted') loadHubSpotTracking();
 
         window.addEventListener('mhk-cookie-consent', (event) => {
-          if (event.detail?.choice === 'accepted') loadHubSpotTracking();
+          if (event.detail?.choice === 'accepted') {
+            loadHubSpotTracking();
+            return;
+          }
+          clearHubSpotCookies();
+          // The chat cannot be unloaded once running; a reload leaves the page without it.
+          if (document.getElementById('hs-script-loader')) window.location.reload();
         });
 
         if (cookieBanner) {
@@ -280,10 +311,18 @@ const organizationSchema = {
 
               try {
                 window.localStorage.setItem(cookieConsentKey, choice);
+                window.localStorage.setItem(cookieConsentDateKey, String(Date.now()));
               } catch {}
 
               cookieBanner.hidden = true;
               window.dispatchEvent(new CustomEvent('mhk-cookie-consent', { detail: { choice } }));
+            });
+          });
+
+          document.querySelectorAll('[data-cookie-settings]').forEach((button) => {
+            button.addEventListener('click', () => {
+              cookieBanner.hidden = false;
+              cookieBanner.querySelector('[data-cookie-choice]')?.focus();
             });
           });
         }
