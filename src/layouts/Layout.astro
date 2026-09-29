@@ -170,7 +170,6 @@ const organizationSchema = {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://js.hs-scripts.com" />
     <link rel="preconnect" href="https://js.hsforms.net" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet" />
 
@@ -242,25 +241,36 @@ const organizationSchema = {
         />
       </svg>
     </a>
-    <script
-      is:inline
-      type="text/javascript"
-      id="hs-script-loader"
-      async
-      defer
-      src="https://js.hs-scripts.com/49385837.js"
-    ></script>
     <script is:inline>
       (() => {
         const cookieBanner = document.querySelector('[data-cookie-banner]');
         const cookieConsentKey = 'mhk-cookie-consent';
 
+        // The HubSpot tracking code (chat and analytics) sets third-party cookies,
+        // so it only loads once the visitor has accepted them.
+        const loadHubSpotTracking = () => {
+          if (document.getElementById('hs-script-loader')) return;
+          const script = document.createElement('script');
+          script.id = 'hs-script-loader';
+          script.async = true;
+          script.defer = true;
+          script.src = 'https://js.hs-scripts.com/49385837.js';
+          document.body.appendChild(script);
+        };
+
+        let storedChoice = null;
+        try {
+          storedChoice = window.localStorage.getItem(cookieConsentKey);
+        } catch {}
+
+        if (storedChoice === 'accepted') loadHubSpotTracking();
+
+        window.addEventListener('mhk-cookie-consent', (event) => {
+          if (event.detail?.choice === 'accepted') loadHubSpotTracking();
+        });
+
         if (cookieBanner) {
-          try {
-            if (!window.localStorage.getItem(cookieConsentKey)) {
-              cookieBanner.hidden = false;
-            }
-          } catch {
+          if (!storedChoice) {
             cookieBanner.hidden = false;
           }
 
