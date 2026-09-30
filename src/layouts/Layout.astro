@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/locations';
-import { absoluteUrl, defaultLang, getAlternatePaths, getLangFromPath, languages, type Lang } from '../i18n/routes';
+import { defaultLang, getLangFromPath, languages, type Lang } from '../i18n/routes';
 import { siteDescriptions } from '../i18n/content';
 
 interface Props {
@@ -35,7 +35,16 @@ const socialTitle = fullTitle;
 const socialDescription = providedSocialDescription ?? description;
 const socialUrl = Astro.url.href;
 const siteLogoUrl = new URL('/images/MHK.webp', Astro.url.origin).href;
-const alternatePaths = getAlternatePaths(Astro.url.pathname);
+// Only the Spanish site is indexed. The translations stay reachable from the
+// language switcher, but the client's SEO asked for them to be kept out of
+// Google: they were surfacing as mixed-language results for Spanish searches.
+// "follow" keeps their links passing value to the Spanish pages.
+const isTranslation = lang !== defaultLang;
+const robots = noindex
+  ? 'noindex, nofollow'
+  : isTranslation
+    ? 'noindex, follow'
+    : 'index, follow, max-image-preview:large';
 const currentLanguage = languages.find((language) => language.code === lang) ?? languages[0];
 const backToTopLabels: Record<Lang, string> = {
   es: 'Volver al inicio',
@@ -129,24 +138,9 @@ const organizationSchema = {
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
-    {!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
+    <meta name="robots" content={robots} />
 
     <link rel="canonical" href={canonical} />
-    {alternatePaths && languages.map((language) => (
-      <link
-        rel="alternate"
-        hreflang={language.hreflang}
-        href={absoluteUrl(siteConfig.url, alternatePaths[language.code])}
-      />
-    ))}
-    {alternatePaths && (
-      <link
-        rel="alternate"
-        hreflang="x-default"
-        href={absoluteUrl(siteConfig.url, alternatePaths[defaultLang])}
-      />
-    )}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

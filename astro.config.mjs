@@ -16,6 +16,10 @@ const nonIndexablePaths = new Set([
   '/fr/merci',
 ]);
 
+// Translations are served but noindexed (see src/layouts/Layout.astro), so
+// they stay out of the sitemap too.
+const translatedPath = /^\/(en|de|ru|it|fr)(\/|$)/;
+
 export default defineConfig({
   site: process.env.PUBLIC_SITE_URL ?? 'https://mhkstudio.design',
   output: 'static',
@@ -28,7 +32,10 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => !nonIndexablePaths.has(new URL(page).pathname),
+      filter: (page) => {
+        const { pathname } = new URL(page);
+        return !nonIndexablePaths.has(pathname) && !translatedPath.test(pathname);
+      },
     }),
   ],
 });

@@ -150,18 +150,3 @@ export const getLocalizedPath = (pathname: string, targetLang: Lang) => {
 
   return getRoutePath('home', targetLang);
 };
-
-/**
- * hreflang alternates for a page, or null when the page has no translations.
- * City landings are Spanish-only, so pointing hreflang at the localized homes
- * would claim a translation that does not exist.
- */
-export const getAlternatePaths = (pathname: string): Record<Lang, string> | null => {
-  const resolved = resolveLocalizedPath(pathname);
-
-  if (!resolved.routeKey || resolved.routeKey === 'location') return null;
-
-  return Object.fromEntries(
-    languages.map((language) => [language.code, getLocalizedPath(pathname, language.code)])
-  ) as Record<Lang, string>;
-};

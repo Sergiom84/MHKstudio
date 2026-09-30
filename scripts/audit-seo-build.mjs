@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -19,6 +19,8 @@ const nonIndexablePaths = new Set([
   '/it/grazie',
   '/fr/merci',
 ]);
+
+const translatedPath = /^\/(en|de|ru|it|fr)(\/|$)/;
 
 const sitemapPath = join(dist, 'sitemap-0.xml');
 assert.ok(existsSync(sitemapPath), 'Run npm run build before npm run audit:seo');
@@ -43,7 +45,7 @@ for (const url of urls) {
   const parsed = new URL(url);
   assert.equal(parsed.origin, siteOrigin, `Unexpected sitemap host: ${url}`);
   assert.ok(!nonIndexablePaths.has(parsed.pathname), `noindex URL leaked into sitemap: ${url}`);
-  assert.ok(!/^\/(en|de|ru|it|fr)\/$/.test(parsed.pathname), `Localized home has trailing slash: ${url}`);
+  assert.ok(!translatedPath.test(parsed.pathname), `Translated URL leaked into sitemap: ${url}`);
 
   const htmlPath = htmlPathFor(url);
   assert.ok(existsSync(htmlPath), `Sitemap URL has no generated HTML: ${url}`);
@@ -61,13 +63,8 @@ for (const url of urls) {
   assert.equal(h1Count, 1, `Indexable page must contain exactly one H1: ${url}`);
   assert.ok(!html.includes('/wp-content/uploads/'), `Legacy WordPress asset remains in ${url}`);
 
-  const alternates = new Map(
-    [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)]
-      .map((match) => [match[1], match[2]])
-  );
-  if (alternates.has('x-default')) {
-    assert.equal(alternates.get('x-default'), alternates.get('es'), `x-default differs from Spanish equivalent on ${url}`);
-  }
+  // Only one language is indexed, so hreflang would point at noindex pages.
+  assert.ok(!/hreflang=/.test(html.match(/<head>[\s\S]*<\/head>/)?.[0] ?? ''), `Unexpected hreflang on ${url}`);
 
   for (const [kind, value, registry] of [
     ['title', title, seenTitles],
@@ -85,6 +82,16 @@ for (const path of nonIndexablePaths) {
   assert.ok(existsSync(htmlPath), `Expected noindex page is missing: ${path}`);
   const html = readFileSync(htmlPath, 'utf8');
   assert.match(html, /<meta name="robots" content="noindex, nofollow"/, `Expected noindex meta on ${path}`);
+}
+
+// Every translated page must be served but noindexed.
+const translatedPages = readdirSync(dist, { recursive: true })
+  .map((file) => file.split(sep).join('/'))
+  .filter((file) => file.endsWith('.html') && translatedPath.test(`/${file}`));
+assert.ok(translatedPages.length > 0, 'Expected translated pages in the build');
+for (const file of translatedPages) {
+  const html = readFileSync(join(dist, file), 'utf8');
+  assert.match(html, /<meta name="robots" content="noindex, (no)?follow"/, `Translated page is indexable: /${file}`);
 }
 
 const notFound = readFileSync(join(dist, '404.html'), 'utf8');
@@ -142,4 +149,4 @@ for (const url of urls) {
   );
 }
 
-console.log(`SEO audit passed: ${urls.length} indexable sitemap URLs, ${nonIndexablePaths.size} noindex pages, ${manifest.redirects.length} WordPress redirects and ${rules.length}/${RULE_BUDGET} redirect rules verified.`);
+console.log(`SEO audit passed: ${urls.length} indexable sitemap URLs, ${nonIndexablePaths.size} noindex pages, ${translatedPages.length} noindexed translations, ${manifest.redirects.length} WordPress redirects and ${rules.length}/${RULE_BUDGET} redirect rules verified.`);
