@@ -94,6 +94,23 @@ for (const file of translatedPages) {
   assert.match(html, /<meta name="robots" content="noindex, (no)?follow"/, `Translated page is indexable: /${file}`);
 }
 
+// Several photos are kept out of git (see .gitignore), so a build from a
+// checkout that lacks them ships broken images. This happened on 2026-09-30
+// with a deploy from the Mac. Every asset the pages reference must exist.
+const builtFiles = readdirSync(dist, { recursive: true }).map((file) => file.split(sep).join('/'));
+const missingAssets = new Set();
+for (const file of builtFiles.filter((name) => /\.(html|css)$/.test(name))) {
+  const text = readFileSync(join(dist, file), 'utf8');
+  for (const [, assetPath] of text.matchAll(/["'(]\/((?:images|fonts)\/[^"'()?#\s]+)/g)) {
+    if (!existsSync(join(dist, decodeURIComponent(assetPath)))) missingAssets.add(`/${assetPath}`);
+  }
+}
+assert.equal(
+  missingAssets.size,
+  0,
+  `Referenced assets missing from the build (copy them into public/images before deploying): ${[...missingAssets].join(', ')}`
+);
+
 const notFound = readFileSync(join(dist, '404.html'), 'utf8');
 assert.match(notFound, /<meta name="robots" content="noindex, nofollow"/, '404 page must remain noindex');
 

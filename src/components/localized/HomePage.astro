@@ -13,7 +13,7 @@ interface Props {
 }
 
 const { lang, location } = Astro.props;
-const city = location?.city ?? 'Mojácar';
+const city = location?.city ?? 'Almería';
 // The translated home copy uses either Mojácar or Almería as its source city.
 // For a location landing, replace only those existing, language-specific names
 // with the canonical city name from locations.ts. This keeps the translations
@@ -212,11 +212,15 @@ const schema = {
                   data-service-copy={index}
                 >
                   {index === 0 ? (
-                    <h2 class={`${storyIndex === 0 ? 'service-scroll-decor-heading' : 'font-medium'} mb-5 text-3xl leading-tight text-[#201400] md:text-5xl ${storyIndex === 0 || storyIndex === 1 ? 'service-scroll-heading-single' : ''}`}>
+                    <h2 class={`${storyIndex === 0 ? 'service-scroll-decor-heading' : 'service-scroll-heading-sentence font-medium'} mb-5 text-3xl leading-tight text-[#201400] md:text-5xl ${storyIndex === 0 || storyIndex === 1 ? 'service-scroll-heading-single' : ''}`}>
                       <a href={getServicePagePath(storyServiceKeys[storyIndex], lang)} class="transition-colors hover:text-[#9a7d62]">
                         {storyIndex === 0 && lang === 'es' ? (
                           <>
                             Decoración de interiores<br />en {city}
+                          </>
+                        ) : storyIndex === 1 && lang === 'es' ? (
+                          <>
+                            Proyectos de interiorismo<br />en {city}
                           </>
                         ) : (
                           step.title
@@ -314,7 +318,11 @@ const schema = {
     <div class="mx-auto grid min-h-[440px] max-w-6xl grid-cols-1 gap-8 md:grid-cols-[1.1fr_0.9fr] md:items-center md:gap-12">
       <div class="min-w-0">
         <h2 class="home-staging-heading-single mb-7 text-3xl font-light leading-tight text-[#201400] md:text-5xl">
-          <a href={getServicePagePath('staging', lang)} class="transition-colors hover:text-[#9a7d62]">{content.homeStagingTitle}</a>
+          <a href={getServicePagePath('staging', lang)} class="transition-colors hover:text-[#9a7d62]">
+            {content.homeStagingTitle.split('\n').map((line, lineIndex) => (
+              <>{lineIndex > 0 && <br />}{line}</>
+            ))}
+          </a>
         </h2>
         <p class="home-uniform-body mhk-body-reference max-w-[760px] text-[#201400]/80">
           <span set:html={highlightHomeText(content.homeStagingBody)}></span>

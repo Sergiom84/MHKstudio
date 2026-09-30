@@ -633,8 +633,9 @@ header summary:focus-visible {
 
 .home-staging-visual {
   position: relative;
+  align-self: stretch;
   width: 100%;
-  min-height: clamp(360px, 50vh, 440px);
+  min-height: clamp(420px, 60vh, 560px);
   margin: 0;
   overflow: hidden;
   border: 1px solid rgb(189 165 137 / 38%);
@@ -710,6 +711,12 @@ header summary:focus-visible {
 
 .service-scroll-heading-single {
   text-wrap: normal;
+}
+
+/* Promoted from h3 to h2 for the SEO brief; keep them in sentence case like
+   the other service headings instead of inheriting the global h2 uppercase. */
+.service-scroll-heading-sentence {
+  text-transform: none;
 }
 
 .home-staging-heading-single {
