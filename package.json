@@ -10,8 +10,8 @@
     "build": "astro build",
     "audit:seo": "node scripts/audit-seo-build.mjs",
     "preview": "astro preview",
-    "deploy:cloudflare": "set PUBLIC_SITE_URL=https://mhkstudio.design&& npm run build && npx wrangler pages deploy dist --project-name mhkstudio-preview --branch main --commit-dirty=true",
-    "deploy:preview": "set PUBLIC_SITE_URL=https://mhkstudio-preview.pages.dev&& npm run build && npx wrangler pages deploy dist --project-name mhkstudio-preview --branch preview --commit-dirty=true",
+    "deploy:cloudflare": "astro build --site https://mhkstudio.design && npx wrangler pages deploy dist --project-name mhkstudio-preview --branch main --commit-dirty=true",
+    "deploy:preview": "astro build --site https://mhkstudio-preview.pages.dev && npx wrangler pages deploy dist --project-name mhkstudio-preview --branch preview --commit-dirty=true",
     "astro": "astro"
   },
   "dependencies": {
